@@ -58,25 +58,33 @@
 
     <div class="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
 
+        <!-- Header -->
         <header class="text-center mb-8">
             <img src="https://iili.io/KGQOvkl.md.png" alt="West Midlands Evidence Based Emergency Medicine Logo" class="h-24 w-auto mx-auto mb-4" onerror="this.style.display='none'">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900">A&E Obstetric & Gynaecological Emergencies</h1>
             <p class="text-md text-gray-600 mt-2">A quick reference and documentation tool for UK Emergency Medicine.</p>
         </header>
 
+        <!-- Navigation -->
         <nav class="mb-8">
             <ul id="nav-menu" class="flex flex-wrap justify-center gap-2">
-                </ul>
+                <!-- Navigation buttons will be inserted here by JS -->
+            </ul>
         </nav>
 
+        <!-- Main Content Area -->
         <main id="main-content">
-            </main>
+            <!-- Sections for each emergency will be dynamically shown here -->
+        </main>
 
+        <!-- Footer -->
         <footer class="text-center mt-12 py-6 border-t border-gray-200">
             <p class="text-sm text-gray-600">Created by Dr Jake Turner and West Midlands Evidence Based Emergency Medicine Ltd.</p>
             <div class="mt-2 text-xs text-gray-500">
                 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center hover:underline">
+                    <!-- CC Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 496 512" fill="currentColor"><path d="M248,8C111,8,0,119,0,256S111,504,248,504,496,393,496,256,385,8,248,8ZM216,352a32,32,0,1,1,32-32A32,32,0,0,1,216,352Zm64,0a32,32,0,1,1,32-32A32,32,0,0,1,280,352Zm64-128a32,32,0,1,1,32-32A32,32,0,0,1,344,224Zm-64,0a32,32,0,1,1,32-32A32,32,0,0,1,280,224Z"/></svg>
+                    <!-- BY (Attribution) Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 512 512" fill="currentColor"><path d="M256,256c53,0,96-43,96-96s-43-96-96-96-96,43-96,96,43,96,96,96Zm0,32c-61.9,0-112,50.1-112,112v32c0,17.7,14.3,32,32,32H336c17.7,0,32-14.3,32-32V400c0-61.9-50.1-112-112-112Z"/></svg>
                     This work is licensed under a Creative Commons Attribution 4.0 International License.
                 </a>
@@ -93,6 +101,7 @@
             name: 'Amniotic Fluid Embolism',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column: Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-amniotic_fluid_embolism" class="space-y-2">
@@ -148,6 +157,24 @@
                                 <li><strong>High Mortality:</strong> AFE carries a very high maternal and fetal mortality rate.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">A diagnosis of exclusion. Suspect in any patient with:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Sudden cardiovascular collapse (hypotension, cardiac arrest).</li>
+                                <li>Profound hypoxia (dyspnoea, cyanosis, respiratory arrest).</li>
+                                <li>Severe consumptive coagulopathy (DIC).</li>
+                                <li>Occurring during labour, delivery, or within 30 minutes postpartum.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 56: Maternal Collapse in Pregnancy</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('amniotic_fluid_embolism')}
                     </div>
                 </div>
@@ -158,6 +185,7 @@
             name: 'Placental Abruption',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column: Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-placental_abruption" class="space-y-2">
@@ -203,12 +231,12 @@
                             </details>
                             <details class="border-b border-gray-200 py-2">
                                 <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Plan for definitive delivery discussed with O&G.">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Plan for definitive delivery (Cat 1 C-section) discussed with O&G.">
                                     Plan for Definitive Delivery
                                     <span class="ml-auto summary-arrow">&#9654;</span>
                                 </summary>
                                 <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Definitive management is delivery. If there is maternal or fetal compromise, this will be via emergency Category 1 Caesarean section, irrespective of gestational age.</p>
+                                    <p class="text-sm text-gray-600">Definitive management is delivery. If there is maternal or fetal compromise, this will be via emergency Category 1 Caesarean section, irrespective of gestational age. The target decision-to-delivery interval (DDI) is 30 minutes.</p>
                                 </div>
                             </details>
                         </div>
@@ -223,6 +251,25 @@
                                 <li><strong>DIC Risk:</strong> Abruption is a major cause of disseminated intravascular coagulation (DIC) in pregnancy.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis based on presentation:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Antepartum haemorrhage (bleeding from 24+0 weeks)</li>
+                                <li>PLUS Abdominal/uterine pain (often constant and severe).</li>
+                                <li>May have a tense, 'woody' uterus.</li>
+                                <li>Signs of fetal distress (abnormal CTG).</li>
+                                <li>Signs of maternal shock (if bleeding is major or concealed).</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/antepartum-haemorrhage-green-top-guideline-no-63/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 63: Antepartum Haemorrhage</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('placental_abruption')}
                     </div>
                 </div>
@@ -233,6 +280,7 @@
             name: 'Ovarian Torsion',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column: Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-ovarian_torsion" class="space-y-2">
@@ -288,6 +336,24 @@
                                 <li><strong>Time is Ovary:</strong> The chance of salvaging the ovary decreases significantly after 6-8 hours of ischaemia.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">Primarily a clinical diagnosis. Definitive diagnosis is surgical (laparoscopy).</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Sudden onset, severe, unilateral pelvic pain.</li>
+                                <li>Often associated with nausea and vomiting (in ~70% of cases).</li>
+                                <li>May have an adnexal mass on examination (not always palpable).</li>
+                                <li>Ultrasound may show an enlarged, oedematous ovary with abnormal/absent Doppler flow. A normal scan does not rule it out.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-suspected-ovarian-masses-in-premenopausal-women-green-top-guideline-no-62/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 62: Management of Suspected Ovarian Masses</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('ovarian_torsion')}
                     </div>
                 </div>
@@ -298,6 +364,7 @@
             name: 'Severe PID / TOA',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column: Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-severe_pid" class="space-y-2">
@@ -353,6 +420,25 @@
                                 <li class="pt-2 text-xs text-gray-500">Switch to oral therapy 24h after clinical improvement to complete a 14-day course.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis. Requires pelvic pain plus signs of inflammation. Admit if features of <strong>Severe PID / TOA</strong>:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Fever (>38°C) or signs of sepsis.</li>
+                                <li>Palpable pelvic mass (suggests Tubo-Ovarian Abscess).</li>
+                                <li>Signs of pelvic peritonism.</li>
+                                <li>Inability to tolerate oral antibiotics.</li>
+                                <li>No response to oral therapy within 72 hours.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.bashh.org/guidelines/uk-guideline-for-the-management-of-pelvic-inflammatory-disease-2019/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">BASHH: UK Guideline for PID (2019)</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+                        
                         ${generateNotesSection('severe_pid')}
                     </div>
                 </div>
@@ -363,6 +449,7 @@
             name: 'Pre-eclampsia & Eclampsia',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column: Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-pre_eclampsia" class="space-y-2">
@@ -429,6 +516,7 @@
                         </div>
                     </div>
 
+                    <!-- Right Column: Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
@@ -439,6 +527,29 @@
                                 <li><strong>Fluid Management:</strong> Restrict fluids to 80ml/hour to reduce risk of pulmonary oedema.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria (NICE)</h3>
+                            <p class="text-sm text-gray-600 mb-2"><strong>Pre-eclampsia:</strong> New onset hypertension after 20 weeks gestation PLUS one or more of:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Hypertension: BP ≥140/90 mmHg.</li>
+                                <li>Severe Hypertension: BP ≥160/110 mmHg.</li>
+                                <li>Proteinuria (PCR ≥30mg/mmol or ACR ≥8mg/mmol).</li>
+                                <li>Maternal organ dysfunction (renal, liver, neuro, haem).</li>
+                                <li>Fetal growth restriction.</li>
+                            </ul>
+                             <p class="text-sm text-gray-600 mt-4 mb-2"><strong>Eclampsia:</strong></p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>A convulsive seizure in a woman with pre-eclampsia.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.nice.org.uk/guidance/ng133" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">NICE NG133: Hypertension in Pregnancy</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('pre_eclampsia')}
                     </div>
                 </div>
@@ -449,6 +560,7 @@
             name: 'Ruptured Ectopic',
             content: `
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-ruptured_ectopic" class="space-y-2">
@@ -504,6 +616,7 @@
                             </details>
                         </div>
                     </div>
+                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
@@ -514,6 +627,24 @@
                                 <li><strong>Anti-D:</strong> 250 IU IM if <20 weeks gestation. 500 IU if >20 weeks.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis of a woman with a positive pregnancy test AND:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Haemodynamic instability (tachycardia, hypotension, syncope).</li>
+                                <li>Signs of peritonism (abdominal tenderness, rebound, guarding).</li>
+                                <li>May have shoulder tip pain (phrenic nerve irritation).</li>
+                                <li>FAST scan may show free fluid in hepato-renal or pelvic space.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.nice.org.uk/guidance/ng126" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">NICE NG126: Ectopic Pregnancy and Miscarriage</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('ruptured_ectopic')}
                     </div>
                 </div>
@@ -524,6 +655,7 @@
             name: 'Post-Partum Haemorrhage',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-post_partum_haemorrhage" class="space-y-2">
@@ -569,6 +701,7 @@
                             </details>
                         </div>
                     </div>
+                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
@@ -580,6 +713,24 @@
                                  <li><strong>Misoprostol:</strong> 800-1000 mcg PR (per rectum).</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2"><strong>Primary PPH:</strong> Blood loss from the genital tract within 24 hours of birth.</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><strong>Minor PPH:</strong> 500–1000 ml blood loss.</li>
+                                <li><strong>Major PPH:</strong> >1000 ml blood loss.</li>
+                                <li><strong>Massive PPH:</strong> >2000 ml blood loss, or clinical shock.</li>
+                                <li>Also defined as any blood loss that causes haemodynamic instability.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 52: Postpartum Haemorrhage</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('post_partum_haemorrhage')}
                     </div>
                 </div>
@@ -590,6 +741,7 @@
             name: 'Cord Prolapse',
             content: `
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-cord_prolapse" class="space-y-2">
@@ -600,7 +752,7 @@
                                     <span class="ml-auto summary-arrow">&#9654;</span>
                                 </summary>
                                 <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is a time-critical emergency threatening fetal life due to cord compression and hypoxia. Immediate delivery is required, usually by Category 1 C-section. Alert all necessary personnel simultaneously.</p>
+                                    <p class="text-sm text-gray-600">This is a time-critical emergency threatening fetal life due to cord compression and hypoxia. Immediate delivery is required, usually by Category 1 C-section (target DDI 30 minutes). Alert all necessary personnel simultaneously.</p>
                                 </div>
                             </details>
                              <details class="border-b border-gray-200 py-2">
@@ -635,6 +787,7 @@
                             </details>
                         </div>
                     </div>
+                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
@@ -642,6 +795,23 @@
                                 <li><strong>Tocolysis:</strong> Terbutaline 250mcg subcutaneously.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis made after rupture of membranes:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><strong>Overt Prolapse:</strong> Umbilical cord is visible, extruding from the introitus.</li>
+                                <li><strong>Occult Prolapse:</strong> Umbilical cord is palpable on vaginal exam, lying alongside the presenting part.</li>
+                                <li>Suspect if sudden, severe fetal bradycardia occurs immediately after rupture of membranes.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/umbilical-cord-prolapse-green-top-guideline-no-50/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 50: Umbilical Cord Prolapse</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('cord_prolapse')}
                     </div>
                 </div>
@@ -652,6 +822,7 @@
             name: 'Shoulder Dystocia',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps (HELPERR)</h3>
                         <div id="checklist-shoulder_dystocia" class="space-y-2">
@@ -707,6 +878,7 @@
                             </details>
                         </div>
                     </div>
+                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
@@ -716,6 +888,23 @@
                                 <li><strong>Post-delivery:</strong> Be prepared for PPH and neonatal resuscitation. Examine for trauma.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Fetal head delivers, but the anterior shoulder becomes impacted behind the pubic symphysis.</li>
+                                <li>Routine, gentle traction fails to deliver the body.</li>
+                                <li><strong>"Turtle-neck" sign:</strong> The fetal head retracts against the perineum.</li>
+                                <li>Head-to-body delivery time >60 seconds.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="httpshttps://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/shoulder-dystocia-green-top-guideline-no-42/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 42: Shoulder Dystocia</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('shoulder_dystocia')}
                     </div>
                 </div>
@@ -726,6 +915,7 @@
             name: 'Breech Birth (Unexpected)',
             content: `
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
                         <div id="checklist-breech_birth" class="space-y-2">
@@ -761,6 +951,7 @@
                             </details>
                         </div>
                     </div>
+                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
@@ -770,6 +961,24 @@
                                 <li><strong>MSV Manoeuvre:</strong> Support baby's body on your forearm. Place index and middle fingers on baby's cheekbones. Other hand applies pressure to the occiput to flex the head.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis made on visual inspection or vaginal exam:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Fetal buttocks or feet are the presenting part at the introitus.</li>
+                                <li><strong>Frank Breech:</strong> Hips flexed, knees extended (feet near head).</li>
+                                <li><strong>Complete Breech:</strong> Hips and knees flexed (cannonball).</li>
+                                <li><strong>Footling Breech:</strong> One or both feet present first.</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-breech-presentation-green-top-guideline-no-20b/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 20b: Management of Breech Presentation</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('breech_birth')}
                     </div>
                 </div>
@@ -780,6 +989,7 @@
             name: 'Obstetric Cardiac Arrest',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Management -->
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps (ALS + Modifications)</h3>
                         <div id="checklist-cardiac_arrest" class="space-y-2">
@@ -815,6 +1025,23 @@
                             </details>
                              <details class="border-b border-gray-200 py-2">
                                 <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Identified and treated reversible causes (Obstetric 4Hs/4Ts).">
+                                    Identify & Treat Reversible Causes
+                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                                </summary>
+                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
+                                    <p class="text-sm text-gray-600">In addition to standard 4H's & 4T's, specifically consider obstetric causes:<br>
+                                    - <b>H</b>aemorrhage (massive PPH, ruptured ectopic)<br>
+                                    - <b>T</b>hromboembolism (PE, AFE)<br>
+                                    - Eclampsia<br>
+                                    - Sepsis (pelvic)<br>
+                                    - Anaphylaxis<br>
+                                    - Cardiac disease (MI, cardiomyopathy)
+                                    </p>
+                                </div>
+                            </details>
+                             <details class="border-b border-gray-200 py-2">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
                                     <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Resuscitative Hysterotomy performed.">
                                     Perform Resuscitative Hysterotomy
                                     <span class="ml-auto summary-arrow">&#9654;</span>
@@ -825,6 +1052,7 @@
                             </details>
                         </div>
                     </div>
+                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold mb-4 text-red-600">Resuscitative Hysterotomy</h3>
@@ -835,6 +1063,24 @@
                                 <li><strong>Procedure:</strong> Large vertical midline incision from xiphisternum to pubis. Incise uterus vertically. Deliver baby and placenta. Continue CPR throughout.</li>
                             </ul>
                         </div>
+                        
+                        <!-- NEW SECTION -->
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
+                            <p class="text-sm text-gray-600 mb-2">Standard ALS criteria in a pregnant patient:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li>Patient is unresponsive.</li>
+                                <li>Patient is not breathing normally.</li>
+                                <li>Modifications apply if patient is visibly pregnant (uterus at or above umbilicus, >20 weeks gestation).</li>
+                            </ul>
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
+                            <ul class="list-disc pl-5 space-y-2 text-sm">
+                                <li><a href="https://www.resus.org.uk/resuscitation-guidelines" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Resus Council UK Guidelines (see Special Circumstances)</a></li>
+                                 <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 56: Maternal Collapse</a></li>
+                            </ul>
+                        </div>
+                        <!-- END NEW SECTION -->
+
                         ${generateNotesSection('cardiac_arrest')}
                     </div>
                 </div>
@@ -905,7 +1151,7 @@
             const timeString = now.toTimeString().split(' ')[0]; // HH:MM:SS
             const fullLog = `${timeString} - ${logMessage}\n`;
             notesArea.value += fullLog;
-            notesArea.scrollTop = notes-area.scrollHeight; // Auto-scroll to bottom
+            notesArea.scrollTop = notesArea.scrollHeight; // Auto-scroll to bottom
         } else {
              // Simple removal of the line. This is imperfect if the same log message exists twice.
             const lineToRemove = `${logMessage}\n`;
@@ -958,7 +1204,7 @@
             if (checklist) {
                  checklist.addEventListener('click', (event) => {
                     if (event.target.type === 'checkbox') {
-                        handleCheckboxChange(event, protocol.id);
+                        handleCheckboxChange(event, protocolId);
                     }
                 });
             }
@@ -1007,3 +1253,5 @@
     </script>
 </body>
 </html>
+
+
