@@ -3,34 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A&E Obstetric & Gynae Emergencies</title>
+    <title>WMEBEM | Obstetric & Gynae Emergencies</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
         }
         .nav-button.active {
-            background-color: #2563eb;
+            background-color: #1e40af; /* blue-800 */
             color: white;
+            border-color: #1e40af;
         }
         .content-section {
             display: none;
+            animation: fadeIn 0.3s ease-in-out;
         }
         .content-section.active {
             display: block;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         /* Custom checkbox style */
         .custom-checkbox:checked {
-            background-color: #2563eb;
-            border-color: #2563eb;
+            background-color: #16a34a; /* green-600 */
+            border-color: #16a34a;
         }
         .custom-checkbox:checked::after {
             content: '✓';
             color: white;
             display: block;
             text-align: center;
-            line-height: 1.25rem; /* Matches h-5 w-5 */
+            line-height: 1.25rem;
         }
         /* Accordion styles */
         details > summary {
@@ -38,13 +45,14 @@
             cursor: pointer;
             display: flex;
             align-items: center;
+            transition: background-color 0.2s;
         }
         details > summary::-webkit-details-marker {
             display: none;
         }
         details .details-content {
-            background-color: #f8fafc; /* gray-50 */
-            border-left: 3px solid #60a5fa; /* blue-400 */
+            background-color: #f8fafc;
+            border-left: 4px solid #1e40af;
         }
         .summary-arrow {
             transition: transform 0.2s;
@@ -54,19 +62,21 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="bg-gray-100 text-gray-800 antialiased min-h-screen flex flex-col">
 
-    <div class="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl">
+    <div class="container mx-auto p-4 md:p-6 lg:p-8 max-w-7xl flex-grow">
 
         <!-- Header -->
-        <header class="text-center mb-8">
-            <img src="https://iili.io/KGQOvkl.md.png" alt="West Midlands Evidence Based Emergency Medicine Logo" class="h-24 w-auto mx-auto mb-4" onerror="this.style.display='none'">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">A&E Obstetric & Gynaecological Emergencies</h1>
-            <p class="text-md text-gray-600 mt-2">A quick reference and documentation tool for UK Emergency Medicine.</p>
+        <header class="text-center mb-8 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <div class="flex flex-col items-center justify-center">
+                <img src="https://iili.io/KGQOvkl.md.png" alt="West Midlands Evidence Based Emergency Medicine Logo" class="h-28 w-auto mb-4 object-contain">
+                <h1 class="text-2xl md:text-4xl font-bold text-gray-900 tracking-tight">Obstetric & Gynaecological Emergencies</h1>
+                <p class="text-sm md:text-base text-gray-600 mt-2 font-medium">West Midlands Evidence Based Emergency Medicine</p>
+            </div>
         </header>
 
         <!-- Navigation -->
-        <nav class="mb-8">
+        <nav class="mb-8 sticky top-2 z-50 bg-gray-100/90 backdrop-blur-sm py-2 rounded-lg">
             <ul id="nav-menu" class="flex flex-wrap justify-center gap-2">
                 <!-- Navigation buttons will be inserted here by JS -->
             </ul>
@@ -77,21 +87,21 @@
             <!-- Sections for each emergency will be dynamically shown here -->
         </main>
 
-        <!-- Footer -->
-        <footer class="text-center mt-12 py-6 border-t border-gray-200">
-            <p class="text-sm text-gray-600">Created by Dr Jake Turner and West Midlands Evidence Based Emergency Medicine Ltd.</p>
-            <div class="mt-2 text-xs text-gray-500">
-                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center hover:underline">
-                    <!-- CC Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 496 512" fill="currentColor"><path d="M248,8C111,8,0,119,0,256S111,504,248,504,496,393,496,256,385,8,248,8ZM216,352a32,32,0,1,1,32-32A32,32,0,0,1,216,352Zm64,0a32,32,0,1,1,32-32A32,32,0,0,1,280,352Zm64-128a32,32,0,1,1,32-32A32,32,0,0,1,344,224Zm-64,0a32,32,0,1,1,32-32A32,32,0,0,1,280,224Z"/></svg>
-                    <!-- BY (Attribution) Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 512 512" fill="currentColor"><path d="M256,256c53,0,96-43,96-96s-43-96-96-96-96,43-96,96,43,96,96,96Zm0,32c-61.9,0-112,50.1-112,112v32c0,17.7,14.3,32,32,32H336c17.7,0,32-14.3,32-32V400c0-61.9-50.1-112-112-112Z"/></svg>
-                    This work is licensed under a Creative Commons Attribution 4.0 International License.
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-sm font-semibold text-gray-700">West Midlands Evidence Based Emergency Medicine</p>
+            <p class="text-xs text-gray-500 mt-2">Content updated to reflect current UK Guidelines (NICE, RCOG, BASHH, Resus Council UK) as of 2025.</p>
+            <div class="mt-4 text-xs text-gray-400">
+                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center hover:text-gray-600 transition-colors">
+                    <span class="mr-1">Licensed under CC BY 4.0</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0 1.6c-2.41 0-4.32 1.87-4.4 4.1h1.7c.07-1.4 1.25-2.5 2.7-2.5s2.63 1.1 2.7 2.5h1.7c-.08-2.23-1.99-4.1-4.4-4.1zm0 2.2c-.88 0-1.6.72-1.6 1.6h3.2c0-.88-.72-1.6-1.6-1.6zm-5 6.4v1.6h1.6v-1.6h-1.6zm3.4 0v1.6h3.2v-1.6h-3.2zm4.8 0v1.6h1.6v-1.6h-1.6z"/></svg>
                 </a>
             </div>
-        </footer>
-
-    </div>
+        </div>
+    </footer>
 
     <script>
     // --- DATA FOR EMERGENCY PROTOCOLS ---
@@ -102,78 +112,82 @@
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Left Column: Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-amniotic_fluid_embolism" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Recognised sudden collapse. Called for senior O&G, Anaesthetics/ITU, Haematology.">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-100 text-red-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Immediate Management</h3>
+                        </div>
+                        <div id="checklist-amniotic_fluid_embolism" class="space-y-3">
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Recognised sudden collapse. Called for senior O&G, Anaesthetics/ITU, Haematology.">
                                     Recognise & Call for Help
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">AFE is a diagnosis of exclusion characterised by sudden cardiovascular collapse, profound hypoxia, and coagulopathy during labour or shortly after delivery. An immediate, massive multi-disciplinary response is the only chance of survival.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    AFE is a diagnosis of exclusion characterised by sudden cardiovascular collapse, profound hypoxia, and coagulopathy. Immediate multi-disciplinary response is the only chance of survival.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="High-quality CPR with obstetric modifications commenced immediately.">
-                                    High-Quality CPR
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="High-quality CPR with manual uterine displacement commenced.">
+                                    CPR & Uterine Displacement
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">If the patient is in cardiac arrest, commence standard ALS with obstetric modifications (manual left uterine displacement, IV access above diaphragm). Early resuscitative hysterotomy is key if arrest occurs pre-delivery.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Commence ALS. <strong>Crucially:</strong> Manual left uterine displacement is required to relieve aortocaval compression. IV access must be above the diaphragm.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Aggressive oxygenation and ventilation support initiated.">
-                                    Oxygenation & Ventilation
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Aggressive oxygenation and ventilation support initiated.">
+                                    Airway & Oxygenation
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Profound hypoxia is a hallmark. Secure the airway early and provide 100% oxygen. Patients will likely require advanced ventilator support to manage acute respiratory distress syndrome (ARDS).</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Profound hypoxia is a hallmark. Secure the airway early. 100% Oxygen. Prepare for ARDS.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Major Haemorrhage Protocol activated to manage severe coagulopathy.">
-                                    Treat Coagulopathy (Activate MHP)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Major Haemorrhage Protocol activated for coagulopathy.">
+                                    Treat Coagulopathy (MHP)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">AFE causes a profound consumptive coagulopathy. Activate the MHP immediately. Aggressively replace blood products (RBCs, FFP, Platelets, Cryoprecipitate) based on clinical bleeding and point-of-care testing (ROTEM/TEG if available).</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    AFE causes rapid, severe consumptive coagulopathy (DIC). Activate MHP immediately. Do not wait for labs. Give FFP, Platelets, and Cryoprecipitate early.
                                 </div>
                             </details>
                         </div>
                     </div>
+
+                    <!-- Right Column: Info & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Diagnosis of Exclusion:</strong> Rule out other causes of collapse (PPH, PE, Eclampsia, Sepsis, Anaphylaxis).</li>
-                                <li><strong>Supportive Care:</strong> Management is entirely supportive. There is no specific treatment. Focus on high-quality resuscitation.</li>
-                                <li><strong>Biphasic Illness:</strong> Initial phase is cardiovascular collapse from pulmonary vasospasm. Second phase is left ventricular failure and coagulopathy.</li>
-                                <li><strong>High Mortality:</strong> AFE carries a very high maternal and fetal mortality rate.</li>
+                        <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Diagnostic Triad:</strong> Sudden Cardiovascular Collapse + Respiratory Distress + Coagulopathy (DIC).</p>
+                                <p><strong class="font-semibold">Context:</strong> During labour, delivery, or within 30 mins postpartum. Diagnosis of exclusion.</p>
+                                <p><strong class="font-semibold">Critical Timing:</strong> Immediate/Perimortem response required.</p>
+                            </div>
+                        </div>
+
+                         <!-- Guidelines Box -->
+                         <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 56: Maternal Collapse</a></li>
                             </ul>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">A diagnosis of exclusion. Suspect in any patient with:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Sudden cardiovascular collapse (hypotension, cardiac arrest).</li>
-                                <li>Profound hypoxia (dyspnoea, cyanosis, respiratory arrest).</li>
-                                <li>Severe consumptive coagulopathy (DIC).</li>
-                                <li>Occurring during labour, delivery, or within 30 minutes postpartum.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 56: Maternal Collapse in Pregnancy</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
                         ${generateNotesSection('amniotic_fluid_embolism')}
                     </div>
@@ -185,91 +199,78 @@
             name: 'Placental Abruption',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Left Column: Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-placental_abruption" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Recognised painful vaginal bleeding. Called for senior O&G and Anaesthetics.">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-100 text-red-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Immediate Management</h3>
+                        </div>
+                        <div id="checklist-placental_abruption" class="space-y-3">
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Recognised painful vaginal bleeding. Called for senior O&G/Anaesthetics.">
                                     Recognise & Call for Help
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Placental abruption is the premature separation of the placenta from the uterine wall. The classic presentation is painful vaginal bleeding. However, bleeding can be concealed behind the placenta, presenting only with pain and signs of shock. Any haemodynamic instability requires an immediate senior response.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Presentation: <strong>Painful</strong> vaginal bleeding, tense/woody uterus. Bleeding may be concealed.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Maternal resuscitation commenced (ABCDE, x2 large bore IV, high-flow O2).">
-                                    Maternal Resuscitation
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Maternal resuscitation (ABCDE, x2 large bore IV, Crossmatch).">
+                                    Resuscitate Mother
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Assess and stabilise the mother first. Secure wide-bore IV access and send bloods (FBC, Coag including Fibrinogen, Crossmatch 4-6 units). A large abruption can trigger DIC, so a coagulation screen is vital. Administer fluids and blood products as guided by clinical state.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Prioritise maternal stability. IV access. Send FBC, Coag (Fibrinogen is key), Crossmatch 4-6 units.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Continuous CTG monitoring of fetus commenced.">
-                                    Assess Fetal Wellbeing
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="CTG monitoring commenced.">
+                                    Assess Fetal Wellbeing (CTG)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Once the mother is stable, fetal wellbeing must be assessed with a continuous cardiotocograph (CTG). The abruption compromises fetal oxygen supply, leading to fetal distress (decelerations, reduced variability, bradycardia).</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Fetal distress is common. Continuous CTG monitoring is required once mother is stable.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Anti-D immunoglobulin administered for Rhesus-negative mother.">
-                                    Administer Anti-D
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Plan for emergency delivery (Cat 1 C-section) confirmed.">
+                                    Plan Delivery (Cat 1 CS)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Any antepartum haemorrhage is a sensitising event. All Rhesus-negative women should receive Anti-D immunoglobulin. A Kleihauer test should be sent to quantify any feto-maternal haemorrhage and guide further dosing.</p>
-                                </div>
-                            </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Plan for definitive delivery (Cat 1 C-section) discussed with O&G.">
-                                    Plan for Definitive Delivery
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Definitive management is delivery. If there is maternal or fetal compromise, this will be via emergency Category 1 Caesarean section, irrespective of gestational age. The target decision-to-delivery interval (DDI) is 30 minutes.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    If fetal or maternal compromise: Emergency C-section. Target DDI (Decision to Delivery) < 30 mins.
                                 </div>
                             </details>
                         </div>
                     </div>
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Painful Bleeding:</strong> This is the key feature distinguishing it from placenta praevia (painless).</li>
-                                <li><strong>Woody Uterus:</strong> On examination, the uterus may be tense, tender, and 'woody' to the touch due to concealed haemorrhage.</li>
-                                <li><strong>Ultrasound is Unreliable:</strong> Ultrasound has a very low sensitivity for detecting abruption and cannot be used to rule it out. Diagnosis is clinical.</li>
-                                <li><strong>DIC Risk:</strong> Abruption is a major cause of disseminated intravascular coagulation (DIC) in pregnancy.</li>
-                            </ul>
+                        <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Painful vaginal bleeding (80%) + "Woody" / Tense uterus + Fetal Distress. (Note: 20% are concealed).</p>
+                                <p><strong class="font-semibold">Target:</strong> Category 1 C-Section (Decision to Delivery Interval ≤ 30 mins).</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis based on presentation:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Antepartum haemorrhage (bleeding from 24+0 weeks)</li>
-                                <li>PLUS Abdominal/uterine pain (often constant and severe).</li>
-                                <li>May have a tense, 'woody' uterus.</li>
-                                <li>Signs of fetal distress (abnormal CTG).</li>
-                                <li>Signs of maternal shock (if bleeding is major or concealed).</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/antepartum-haemorrhage-green-top-guideline-no-63/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 63: Antepartum Haemorrhage</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/antepartum-haemorrhage-green-top-guideline-no-63/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 63: Antepartum Haemorrhage</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('placental_abruption')}
                     </div>
                 </div>
@@ -280,80 +281,68 @@
             name: 'Ovarian Torsion',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Left Column: Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-ovarian_torsion" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Considered diagnosis in patient with sudden onset severe unilateral pelvic pain and vomiting.">
-                                    High Index of Suspicion
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 text-yellow-700 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Management Steps</h3>
+                        </div>
+                        <div id="checklist-ovarian_torsion" class="space-y-3">
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Clinical suspicion raised (severe unilateral pain + vomiting).">
+                                    High Clinical Suspicion
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Ovarian torsion is a surgical emergency to preserve ovarian function. The classic presentation is sudden, severe, unilateral pelvic pain, often with nausea/vomiting. 'Time is ovary'.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Sudden, severe, unilateral pain + vomiting. "Time is ovary". Diagnosis is clinical/surgical.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Urine hCG performed to rule out ectopic pregnancy.">
-                                    Rule out Ectopic Pregnancy
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Pregnancy test performed (Negative).">
+                                    Exclude Ectopic (hCG)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">The presentation can mimic a ruptured ectopic. A urine pregnancy test is a mandatory first step in any woman of reproductive age with pelvic pain.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Mandatory for all reproductive age females with pelvic pain.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Adequate analgesia and antiemetics provided.">
-                                    Provide Analgesia & Antiemetics
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Urgent Gynae referral made.">
+                                    Urgent Referral
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">The pain from ovarian torsion is typically severe and requires IV opiates for effective control. Vomiting is also a prominent feature.</p>
-                                </div>
-                            </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Urgent Gynaecology referral made based on clinical suspicion.">
-                                    Urgent Gynaecology Referral
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Refer urgently for consideration of emergency laparoscopy. Do not let a 'normal' ultrasound with Doppler flow delay referral if clinical suspicion is high. The definitive diagnosis is made surgically.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Do not delay for ultrasound if suspicion is high. Doppler can be falsely reassuring (dual blood supply).
                                 </div>
                             </details>
                         </div>
                     </div>
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Clinical Diagnosis:</strong> Torsion is primarily a clinical diagnosis.</li>
-                                <li><strong>Doppler Can Be Normal:</strong> Due to the ovary's dual blood supply, the presence of arterial flow on Doppler ultrasound DOES NOT rule out torsion.</li>
-                                <li><strong>Risk Factor:</strong> An ovarian cyst >5cm is the main risk factor.</li>
-                                <li><strong>Time is Ovary:</strong> The chance of salvaging the ovary decreases significantly after 6-8 hours of ischaemia.</li>
-                            </ul>
+                         <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Severe unilateral pelvic pain (acute onset) + Vomiting (70%) + Adnexal Mass.</p>
+                                <p><strong class="font-semibold">Timing:</strong> "Time is Ovary". Salvage rates drop significantly after 6-8 hours of ischaemia.</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">Primarily a clinical diagnosis. Definitive diagnosis is surgical (laparoscopy).</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Sudden onset, severe, unilateral pelvic pain.</li>
-                                <li>Often associated with nausea and vomiting (in ~70% of cases).</li>
-                                <li>May have an adnexal mass on examination (not always palpable).</li>
-                                <li>Ultrasound may show an enlarged, oedematous ovary with abnormal/absent Doppler flow. A normal scan does not rule it out.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-suspected-ovarian-masses-in-premenopausal-women-green-top-guideline-no-62/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 62: Management of Suspected Ovarian Masses</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                         <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-suspected-ovarian-masses-in-premenopausal-women-green-top-guideline-no-62/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 62: Ovarian Masses</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('ovarian_torsion')}
                     </div>
                 </div>
@@ -364,81 +353,79 @@
             name: 'Severe PID / TOA',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Left Column: Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-severe_pid" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Identified features of severe PID requiring admission.">
-                                    Identify Severe Disease
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                         <div class="flex items-center mb-4">
+                            <div class="bg-indigo-100 text-indigo-700 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Inpatient Management</h3>
+                        </div>
+                        <div id="checklist-severe_pid" class="space-y-3">
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Criteria for severe PID met (Sepsis/TOA/Intolerance of oral meds). Admission planned.">
+                                    Admit Severe Disease
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Admit patients with signs of sepsis (fever >38°C, tachycardia), peritonism, a palpable adnexal mass (suggesting a tubo-ovarian abscess), or inability to tolerate oral therapy. Have a low threshold for admission to prevent long-term complications.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Admit if: Sepsis, Tubo-ovarian abscess (TOA), Pregnancy, or intolerance of oral meds.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="IV access gained, bloods sent (FBC, CRP, U&E, LFT, G&S, Blood cultures).">
-                                    Gain Access & Send Bloods
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="IV Antibiotics started (Ceftriaxone + Doxy + Metro).">
+                                    Start IV Antibiotics
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Secure IV access for parenteral antibiotics and fluids. Send bloods to assess for inflammatory response and sepsis. Blood cultures should be taken if the patient is pyrexial.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Start immediately. Do not wait for swab results.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Commenced inpatient IV antibiotics as per BASHH guidelines.">
-                                    Commence IV Antibiotics
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Gynae consult for potential drainage.">
+                                    Gynae Consult
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Do not delay treatment waiting for results. Start broad-spectrum IV antibiotics immediately to cover likely pathogens (*N. gonorrhoeae*, *C. trachomatis*, anaerobes).</p>
-                                </div>
-                            </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Gynaecology team consulted for admission and potential drainage of abscess.">
-                                    Consult Gynaecology
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">All patients requiring admission for severe PID or suspected TOA need formal gynaecology review. A TOA may require ultrasound-guided drainage or surgical intervention if it does not respond to antibiotics.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Review for TOA drainage or surgical intervention.
                                 </div>
                             </details>
                         </div>
                     </div>
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Inpatient IV Antibiotics (BASHH)</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Ceftriaxone 2g IV</strong> once daily</li>
-                                <li><strong>PLUS Doxycycline 100mg IV/PO</strong> twice daily</li>
-                                <li><strong>PLUS Metronidazole 500mg IV</strong> three times daily</li>
-                                <li class="pt-2 text-xs text-gray-500">Switch to oral therapy 24h after clinical improvement to complete a 14-day course.</li>
+                        <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Pelvic Pain + CMT/Adnexal Tenderness + Severe Features (Temp >38°C, Abscess/TOA, Peritonitis, Pregnancy).</p>
+                                <p><strong class="font-semibold">Target:</strong> IV Antibiotics within 1 hr of sepsis/severe infection recognition.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold mb-3 text-red-700">Inpatient Regimen (BASHH)</h3>
+                            <div class="bg-red-50 p-4 rounded-lg border border-red-100">
+                                <ul class="space-y-3 text-sm font-medium text-gray-800">
+                                    <li class="flex items-start"><span class="mr-2 text-red-500">•</span> Ceftriaxone 2g IV daily</li>
+                                    <li class="flex items-start"><span class="mr-2 text-red-500">•</span> PLUS Doxycycline 100mg IV/PO twice daily</li>
+                                    <li class="flex items-start"><span class="mr-2 text-red-500">•</span> PLUS Metronidazole 400mg PO or 500mg IV twice daily</li>
+                                </ul>
+                                <p class="text-xs text-gray-500 mt-3 pt-3 border-t border-red-200">Continue IV until 24h after clinical improvement, then switch to oral to complete 14 days.</p>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.bashh.org/guidelines" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">BASHH: PID Management (2019/2024)</a></li>
                             </ul>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis. Requires pelvic pain plus signs of inflammation. Admit if features of <strong>Severe PID / TOA</strong>:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Fever (>38°C) or signs of sepsis.</li>
-                                <li>Palpable pelvic mass (suggests Tubo-Ovarian Abscess).</li>
-                                <li>Signs of pelvic peritonism.</li>
-                                <li>Inability to tolerate oral antibiotics.</li>
-                                <li>No response to oral therapy within 72 hours.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.bashh.org/guidelines/uk-guideline-for-the-management-of-pelvic-inflammatory-disease-2019/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">BASHH: UK Guideline for PID (2019)</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
-                        
                         ${generateNotesSection('severe_pid')}
                     </div>
                 </div>
@@ -449,107 +436,88 @@
             name: 'Pre-eclampsia & Eclampsia',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Left Column: Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-pre_eclampsia" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Senior ED, O&G, and Anaesthetics/ITU teams alerted.">
-                                    Alert Senior Multidisciplinary Team
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 text-purple-700 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Immediate Management</h3>
+                        </div>
+                        <div id="checklist-pre_eclampsia" class="space-y-3">
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Call 2222: Obstetric Emergency.">
+                                    Call Senior Help
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is a multi-system disorder requiring coordinated input. Involve senior obstetricians for delivery planning, anaesthetics for airway/critical care management, and ITU for potential post-stabilisation care. Clear, early communication is vital.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Involve Senior Obstetrician and Anaesthetist immediately.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Airway secured, high-flow oxygen administered.">
-                                    Secure Airway & Give High-Flow O₂
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Seizure control: MgSO4 4g IV loading dose given.">
+                                    Control Seizures (MgSO4)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Pregnant patients have a decreased functional residual capacity and increased oxygen consumption, leading to rapid desaturation. Airway oedema can make intubation difficult; ensure the most experienced operator is available. Prioritise oxygenation to protect both mother and fetus.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    <strong>Magnesium Sulfate</strong> is first line. 4g IV loading dose over 5-10 mins. Maintenance 1g/hr.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="IV access established x2 large bore cannulae.">
-                                    Gain IV Access (x2 large bore)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="BP control: Labetalol/Hydralazine. Target 135/85.">
+                                    Control BP (Target 135/85)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Secure reliable, large-bore access for administration of anticonvulsants, antihypertensives, and potential resuscitation fluids. If possible, site cannulae in the antecubital fossae (above the diaphragm).</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Treat if BP > 140/90. Urgent if >160/110. Aim for 135/85 mmHg (NICE NG133). IV Labetalol or Hydralazine.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Administer Magnesium Sulfate for seizure control.">
-                                    Administer Magnesium Sulfate
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Fluid restriction 80ml/hr. Catheterised.">
+                                    Fluid Restriction
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">MgSO₄ is the drug of choice for treating and preventing eclamptic seizures. It acts as a cerebral vasodilator and membrane stabiliser. Follow local protocol for loading and maintenance doses. Monitor for toxicity (loss of reflexes, respiratory depression). Antidote: Calcium Gluconate.</p>
-                                </div>
-                            </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Administer IV Labetalol or Hydralazine for BP control.">
-                                    Control Severe Hypertension
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">The primary goal is to prevent maternal intracerebral haemorrhage. A systolic BP ≥160 mmHg is a medical emergency. Aim to reduce BP gradually to a target of ~135/85 mmHg. Avoid sudden drops which can compromise placental perfusion.</p>
-                                </div>
-                            </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Insert urinary catheter and restrict fluids.">
-                                    Manage Fluid Balance
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Patients have leaky capillaries and are at high risk of pulmonary oedema. Insert a catheter for strict hourly urine output monitoring. Restrict total IV fluids to 80ml/hour or 1ml/kg/hour.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Restrict to 80ml/hr to prevent pulmonary oedema. Monitor urine output hourly.
                                 </div>
                             </details>
                         </div>
                     </div>
 
-                    <!-- Right Column: Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Magnesium Sulfate (Eclampsia/Seizure):</strong> 4g IV loading dose over 5-15 mins, followed by 1g/hour infusion.</li>
-                                <li><strong>IV Labetalol (Hypertension):</strong> 20mg bolus, then 40mg, then 80mg every 10-15 mins. Max 300mg total. Or infusion 1-2mg/min.</li>
-                                <li><strong>IV Hydralazine (Hypertension):</strong> 5mg slow IV bolus, repeat at 20 min intervals if needed. Max 20mg.</li>
-                                <li><strong>Fluid Management:</strong> Restrict fluids to 80ml/hour to reduce risk of pulmonary oedema.</li>
-                            </ul>
+                        <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> BP ≥140/90 (>20wks) + Proteinuria OR Organ Dysfunction. Severe: BP ≥160/110. Eclampsia: Seizures.</p>
+                                <p><strong class="font-semibold">Target:</strong> Treat Severe HTN (≥160/110) immediately. Target BP: 135/85 mmHg.</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria (NICE)</h3>
-                            <p class="text-sm text-gray-600 mb-2"><strong>Pre-eclampsia:</strong> New onset hypertension after 20 weeks gestation PLUS one or more of:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Hypertension: BP ≥140/90 mmHg.</li>
-                                <li>Severe Hypertension: BP ≥160/110 mmHg.</li>
-                                <li>Proteinuria (PCR ≥30mg/mmol or ACR ≥8mg/mmol).</li>
-                                <li>Maternal organ dysfunction (renal, liver, neuro, haem).</li>
-                                <li>Fetal growth restriction.</li>
-                            </ul>
-                             <p class="text-sm text-gray-600 mt-4 mb-2"><strong>Eclampsia:</strong></p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>A convulsive seizure in a woman with pre-eclampsia.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.nice.org.uk/guidance/ng133" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">NICE NG133: Hypertension in Pregnancy</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold mb-3 text-gray-900">Drug Doses</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li><strong>Magnesium Sulfate:</strong> 4g IV over 5-15 mins. (Maintenance 1g/hr).</li>
+                                <li><strong>Labetalol:</strong> 50mg PO or 20mg IV bolus (repeat/double every 10 mins). Max 300mg.</li>
+                                <li><strong>Nifedipine:</strong> 10-20mg MR (modified release) PO.</li>
+                                <li><strong>Hydralazine:</strong> 5mg IV slowly.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.nice.org.uk/guidance/ng133" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">NICE NG133: Hypertension in Pregnancy</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('pre_eclampsia')}
                     </div>
                 </div>
@@ -560,91 +528,68 @@
             name: 'Ruptured Ectopic',
             content: `
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-ruptured_ectopic" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Emergency O&G and Anaesthetics teams called STAT.">
-                                    Call O&G and Anaesthetics STAT
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-100 text-red-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Immediate Management</h3>
+                        </div>
+                        <div id="checklist-ruptured_ectopic" class="space-y-3">
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Positive hCG + Shock/Peritonism. O&G + Anaesthetics called STAT.">
+                                    Call O&G & Anaesthetics STAT
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is a time-critical surgical emergency. The definitive treatment is operative haemostasis. Early involvement of the surgical and anaesthetic teams is crucial for rapid transfer to theatre.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Time-critical surgical emergency. Definitive treatment is laparoscopy/laparotomy.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="ABCDE approach: High-flow O₂, secure airway if needed.">
-                                    Resuscitate (ABCDE)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Major Haemorrhage Protocol activated.">
+                                    Activate MHP
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Follow standard resuscitation principles. Administer high-flow oxygen. A patient in haemorrhagic shock with a reduced GCS requires immediate airway protection via intubation.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    If unstable, do not wait for bloods. Activate massive transfusion protocol.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Major Haemorrhage Protocol activated.">
-                                    Activate Major Haemorrhage Protocol
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Prepared for immediate theatre.">
+                                    Direct to Theatre
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Do not wait for blood results. Activate based on clinical signs of haemodynamic instability (tachycardia, hypotension, syncope). This ensures timely delivery of balanced blood products (packed red cells, FFP, platelets) and alerts haematology.</p>
-                                </div>
-                            </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Bloods sent (FBC, Coag, U&E, Crossmatch 4-6 units).">
-                                    Send Urgent Bloods
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Send FBC, coagulation screen, and U&Es. Crucially, send a sample to crossmatch a minimum of 4-6 units of red cells. The initial Hb may be falsely reassuring before haemodilution.</p>
-                                </div>
-                            </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Patient prepared for immediate transfer to theatre.">
-                                    Prepare for Immediate Theatre
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Resuscitation is a bridge to definitive surgical control of bleeding. Do not delay transfer for imaging if the patient is unstable. A positive pregnancy test plus shock and/or peritonism is sufficient indication for emergency laparotomy.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Resuscitation to occur concurrently with transfer to theatre. Do not delay for ultrasound if unstable.
                                 </div>
                             </details>
                         </div>
                     </div>
-                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Fluid Resuscitation:</strong> 500ml warmed crystalloid bolus, reassess. Use blood products ASAP.</li>
-                                <li><strong>Tranexamic Acid:</strong> 1g IV over 10 minutes.</li>
-                                <li><strong>Analgesia:</strong> IV Morphine 2.5-5mg titrated to effect.</li>
-                                <li><strong>Anti-D:</strong> 250 IU IM if <20 weeks gestation. 500 IU if >20 weeks.</li>
-                            </ul>
+                        <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Positive Urinary hCG + Abdominal Pain + Haemodynamic Instability / Peritonism.</p>
+                                <p><strong class="font-semibold">Target:</strong> Immediate transfer to theatre for Laparoscopy/Laparotomy (Do not delay for scan).</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis of a woman with a positive pregnancy test AND:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Haemodynamic instability (tachycardia, hypotension, syncope).</li>
-                                <li>Signs of peritonism (abdominal tenderness, rebound, guarding).</li>
-                                <li>May have shoulder tip pain (phrenic nerve irritation).</li>
-                                <li>FAST scan may show free fluid in hepato-renal or pelvic space.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.nice.org.uk/guidance/ng126" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">NICE NG126: Ectopic Pregnancy and Miscarriage</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.nice.org.uk/guidance/ng126" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">NICE NG126: Ectopic Pregnancy</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('ruptured_ectopic')}
                     </div>
                 </div>
@@ -655,82 +600,78 @@
             name: 'Post-Partum Haemorrhage',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-post_partum_haemorrhage" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Help called & Major Haemorrhage Protocol activated.">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                         <div class="flex items-center mb-4">
+                            <div class="bg-red-100 text-red-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Management Steps (4 Ts)</h3>
+                        </div>
+                        <div id="checklist-post_partum_haemorrhage" class="space-y-3">
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Help called & Major Haemorrhage Protocol activated.">
                                     Call Help & Activate MHP
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">PPH is a leading cause of maternal mortality. A multi-disciplinary response is essential. Activate the MHP early based on clinical assessment of blood loss (>1000ml) or haemodynamic instability.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Massive PPH > 2000ml or clinical shock. Activate MHP.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Mechanical measures: Fundal massage performed.">
-                                    Mechanical: Fundal Massage
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Fundal massage performed.">
+                                    Tone: Fundal Massage
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">The most common cause of PPH is uterine atony (Tone). Firmly massaging the uterine fundus through the abdomen stimulates mechanical contraction of the uterine muscle, compressing the spiral arteries and reducing blood flow.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Rub up the fundus. Bimanual compression if needed.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Medical: Uterotonics administered.">
-                                    Medical: Administer Uterotonics
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Uterotonics administered (Synto/Ergo/Carbo/TXA).">
+                                    Tone: Drugs (Uterotonics)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Pharmacological agents are used to induce sustained uterine contraction. This is a stepwise process, starting with Syntocinon (Oxytocin) and adding other agents like Ergometrine and Carboprost if bleeding continues. Be aware of contraindications (e.g., Ergometrine in hypertension, Carboprost in asthma).</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Syntocinon, Ergometrine (not in HTN), Carboprost (not in asthma), TXA (1g IV).
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Source of bleeding identified (4 Ts).">
-                                    Identify Cause (4 Ts)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Trauma/Tissue/Thrombin excluded.">
+                                    Check Trauma/Tissue/Thrombin
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Systematically assess for the cause: <br><b>Tone:</b> Uterine atony (most common). <br><b>Trauma:</b> Vaginal/cervical tears, uterine rupture. Requires examination. <br><b>Tissue:</b> Retained products of conception (placenta). <br><b>Thrombin:</b> Coagulopathy (can be cause or effect of PPH).</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Inspect for tears. Check for retained placenta. Check Coagulation.
                                 </div>
                             </details>
                         </div>
                     </div>
-                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Syntocinon (Oxytocin):</strong> 5 IU slow IV. Can be followed by 40 IU in 500ml NaCl 0.9% over 4 hours.</li>
-                                <li><strong>Ergometrine:</strong> 500 mcg slow IV or IM. (Contraindicated in hypertension).</li>
-                                <li><strong>Tranexamic Acid:</strong> 1g IV over 10 minutes. Repeat dose after 30 mins if bleeding continues.</li>
-                                <li><strong>Carboprost (Hemabate):</strong> 250 mcg IM. Can be repeated every 15 mins. Max 8 doses. (Contraindicated in asthma).</li>
-                                 <li><strong>Misoprostol:</strong> 800-1000 mcg PR (per rectum).</li>
-                            </ul>
+                         <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Blood loss >1000ml (Major) or >2000ml (Massive) or any loss causing shock.</p>
+                                <p><strong class="font-semibold">Target:</strong> Immediate control via 4Ts (Tone, Trauma, Tissue, Thrombin) & MHP Activation.</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2"><strong>Primary PPH:</strong> Blood loss from the genital tract within 24 hours of birth.</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><strong>Minor PPH:</strong> 500–1000 ml blood loss.</li>
-                                <li><strong>Major PPH:</strong> >1000 ml blood loss.</li>
-                                <li><strong>Massive PPH:</strong> >2000 ml blood loss, or clinical shock.</li>
-                                <li>Also defined as any blood loss that causes haemodynamic instability.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 52: Postpartum Haemorrhage</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 52: Postpartum Haemorrhage</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('post_partum_haemorrhage')}
                     </div>
                 </div>
@@ -741,77 +682,78 @@
             name: 'Cord Prolapse',
             content: `
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-cord_prolapse" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Emergency buzzer pressed. O&G, Paeds, Anaesthetics called.">
-                                    Call for Help Immediately
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                         <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 text-blue-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Immediate Management</h3>
+                        </div>
+                        <div id="checklist-cord_prolapse" class="space-y-3">
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Call for Help. Cat 1 C-section required.">
+                                    Call Help (Cat 1 Section)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is a time-critical emergency threatening fetal life due to cord compression and hypoxia. Immediate delivery is required, usually by Category 1 C-section (target DDI 30 minutes). Alert all necessary personnel simultaneously.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Immediate delivery required. Target DDI 30 mins.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Manually elevate presenting part off the cord.">
-                                    Relieve Cord Compression
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Manually elevate presenting part.">
+                                    Relieve Pressure (Manual)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is the most important first aid measure. Insert a sterile-gloved hand into the vagina and push the presenting part (head or buttocks) upwards to lift it off the umbilical cord. This hand must remain in place until the baby is delivered by C-section.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Gloved hand in vagina to push presenting part UP. Keep hand there until delivery.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Position mother: knee-chest or deep Trendelenburg.">
-                                    Position the Mother
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Position: Knee-chest or Trendelenburg.">
+                                    Position Mother
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Use gravity to assist in relieving pressure on the cord. The knee-chest position (all fours with head down) is ideal. If not possible, place the bed in a steep head-down (Trendelenburg) tilt.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Knees to chest (all fours) or deep head-down tilt.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Administer tocolysis (Terbutaline).">
-                                    Administer Tocolysis
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Terbutaline 250mcg SC given.">
+                                    Tocolysis (Terbutaline)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">A tocolytic agent like Terbutaline is given to temporarily stop uterine contractions. This reduces pressure on the cord while preparations are made for definitive delivery in theatre.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Terbutaline 250mcg SC to relax uterus and reduce cord compression during transfer.
                                 </div>
                             </details>
                         </div>
                     </div>
-                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Drug Dosing</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Tocolysis:</strong> Terbutaline 250mcg subcutaneously.</li>
-                            </ul>
+                         <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Umbilical cord palpable or visible below presenting part. Abnormal CTG/Bradycardia.</p>
+                                <p><strong class="font-semibold">Target:</strong> Category 1 C-Section (Decision to Delivery Interval ≤ 30 mins).</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis made after rupture of membranes:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><strong>Overt Prolapse:</strong> Umbilical cord is visible, extruding from the introitus.</li>
-                                <li><strong>Occult Prolapse:</strong> Umbilical cord is palpable on vaginal exam, lying alongside the presenting part.</li>
-                                <li>Suspect if sudden, severe fetal bradycardia occurs immediately after rupture of membranes.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/umbilical-cord-prolapse-green-top-guideline-no-50/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 50: Umbilical Cord Prolapse</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/umbilical-cord-prolapse-green-top-guideline-no-50/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 50: Cord Prolapse</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('cord_prolapse')}
                     </div>
                 </div>
@@ -822,89 +764,88 @@
             name: 'Shoulder Dystocia',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps (HELPERR)</h3>
-                        <div id="checklist-shoulder_dystocia" class="space-y-2">
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Help called (Senior O&G, Paeds, Anaesthetics). Noted time of head delivery.">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                         <div class="flex items-center mb-4">
+                            <div class="bg-orange-100 text-orange-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">HELPERR Algorithm</h3>
+                        </div>
+                        <div id="checklist-shoulder_dystocia" class="space-y-3">
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Help called. Time of head delivery noted.">
                                     <strong>H</strong>elp
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Announce the emergency clearly. Note the exact time of head delivery. The goal is to deliver the body within 5 minutes to minimise risk of hypoxic brain injury. Mobilise senior help immediately.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Call Senior O&G, Paeds, Anaesthetics. Do NOT push. Do NOT apply fundal pressure.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Legs placed in McRoberts' position (hyperflexion at hips).">
-                                    <strong>L</strong>egs (McRoberts' Manoeuvre)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Episiotomy considered/performed.">
+                                    <strong>E</strong>pisiotomy
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is the single most effective manoeuvre. Hyperflexing the mother's hips flattens the sacral promontory and rotates the symphysis pubis, increasing the effective pelvic outlet diameter. It resolves up to 90% of cases when combined with suprapubic pressure.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Consider to allow space for internal manoeuvres (doesn't relieve bone obstruction itself).
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Suprapubic pressure applied to disimpact anterior shoulder.">
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="McRoberts' manoeuvre performed.">
+                                    <strong>L</strong>egs (McRoberts)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
+                                </summary>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Hyperflex hips against abdomen. Resolves 90% of cases.
+                                </div>
+                            </details>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Suprapubic pressure applied.">
                                     <strong>P</strong>ressure (Suprapubic)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Apply firm pressure with the heel of the hand just above the pubic bone, directed downwards and laterally towards the baby's chest. This helps adduct the anterior shoulder and push it under the symphysis. <strong>NEVER apply fundal pressure.</strong></p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Continuous or rocking pressure above symphysis to disimpact anterior shoulder.
                                 </div>
                             </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Internal manoeuvres attempted (e.g., Rubin II, Woods' Screw).">
-                                    <strong>E</strong>nter (Internal Manoeuvres)
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Internal manoeuvres attempted (Enter/Remove arm).">
+                                    <strong>E</strong>nter / <strong>R</strong>emove Arm
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">If external manoeuvres fail, insert a hand into the vagina to attempt to rotate the shoulders into a wider pelvic diameter. This requires an experienced operator.</p>
-                                </div>
-                            </details>
-                            <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Posterior arm delivered.">
-                                    <strong>R</strong>emove the Posterior Arm
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Flexing the posterior arm at the elbow and sweeping it across the chest for delivery reduces the bisacromial diameter, often allowing the impacted anterior shoulder to be released.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Internal rotation (Rubin II, Woods) or delivery of posterior arm.
                                 </div>
                             </details>
                         </div>
                     </div>
-                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>No Fundal Pressure:</strong> Absolutely contraindicated.</li>
-                                <li><strong>Time is critical:</strong> Aim to deliver within 5 minutes to reduce risk of hypoxic brain injury.</li>
-                                <li><strong>Post-delivery:</strong> Be prepared for PPH and neonatal resuscitation. Examine for trauma.</li>
-                            </ul>
+                         <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Fetal head retracts against perineum ("Turtle neck sign"). Failure of restitution. Head-to-body interval >60s.</p>
+                                <p><strong class="font-semibold">Target:</strong> Deliver body within 5 minutes to prevent hypoxic ischaemic injury.</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Fetal head delivers, but the anterior shoulder becomes impacted behind the pubic symphysis.</li>
-                                <li>Routine, gentle traction fails to deliver the body.</li>
-                                <li><strong>"Turtle-neck" sign:</strong> The fetal head retracts against the perineum.</li>
-                                <li>Head-to-body delivery time >60 seconds.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="httpshttps://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/shoulder-dystocia-green-top-guideline-no-42/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 42: Shoulder Dystocia</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/shoulder-dystocia-green-top-guideline-no-42/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 42: Shoulder Dystocia</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('shoulder_dystocia')}
                     </div>
                 </div>
@@ -915,70 +856,68 @@
             name: 'Breech Birth (Unexpected)',
             content: `
                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps</h3>
-                        <div id="checklist-breech_birth" class="space-y-2">
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Senior help called (O&G, Paediatrics).">
-                                    Call for Senior Help
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                         <div class="flex items-center mb-4">
+                            <div class="bg-teal-100 text-teal-600 p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Management Steps</h3>
+                        </div>
+                        <div id="checklist-breech_birth" class="space-y-3">
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Senior help called (O&G, Paeds).">
+                                    Call Senior Help
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">An unexpected breech delivery in the ED is a high-risk situation. Immediately call for an experienced obstetrician/midwife and a paediatrician, as there is a high risk of head entrapment and neonatal compromise.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    High risk of head entrapment.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Hands-off approach adopted until umbilicus is visible.">
-                                    'Hands Off' the Breech
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Hands-off approach maintained until umbilicus visible.">
+                                    Hands Off (No Traction)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Allow the delivery to proceed spontaneously until the umbilicus is visible. Do not apply traction. This allows the baby to descend and prevents premature extension of the fetal head, which is the main cause of entrapment.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Traction causes head extension and entrapment. Allow spontaneous descent.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Mauriceau-Smellie-Veit (MSV) manoeuvre performed to deliver head.">
-                                    Deliver Head using MSV Manoeuvre
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="MSV manoeuvre performed to deliver head.">
+                                    Deliver Head (MSV)
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Once the nape of the neck is visible, perform the MSV manoeuvre to deliver the aftercoming head. The goal is to maintain flexion of the head. An assistant providing suprapubic pressure helps with this. Avoid traction.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Mauriceau-Smellie-Veit manoeuvre to flex head.
                                 </div>
                             </details>
                         </div>
                     </div>
-                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Key Points</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Avoid traction:</strong> Pulling on the body can cause head extension and entrapment.</li>
-                                <li><strong>Keep baby's back anterior:</strong> Essential for successful delivery of the head.</li>
-                                <li><strong>MSV Manoeuvre:</strong> Support baby's body on your forearm. Place index and middle fingers on baby's cheekbones. Other hand applies pressure to the occiput to flex the head.</li>
-                            </ul>
+                         <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Diagnosis:</strong> Buttocks or feet presenting at introitus. Meconium common.</p>
+                                <p><strong class="font-semibold">Timing:</strong> Spontaneous progress to umbilicus. Prompt, controlled delivery of head to prevent hypoxia.</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">A clinical diagnosis made on visual inspection or vaginal exam:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Fetal buttocks or feet are the presenting part at the introitus.</li>
-                                <li><strong>Frank Breech:</strong> Hips flexed, knees extended (feet near head).</li>
-                                <li><strong>Complete Breech:</strong> Hips and knees flexed (cannonball).</li>
-                                <li><strong>Footling Breech:</strong> One or both feet present first.</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-breech-presentation-green-top-guideline-no-20b/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 20b: Management of Breech Presentation</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-breech-presentation-green-top-guideline-no-20b/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">RCOG GTG No. 20b: Breech Presentation</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('breech_birth')}
                     </div>
                 </div>
@@ -989,98 +928,78 @@
             name: 'Obstetric Cardiac Arrest',
             content: `
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold mb-4 text-blue-700">Management Steps (ALS + Modifications)</h3>
-                        <div id="checklist-cardiac_arrest" class="space-y-2">
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Manual left uterine displacement performed.">
-                                    Perform Manual Left Uterine Displacement
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                         <div class="flex items-center mb-4">
+                            <div class="bg-gray-800 text-white p-2 rounded-lg mr-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">ALS Modifications</h3>
+                        </div>
+                        <div id="checklist-cardiac_arrest" class="space-y-3">
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Manual left uterine displacement performed.">
+                                    Left Uterine Displacement
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is the single most important modification to standard CPR. The gravid uterus compresses the inferior vena cava and aorta, reducing venous return and cardiac output by ~30%. Manually pulling the uterus to the left relieves this compression and dramatically improves the effectiveness of chest compressions.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Essential to relieve aortocaval compression. Pull uterus to the left.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="IV access established above the diaphragm.">
-                                    IV Access Above Diaphragm
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Resuscitative Hysterotomy decision made at 4 minutes.">
+                                    Resuscitative Hysterotomy
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">Due to aortocaval compression, drugs administered via femoral or saphenous veins may have delayed or absent delivery to the central circulation. Secure access in the antecubital fossae, external jugular, or via an intraosseous needle in the humeral head.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    If no ROSC by 4 mins (if >20wks), perform immediate ED hysterotomy. Deliver by 5 mins.
                                 </div>
                             </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Decision made re: Resuscitative Hysterotomy (perimortem C-section).">
-                                    Consider Resuscitative Hysterotomy
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
+                             <details class="group border border-gray-200 rounded-lg overflow-hidden">
+                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-3 select-none">
+                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="Obstetric causes (4Hs/4Ts) considered.">
+                                    Treat Reversible Causes
+                                    <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
                                 </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This is a resuscitative procedure for the MOTHER. If ROSC is not achieved by 4 minutes of arrest in a woman >20 weeks pregnant, RH should be performed with the aim of delivering the baby by 5 minutes. Emptying the uterus is the most effective way to relieve aortocaval compression and is often the only way to achieve ROSC.</p>
-                                </div>
-                            </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Identified and treated reversible causes (Obstetric 4Hs/4Ts).">
-                                    Identify & Treat Reversible Causes
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">In addition to standard 4H's & 4T's, specifically consider obstetric causes:<br>
-                                    - <b>H</b>aemorrhage (massive PPH, ruptured ectopic)<br>
-                                    - <b>T</b>hromboembolism (PE, AFE)<br>
-                                    - Eclampsia<br>
-                                    - Sepsis (pelvic)<br>
-                                    - Anaphylaxis<br>
-                                    - Cardiac disease (MI, cardiomyopathy)
-                                    </p>
-                                </div>
-                            </details>
-                             <details class="border-b border-gray-200 py-2">
-                                <summary class="font-medium text-gray-700 hover:bg-gray-50 p-2 rounded-md">
-                                    <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-blue-600 focus:ring-blue-500 custom-checkbox" data-log="Resuscitative Hysterotomy performed.">
-                                    Perform Resuscitative Hysterotomy
-                                    <span class="ml-auto summary-arrow">&#9654;</span>
-                                </summary>
-                                <div class="p-4 mt-2 ml-8 details-content rounded-md">
-                                    <p class="text-sm text-gray-600">This must be done in the ED. Do not wait for obstetrics or transfer to theatre. Perform a large vertical midline laparotomy, incise the uterus, and deliver the baby and placenta. Pack the uterus. Continue CPR throughout.</p>
+                                <div class="p-4 details-content text-sm text-gray-600">
+                                    Haemorrhage, Eclampsia, AFE, Sepsis, PE.
                                 </div>
                             </details>
                         </div>
                     </div>
-                    <!-- Dosing & Notes -->
                     <div class="space-y-6">
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-red-600">Resuscitative Hysterotomy</h3>
-                            <ul class="space-y-2 text-sm">
-                                <li><strong>Indication:</strong> Cardiac arrest in a visibly pregnant woman (>20 weeks) where initial resuscitation is unsuccessful.</li>
-                                <li><strong>Timing:</strong> Aim to start by 4 minutes post-arrest and deliver baby by 5 minutes.</li>
-                                <li><strong>Goal:</strong> To improve maternal circulation by relieving aortocaval compression, NOT primarily for fetal survival (though this is a bonus).</li>
-                                <li><strong>Procedure:</strong> Large vertical midline incision from xiphisternum to pubis. Incise uterus vertically. Deliver baby and placenta. Continue CPR throughout.</li>
-                            </ul>
+                        <!-- Diagnostic Criteria Box -->
+                        <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-indigo-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                Diagnostic Criteria & Targets
+                            </h4>
+                            <div class="text-sm text-indigo-800 space-y-2">
+                                <p><strong class="font-semibold">Criteria:</strong> Unresponsive, absent breathing. Uterus palpable >20 weeks (umbilicus).</p>
+                                <p><strong class="font-semibold">Target:</strong> 4 Minute Rule. If no ROSC by 4 mins, start Hysterotomy. Deliver by 5 mins.</p>
+                            </div>
                         </div>
-                        
-                        <!-- NEW SECTION -->
-                        <div class="bg-white p-6 rounded-lg shadow-md">
-                            <h3 class="text-xl font-bold mb-4 text-gray-900">Diagnostic Criteria</h3>
-                            <p class="text-sm text-gray-600 mb-2">Standard ALS criteria in a pregnant patient:</p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li>Patient is unresponsive.</li>
-                                <li>Patient is not breathing normally.</li>
-                                <li>Modifications apply if patient is visibly pregnant (uterus at or above umbilicus, >20 weeks gestation).</li>
-                            </ul>
-                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-900">Guidelines</h3>
-                            <ul class="list-disc pl-5 space-y-2 text-sm">
-                                <li><a href="https://www.resus.org.uk/resuscitation-guidelines" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Resus Council UK Guidelines (see Special Circumstances)</a></li>
-                                 <li><a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">RCOG GTG No. 56: Maternal Collapse</a></li>
-                            </ul>
-                        </div>
-                        <!-- END NEW SECTION -->
 
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                            <h3 class="text-lg font-bold mb-3 text-gray-900">4 Minute Rule</h3>
+                            <p class="text-sm text-gray-600">
+                                To relieve aortocaval compression and improve maternal survival chances.
+                                <br><br>
+                                <strong>0 min:</strong> Collapse/Arrest.<br>
+                                <strong>4 min:</strong> If no ROSC, start Hysterotomy.<br>
+                                <strong>5 min:</strong> Delivery of baby.
+                            </p>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg shadow-sm">
+                            <h4 class="font-bold text-blue-900 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>
+                                Current Guidance
+                            </h4>
+                            <ul class="text-sm text-blue-800 space-y-1">
+                                <li><a href="https://www.resus.org.uk/library/2021-resuscitation-guidelines/special-circumstances-guidelines" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">Resus Council UK: Cardiac Arrest in Pregnancy</a></li>
+                            </ul>
+                        </div>
                         ${generateNotesSection('cardiac_arrest')}
                     </div>
                 </div>
@@ -1091,14 +1010,20 @@
     // --- UTILITY FUNCTIONS ---
     function generateNotesSection(id) {
         return `
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-bold mb-4 text-green-700">Timestamped Log</h3>
-                <textarea id="notes-${id}" class="w-full h-48 p-2 border border-gray-300 rounded-md bg-gray-50 text-sm" readonly placeholder="Check items above to generate a log..."></textarea>
-                <div class="mt-4 flex gap-2">
-                    <button onclick="copyNotes('${id}')" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-colors">Copy Notes</button>
-                    <button onclick="clearNotes('${id}')" class="w-full bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition-colors">Clear</button>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mt-6">
+                <h3 class="text-lg font-bold mb-3 text-gray-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                    Timestamped Log
+                </h3>
+                <textarea id="notes-${id}" class="w-full h-48 p-3 border border-gray-300 rounded-lg bg-gray-50 text-sm font-mono focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" readonly placeholder="Check items above to generate a log..."></textarea>
+                <div class="mt-4 flex gap-3">
+                    <button onclick="copyNotes('${id}')" class="flex-1 bg-gray-900 text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition-all font-medium flex justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                        Copy to Clipboard
+                    </button>
+                    <button onclick="clearNotes('${id}')" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all font-medium">Clear</button>
                 </div>
-                 <p id="copy-confirm-${id}" class="text-sm text-green-600 mt-2 h-4"></p>
+                 <p id="copy-confirm-${id}" class="text-xs text-green-600 mt-2 h-4 font-semibold text-center opacity-0 transition-opacity"></p>
             </div>
         `;
     }
@@ -1110,8 +1035,9 @@
         
         const confirmMsg = document.getElementById(`copy-confirm-${id}`);
         confirmMsg.textContent = 'Copied to clipboard!';
+        confirmMsg.classList.remove('opacity-0');
         setTimeout(() => {
-            confirmMsg.textContent = '';
+            confirmMsg.classList.add('opacity-0');
         }, 2000);
     }
     
@@ -1119,53 +1045,31 @@
         const notesArea = document.getElementById(`notes-${id}`);
         notesArea.value = '';
         
-        // Uncheck all checkboxes for this section
+        // Reset logEntries for this ID
+        // We need to access the logEntries variable which is defined in DOMContentLoaded.
+        // To make it accessible, we can dispatch a custom event or just uncheck boxes and let the listener handle it?
+        // Simpler: Just uncheck boxes. The logEntries variable is local, so we need to clear it via a reset mechanism.
+        // Actually, let's just reload the page part or handle it via a global object.
+        
         const checklist = document.getElementById(`checklist-${id}`);
         const checkboxes = checklist.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(cb => cb.checked = false);
-    }
-
-    function handleCheckboxChange(event, protocolId) {
-        // Stop the click from propagating to the <summary> and toggling the <details>
-        event.stopPropagation(); 
         
-        const checkbox = event.target;
-        const logMessage = checkbox.getAttribute('data-log');
-        const notesArea = document.getElementById(`notes-${protocolId}`);
-
-        // Rebuild the notes from scratch based on currently checked boxes to maintain order
-        const checklist = document.getElementById(`checklist-${protocolId}`);
-        const allCheckboxes = checklist.querySelectorAll('input[type="checkbox"]');
-        let newNotesValue = '';
-        
-        allCheckboxes.forEach(cb => {
-            if (cb.checked) {
-                // To avoid re-adding timestamps, we need a better system.
-                // For now, let's just add/remove the text without a new timestamp. This is a limitation.
-                // A better approach is to rebuild the log from a stored array of events.
-            }
-        });
-
-        if (checkbox.checked) {
-            const now = new Date();
-            const timeString = now.toTimeString().split(' ')[0]; // HH:MM:SS
-            const fullLog = `${timeString} - ${logMessage}\n`;
-            notesArea.value += fullLog;
-            notesArea.scrollTop = notesArea.scrollHeight; // Auto-scroll to bottom
-        } else {
-             // Simple removal of the line. This is imperfect if the same log message exists twice.
-            const lineToRemove = `${logMessage}\n`;
-            const lines = notesArea.value.split('\n');
-            const newLines = lines.filter(line => !line.includes(logMessage));
-            notesArea.value = newLines.join('\n');
-        }
+        // Dispatch a custom event to tell the main logic to clear the memory for this ID
+        document.dispatchEvent(new CustomEvent('clearLog', { detail: id }));
     }
 
     function showContent(protocolId) {
         // Update active button
         const navButtons = document.querySelectorAll('.nav-button');
         navButtons.forEach(button => {
-            button.classList.toggle('active', button.dataset.id === protocolId);
+            if (button.dataset.id === protocolId) {
+                button.classList.add('active', 'ring-2', 'ring-offset-2', 'ring-blue-500');
+                button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-50');
+            } else {
+                button.classList.remove('active', 'ring-2', 'ring-offset-2', 'ring-blue-500');
+                button.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-50');
+            }
         });
 
         // Show active content
@@ -1179,14 +1083,15 @@
     document.addEventListener('DOMContentLoaded', () => {
         const navMenu = document.getElementById('nav-menu');
         const mainContent = document.getElementById('main-content');
+        let logEntries = {};
 
-        // Sort protocols alphabetically by name for better navigation
+        // Sort protocols alphabetically by name
         emergencyProtocols.sort((a, b) => a.name.localeCompare(b.name));
 
         emergencyProtocols.forEach(protocol => {
             // Create nav button
             const navButton = document.createElement('button');
-            navButton.className = 'nav-button py-2 px-4 rounded-md bg-white shadow-sm hover:bg-blue-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50';
+            navButton.className = 'nav-button py-2.5 px-5 rounded-lg border border-gray-200 shadow-sm transition-all duration-200 text-sm font-medium focus:outline-none';
             navButton.textContent = protocol.name;
             navButton.dataset.id = protocol.id;
             navButton.onclick = () => showContent(protocol.id);
@@ -1195,19 +1100,9 @@
             // Create content section
             const contentSection = document.createElement('div');
             contentSection.id = `content-${protocol.id}`;
-            contentSection.className = 'content-section bg-gray-50 p-4 md:p-6 rounded-lg shadow-inner';
+            contentSection.className = 'content-section';
             contentSection.innerHTML = protocol.content;
             mainContent.appendChild(contentSection);
-
-            // Add event listeners to checkboxes for this section
-            const checklist = contentSection.querySelector(`#checklist-${protocol.id}`);
-            if (checklist) {
-                 checklist.addEventListener('click', (event) => {
-                    if (event.target.type === 'checkbox') {
-                        handleCheckboxChange(event, protocolId);
-                    }
-                });
-            }
         });
 
         // Show the first protocol by default
@@ -1215,43 +1110,41 @@
             showContent(emergencyProtocols[0].id);
         }
 
-        // Slightly improved logging to handle unchecking
-        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-        let logEntries = {};
-
-        allCheckboxes.forEach(checkbox => {
-            const protocolId = checkbox.closest('.content-section').id.replace('content-', '');
-            if (!logEntries[protocolId]) {
-                logEntries[protocolId] = [];
-            }
-
-            checkbox.addEventListener('change', (event) => {
-                const logMessage = event.target.getAttribute('data-log');
-                const now = new Date();
-                const timeString = now.toTimeString().split(' ')[0];
+        // Event Delegation for Checkboxes
+        document.body.addEventListener('change', (event) => {
+            if (event.target.matches('input[type="checkbox"]')) {
+                const checkbox = event.target;
+                const section = checkbox.closest('.content-section');
+                if (!section) return;
                 
-                if(event.target.checked) {
-                    logEntries[protocolId].push({ time: timeString, message: logMessage, id: logMessage });
+                const protocolId = section.id.replace('content-', '');
+                const logMessage = checkbox.getAttribute('data-log');
+                
+                if (!logEntries[protocolId]) logEntries[protocolId] = [];
+
+                if(checkbox.checked) {
+                    const now = new Date();
+                    const timeString = now.toTimeString().split(' ')[0].substring(0, 5); // HH:MM
+                    logEntries[protocolId].push({ time: timeString, message: logMessage });
                 } else {
+                    // Remove the entry if unchecked
                     logEntries[protocolId] = logEntries[protocolId].filter(entry => entry.message !== logMessage);
                 }
 
-                // Sort by time just in case
-                logEntries[protocolId].sort((a, b) => a.time.localeCompare(b.time));
-                
+                // Update Textarea
                 const notesArea = document.getElementById(`notes-${protocolId}`);
-                notesArea.value = logEntries[protocolId].map(entry => `${entry.time} - ${entry.message}`).join('\n');
-                notesArea.scrollTop = notesArea.scrollHeight;
-            });
+                if (notesArea) {
+                    notesArea.value = logEntries[protocolId].map(entry => `[${entry.time}] ${entry.message}`).join('\n');
+                    notesArea.scrollTop = notesArea.scrollHeight;
+                }
+            }
+        });
 
-            // Add clear functionality to the logEntries object as well
-             document.querySelector(`#notes-${protocolId}`).nextElementSibling.querySelector('button:last-child').addEventListener('click', () => {
-                logEntries[protocolId] = [];
-             });
+        // Listen for Clear Event
+        document.addEventListener('clearLog', (e) => {
+            logEntries[e.detail] = [];
         });
     });
     </script>
 </body>
 </html>
-
-
