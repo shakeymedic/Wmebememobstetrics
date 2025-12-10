@@ -1,727 +1,543 @@
 <!DOCTYPE html>
-<html lang="en-GB" class="scroll-smooth">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WMEBEM | Obstetric Emergencies Tool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        slate: { 850: '#151f32' } // Darker background for night mode
-                    }
-                }
-            }
-        }
-    </script>
+    <title>WMEBEM | Obstetric Emergencies (Complete)</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        /* --- CORE CSS --- */
+        :root {
+            --bg-body: #f3f4f6; --text-main: #1f2937; --text-muted: #6b7280;
+            --bg-card: #ffffff; --border-color: #e5e7eb;
+            --primary: #2563eb; --primary-hover: #1d4ed8; --primary-light: #eff6ff;
+            --danger: #dc2626; --danger-light: #fef2f2;
+            --success: #16a34a; --warning: #f59e0b; --warning-light: #fffbeb;
+        }
+        .dark {
+            --bg-body: #0f172a; --text-main: #f3f4f6; --text-muted: #9ca3af;
+            --bg-card: #1e293b; --border-color: #374151;
+            --primary: #3b82f6; --primary-light: #1e3a8a;
+            --danger-light: #450a0a; --warning-light: #451a03;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg-body); color: var(--text-main); font-size: 16px; line-height: 1.5; padding-bottom: 100px; }
         
-        /* Smooth fade for content */
-        .content-section { display: none; animation: fadeIn 0.2s ease-in-out; }
-        .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
+        /* Layout */
+        .container { max-width: 1024px; margin: 0 auto; padding: 0 1rem; }
+        .flex { display: flex; } .flex-col { flex-direction: column; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .gap-2 { gap: 0.5rem; }
+        .hidden { display: none !important; } .block { display: block; }
+        .w-full { width: 100%; } .p-4 { padding: 1rem; } .mb-4 { margin-bottom: 1rem; } .mt-2 { margin-top: 0.5rem; }
+        
+        /* Components */
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
+        .btn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; border: 1px solid transparent; font-size: 0.875rem; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-muted); }
+        .btn-danger { background: var(--danger); color: white; }
+        
+        /* Inputs */
+        input[type="text"], textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 1rem; }
 
-        /* Custom Checkbox */
-        .custom-checkbox:checked { background-color: #16a34a; border-color: #16a34a; }
-        .custom-checkbox:checked::after { content: '✓'; color: white; display: block; text-align: center; line-height: 1.25rem; }
+        /* Header */
+        header { position: sticky; top: 0; z-index: 50; background: var(--bg-card); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(8px); padding: 0.75rem 0; opacity: 0.98; }
 
-        /* Accordion Arrows */
-        details > summary { list-style: none; cursor: pointer; transition: background-color 0.1s; }
-        details > summary::-webkit-details-marker { display: none; }
-        .summary-arrow { transition: transform 0.2s; }
+        /* Navigation */
+        .nav-scroll { overflow-x: auto; white-space: nowrap; padding-bottom: 0.5rem; -ms-overflow-style: none; scrollbar-width: none; }
+        .nav-scroll::-webkit-scrollbar { display: none; }
+        .nav-btn { display: inline-block; padding: 0.5rem 1rem; margin-right: 0.5rem; border-radius: 99px; border: 1px solid var(--border-color); color: var(--text-muted); background: var(--bg-card); font-size: 0.875rem; transition: all 0.2s; }
+        .nav-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        /* Accordions */
+        details { border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--bg-body); margin-bottom: 0.5rem; overflow: hidden; }
+        details summary { padding: 0.75rem; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 500; }
+        details summary::-webkit-details-marker { display: none; }
+        details[open] summary { border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.02); }
+        .summary-arrow { margin-left: auto; transition: transform 0.2s; }
         details[open] .summary-arrow { transform: rotate(90deg); }
+        .checkbox { width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; accent-color: var(--success); }
 
-        /* Dark Mode Transitions */
-        .transition-colors { transition-property: background-color, border-color, color, fill, stroke; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 200ms; }
+        /* Widgets */
+        .timer-box { background: var(--danger); color: white; padding: 1.5rem; border-radius: 0.75rem; text-align: center; margin-bottom: 1rem; }
+        .timer-display { font-family: monospace; font-size: 3rem; font-weight: 700; line-height: 1; margin: 0.5rem 0; }
+        
+        /* FAB */
+        .fab-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; display: flex; flex-direction: column; align-items: flex-end; pointer-events: none; }
+        .fab-btn { pointer-events: auto; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+        .fab-menu { opacity: 0; transform: translateY(10px); transition: all 0.2s; pointer-events: none; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; }
+        .fab-container:hover .fab-menu, .fab-menu:hover { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .fab-item { background: var(--bg-card); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid var(--border-color); font-size: 0.875rem; cursor: pointer; }
+
+        /* Modals */
+        dialog { border: none; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); padding: 0; max-width: 95vw; width: 600px; background: var(--bg-card); color: var(--text-main); }
+        dialog::backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        
+        /* SVG Flowchart Styles */
+        .flow-box { fill: var(--primary-light); stroke: var(--primary); stroke-width: 2px; rx: 8px; }
+        .flow-text { font-family: sans-serif; font-size: 14px; fill: var(--text-main); text-anchor: middle; font-weight: 600; }
+        .flow-arrow { stroke: var(--text-muted); stroke-width: 2px; marker-end: url(#arrowhead); }
+        .dark .flow-box { fill: #1e3a8a; stroke: #60a5fa; }
+        .dark .flow-text { fill: white; }
+        .dark .flow-arrow { stroke: #94a3b8; }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 dark:bg-slate-900 dark:text-gray-100 transition-colors duration-200 min-h-screen flex flex-col pb-24">
+<body>
 
-    <header class="sticky top-0 z-50 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
-        <div class="container mx-auto px-4 py-3">
-            
+    <dialog id="disclaimer-modal">
+        <div class="p-4 border-b" style="border-color: var(--border-color)">
+            <h2 style="margin:0; font-size:1.25rem;">Clinical Disclaimer</h2>
+        </div>
+        <div class="p-4">
+            <p>This application is an <strong>educational aide-mémoire</strong> for qualified medical professionals.</p>
+            <p class="mt-2 font-bold text-danger">DOES NOT replace clinical judgment. Use at your own risk.</p>
+        </div>
+        <div class="p-4 bg-gray-50 dark:bg-gray-800">
+            <button class="btn btn-primary w-full" onclick="acceptDisclaimer()">I Accept</button>
+        </div>
+    </dialog>
+
+    <header>
+        <div class="container">
             <div class="flex justify-between items-center mb-3">
-                <div class="flex items-center gap-3">
-                    <img src="https://iili.io/KGQOvkl.md.png" alt="Logo" class="h-8 w-auto">
-                    <h1 class="text-lg font-bold text-gray-900 dark:text-white leading-tight hidden md:block">Obstetric Emergencies</h1>
-                </div>
-                
                 <div class="flex items-center gap-2">
-                    <div id="emergency-numbers-display" class="hidden md:flex gap-2 text-xs font-mono">
-                        </div>
-
-                    <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
-                        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-                        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                    </button>
-
-                    <button onclick="openSettings()" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    </button>
+                    <img src="https://iili.io/KGQOvkl.md.png" alt="Logo" style="height: 32px; width: auto;">
+                    <span style="font-weight: 700;">Obs Emergencies</span>
                 </div>
-            </div>
-
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                <div class="flex items-center gap-2">
+                    <div id="numbers-bar" style="font-size: 0.75rem; display: flex; gap: 0.5rem;"></div>
+                    <button class="btn btn-outline" style="padding: 0.5rem;" onclick="openSettings()">⚙️</button>
+                    <button class="btn btn-outline" style="padding: 0.5rem;" onclick="toggleDark()">🌙</button>
                 </div>
-                <input type="text" id="global-search" placeholder="Search protocols (e.g., 'Cord', 'Sepsis')..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white dark:placeholder-gray-400 outline-none transition-all">
             </div>
             
-            <nav class="mt-3 -mx-4 px-4 overflow-x-auto no-scrollbar">
-                <div id="nav-menu" class="flex gap-2 pb-2 min-w-max">
-                    </div>
-            </nav>
+            <input type="text" id="search-bar" placeholder="Search (e.g., 'Sepsis', 'Cord')..." class="mb-3">
+            
+            <div class="nav-scroll" id="nav-container"></div>
         </div>
     </header>
 
-    <main id="main-content" class="container mx-auto p-4 max-w-5xl flex-grow">
-        </main>
+    <main class="container mt-2">
+        <div id="content-area"></div>
+    </main>
 
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none">
-        
-        <div id="fab-timer-panel" class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-600 w-64 pointer-events-auto transform transition-all translate-x-full opacity-0 duration-200 hidden">
-            <div class="flex justify-between items-center mb-2">
-                <span class="text-sm font-bold text-gray-700 dark:text-gray-200">Generic Timer</span>
-                <button onclick="toggleFabTimer()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">&times;</button>
+    <div class="fab-container">
+        <div class="fab-menu">
+            <div class="card p-4 mb-2 hidden" id="fab-timer-widget" style="width: 200px;">
+                <div class="flex justify-between mb-2"><strong>Timer</strong> <span style="cursor:pointer" onclick="toggleFabWidget()">✕</span></div>
+                <div id="fab-timer-display" style="font-family:monospace; font-size:2rem; text-align:center;">00:00</div>
+                <button class="btn btn-success w-full" id="fab-timer-btn" onclick="runFabTimer()">Start</button>
             </div>
-            <div id="fab-timer-display" class="text-3xl font-mono text-center font-bold text-gray-800 dark:text-white mb-3">00:00</div>
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="fabTimerStart()" id="fab-timer-btn-start" class="bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded text-sm">Start</button>
-                <button onclick="fabTimerReset()" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 py-1 px-2 rounded text-sm">Reset</button>
-            </div>
+            <button class="fab-item" onclick="toggleFabWidget()">⏱️ Timer</button>
+            <button class="fab-item" onclick="copyLog()">📋 Copy Log</button>
         </div>
-
-        <div class="pointer-events-auto relative group">
-            <button id="fab-main" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg focus:outline-none transition-transform active:scale-95 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-            </button>
-            
-            <div class="absolute bottom-full right-0 mb-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-max items-end">
-                <button onclick="toggleFabTimer()" class="bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 text-sm font-medium hover:bg-gray-50 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    Generic Timer
-                </button>
-                <button onclick="copyCurrentLog()" class="bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg shadow-md border border-gray-200 dark:border-gray-600 text-sm font-medium hover:bg-gray-50 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
-                    Copy Current Log
-                </button>
-                <div id="copy-toast" class="bg-green-600 text-white text-xs py-1 px-3 rounded shadow hidden">Copied!</div>
-            </div>
-        </div>
+        <button class="fab-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
     </div>
 
-    <dialog id="settings-modal" class="rounded-xl shadow-2xl p-0 w-full max-w-md bg-white dark:bg-slate-800 dark:text-white backdrop:bg-black/50">
-        <div class="p-6">
-            <h3 class="text-xl font-bold mb-4">Settings</h3>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Emergency Number (Crash Call)</label>
-                    <input type="text" id="setting-crash-num" class="w-full p-2 border rounded dark:bg-slate-700 dark:border-gray-600" placeholder="e.g. 2222">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Obstetric Reg / MHP Extension</label>
-                    <input type="text" id="setting-obs-num" class="w-full p-2 border rounded dark:bg-slate-700 dark:border-gray-600" placeholder="e.g. 5566">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Neonatal Reg Extension</label>
-                    <input type="text" id="setting-neo-num" class="w-full p-2 border rounded dark:bg-slate-700 dark:border-gray-600" placeholder="e.g. 4433">
-                </div>
-            </div>
-            <div class="mt-6 flex justify-end gap-3">
-                <button onclick="document.getElementById('settings-modal').close()" class="px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg">Cancel</button>
-                <button onclick="saveSettings()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
-            </div>
+    <dialog id="algo-modal">
+        <div class="p-4 flex justify-between items-center border-b" style="border-color: var(--border-color);">
+            <h3 style="margin:0" id="algo-title">Algorithm</h3>
+            <button class="btn btn-outline" onclick="document.getElementById('algo-modal').close()">✕</button>
         </div>
+        <div class="p-4" style="overflow-x: auto; text-align: center; background: var(--bg-card);" id="algo-content">
+            </div>
     </dialog>
 
-    <dialog id="algo-modal" class="rounded-xl shadow-2xl p-0 w-full max-w-4xl h-[80vh] bg-white dark:bg-slate-800 backdrop:bg-black/50">
-        <div class="flex flex-col h-full">
-            <div class="p-4 border-b dark:border-gray-700 flex justify-between items-center">
-                <h3 class="text-lg font-bold dark:text-white" id="algo-title">Algorithm View</h3>
-                <button onclick="document.getElementById('algo-modal').close()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-            </div>
-            <div class="flex-grow p-8 flex items-center justify-center bg-gray-50 dark:bg-slate-900">
-                <div class="text-center text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    <p>Visual Algorithm / Flowchart SVG would appear here.</p>
+    <dialog id="settings-modal">
+        <div class="p-4">
+            <h3>Emergency Numbers</h3>
+            <div class="flex flex-col gap-4 mt-2">
+                <input type="text" id="set-crash" placeholder="Crash Call (e.g. 2222)">
+                <input type="text" id="set-obs" placeholder="Obs Reg (e.g. Bleep 1234)">
+                <div class="flex justify-end gap-2 mt-2">
+                    <button class="btn btn-outline" onclick="document.getElementById('settings-modal').close()">Close</button>
+                    <button class="btn btn-primary" onclick="saveSettings()">Save</button>
                 </div>
             </div>
         </div>
     </dialog>
 
     <script>
-    // --- APP STATE & DATA ---
-    let currentProtocolId = '';
-    let logEntries = {};
-    let activeTimers = {};
-    let pphTotal = 0;
-
-    const emergencyProtocols = [
+    // --- FULL DATASET ---
+    const protocols = [
         {
-            id: 'amniotic_fluid_embolism',
+            id: 'afe',
             name: 'Amniotic Fluid Embolism',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    ${generateManagementColumn('amniotic_fluid_embolism', 'Recognise & Call for Help', 'AFE is a diagnosis of exclusion characterised by sudden cardiovascular collapse, profound hypoxia, and coagulopathy. Immediate multi-disciplinary response is the only chance of survival.', [
-                        'Recognised sudden collapse. Called for senior O&G, Anaesthetics/ITU, Haematology.',
-                        'High-quality CPR with manual uterine displacement commenced.',
-                        'Aggressive oxygenation and ventilation support initiated.',
-                        'Major Haemorrhage Protocol activated for coagulopathy.'
-                    ])}
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Sudden Cardiovascular Collapse + Respiratory Distress + Coagulopathy (DIC).', 'Immediate/Perimortem response required.')}
-                        ${generateAlgoButton()}
-                        ${generateNotesSection('amniotic_fluid_embolism')}
-                    </div>
-                </div>`
+            steps: ['Call Help (2222)', 'CPR + LUD', 'Airway / Oxygen', 'Treat Coagulopathy (MHP)', 'Perimortem Section'],
+            checklist: [
+                'Recognise: Collapse + Hypoxia + Coagulopathy',
+                'Call Help (Snr Obs, Anaes, Haem)',
+                'Start CPR + Left Uterine Displacement',
+                'Secure Airway (100% Oxygen)',
+                'Activate MHP (Early FFP/Cryo)'
+            ]
         },
         {
-            id: 'placental_abruption',
+            id: 'abruption',
             name: 'Placental Abruption',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    ${generateManagementColumn('placental_abruption', 'Recognise & Call for Help', 'Presentation: Painful vaginal bleeding, tense/woody uterus. Bleeding may be concealed.', [
-                        'Recognised painful vaginal bleeding. Called for senior O&G/Anaesthetics.',
-                        'Maternal resuscitation (ABCDE, x2 large bore IV, Crossmatch).',
-                        'CTG monitoring commenced.',
-                        'Plan for emergency delivery (Cat 1 C-section) confirmed.'
-                    ])}
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Painful vaginal bleeding (80%) + "Woody" uterus + Fetal Distress.', 'Category 1 C-Section (Decision to Delivery Interval ≤ 30 mins).')}
-                        ${generateAlgoButton()}
-                        ${generateNotesSection('placental_abruption')}
-                    </div>
-                </div>`
+            steps: ['Assess (Pain + Bleeding)', 'Resus Mother (IV x2)', 'CTG Monitoring', 'Coag Screen', 'Category 1 Section'],
+            checklist: [
+                'Recognise: Painful bleeding, woody uterus',
+                'Call Senior Help',
+                'Maternal Resus: ABCDE, 2x Grey Cannulas',
+                'Send FBC, G&S, Coag (Fibrinogen)',
+                'Continuous CTG (if fetal heart present)',
+                'Expedite Delivery (Cat 1 CS)'
+            ]
         },
         {
-            id: 'ovarian_torsion',
+            id: 'torsion',
             name: 'Ovarian Torsion',
-            content: `
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    ${generateManagementColumn('ovarian_torsion', 'High Clinical Suspicion', 'Sudden, severe, unilateral pain + vomiting. "Time is ovary".', [
-                        'Clinical suspicion raised (severe unilateral pain + vomiting).',
-                        'Pregnancy test performed (Negative).',
-                        'Urgent Gynae referral made.'
-                    ])}
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Severe unilateral pelvic pain (acute onset) + Vomiting (70%) + Adnexal Mass.', 'Time is Ovary. Salvage rates drop significantly after 6-8 hours.')}
-                        ${generateAlgoButton()}
-                        ${generateNotesSection('ovarian_torsion')}
-                    </div>
-                </div>`
+            steps: ['Analgesia + Antiemetics', 'Pregnancy Test (-ve)', 'Urgent Gynae Review', 'Laparoscopy'],
+            checklist: [
+                'Recognise: Severe unilateral pain + Vomiting',
+                'Perform Pregnancy Test (Exclude Ectopic)',
+                'NBM + IV Fluids',
+                'Urgent Gynae Referral',
+                'Consent for Laparoscopy'
+            ]
         },
         {
-            id: 'pre_eclampsia',
-            name: 'Pre-eclampsia & Eclampsia',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    ${generateManagementColumn('pre_eclampsia', 'Call Senior Help', 'Involve Senior Obstetrician and Anaesthetist immediately.', [
-                        'Call 2222: Obstetric Emergency.',
-                        'Seizure control: MgSO4 4g IV loading dose given.',
-                        'BP control: Labetalol/Hydralazine. Target 135/85.',
-                        'Fluid restriction 80ml/hr. Catheterised.'
-                    ])}
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('BP ≥140/90 + Proteinuria. Severe: ≥160/110. Eclampsia: Seizures.', 'Treat Severe HTN immediately. Target BP: 135/85 mmHg.')}
-                        <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow border border-gray-200 dark:border-gray-700">
-                             <h4 class="font-bold text-gray-900 dark:text-gray-100 mb-2">Drug Doses</h4>
-                             <ul class="text-sm space-y-2 dark:text-gray-300">
-                                <li><strong>Magnesium Sulfate:</strong> 4g IV over 5-15 mins. (Maintenance 1g/hr).</li>
-                                <li><strong>Labetalol:</strong> 50mg PO or 20mg IV bolus. Max 300mg.</li>
-                             </ul>
-                        </div>
-                        ${generateNotesSection('pre_eclampsia')}
-                    </div>
-                </div>`
+            id: 'pid',
+            name: 'Severe PID / TOA',
+            steps: ['Sepsis Screen', 'Admit Inpatient', 'IV Antibiotics', 'Gynae Review', 'Imaging'],
+            checklist: [
+                'Assess Severity (Sepsis/TOA/Pregnancy)',
+                'Start IV Abx (Ceftriaxone + Doxy + Metro)',
+                'Analgesia',
+                'Gynae Consult for ?Drainage'
+            ]
         },
         {
-            id: 'ruptured_ectopic',
+            id: 'preeclampsia',
+            name: 'Pre-eclampsia / Eclampsia',
+            steps: ['Call Help', 'Seizure: MgSO4 4g', 'BP: Labetalol/Hydralazine', 'Restrict Fluid', 'Deliver'],
+            checklist: [
+                'Call 2222 (Obstetric Emergency)',
+                'Load MgSO4 4g IV (over 5-10 mins)',
+                'Treat BP if >160/110 (Target 135/85)',
+                'Fluid Restrict (80ml/hr)',
+                'Monitor Reflexes & Resp Rate',
+                'Urgent Delivery Plan'
+            ]
+        },
+        {
+            id: 'ectopic',
             name: 'Ruptured Ectopic',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                     ${generateManagementColumn('ruptured_ectopic', 'Call O&G & Anaesthetics STAT', 'Time-critical surgical emergency. Definitive treatment is laparoscopy/laparotomy.', [
-                        'Positive hCG + Shock/Peritonism. O&G + Anaesthetics called STAT.',
-                        'Major Haemorrhage Protocol activated.',
-                        'Prepared for immediate theatre.'
-                    ])}
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Positive Urinary hCG + Abdominal Pain + Haemodynamic Instability.', 'Immediate transfer to theatre (Do not delay for scan).')}
-                        ${generateAlgoButton()}
-                        ${generateNotesSection('ruptured_ectopic')}
-                    </div>
-                </div>`
+            steps: ['Positive hCG + Shock', 'Call Help + MHP', 'IV Access x2', 'Immediate Theatre'],
+            checklist: [
+                'Recognise: +ve hCG, Peritonism, Shock',
+                'Call Gynae + Anaesthetics STAT',
+                'Activate Massive Haemorrhage Protocol',
+                'Do NOT delay for Ultrasound',
+                'Transfer to Theatre (Laparoscopy/Laparotomy)'
+            ]
         },
         {
-            id: 'post_partum_haemorrhage',
-            name: 'Post-Partum Haemorrhage',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="space-y-6">
-                         <div class="bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900 p-4 rounded-xl">
-                            <h4 class="font-bold text-red-800 dark:text-red-300 flex items-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                Blood Loss Calculator
-                            </h4>
-                            <div class="flex items-end justify-between mb-4">
-                                <div class="text-3xl font-bold text-red-700 dark:text-red-400" id="pph-total-display">0 ml</div>
-                                <button onclick="resetPPH()" class="text-xs text-gray-500 hover:text-red-600 underline">Reset</button>
-                            </div>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button onclick="addBloodLoss(50)" class="bg-white dark:bg-slate-700 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 py-2 rounded shadow-sm hover:bg-red-50 font-medium text-sm">+50ml</button>
-                                <button onclick="addBloodLoss(100)" class="bg-white dark:bg-slate-700 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 py-2 rounded shadow-sm hover:bg-red-50 font-medium text-sm">+100ml</button>
-                                <button onclick="addBloodLoss(500)" class="bg-red-100 dark:bg-red-900/50 border border-red-300 dark:border-red-800 text-red-800 dark:text-red-200 py-2 rounded shadow-sm hover:bg-red-200 font-bold text-sm">+500ml</button>
-                            </div>
-                        </div>
-
-                         ${generateManagementColumnInner('post_partum_haemorrhage', [
-                            'Help called & Major Haemorrhage Protocol activated.',
-                            'Fundal massage performed.',
-                            'Uterotonics administered (Synto/Ergo/Carbo/TXA).',
-                            'Trauma/Tissue/Thrombin excluded.'
-                        ])}
-                    </div>
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Blood loss >1000ml (Major) or >2000ml (Massive).', 'Immediate control via 4Ts (Tone, Trauma, Tissue, Thrombin).')}
-                        ${generateNotesSection('post_partum_haemorrhage')}
-                    </div>
-                </div>`
+            id: 'pph',
+            name: 'Post Partum Haemorrhage',
+            steps: ['Call Help', 'Fundal Massage', 'Drugs (Synto/Ergo)', '4 Ts Check', 'MHP / Theatre'],
+            checklist: [
+                'Call 2222 if >1000ml or Shock',
+                'Lie Flat + High flow Oxygen',
+                'Mechanical: Fundal Massage / Bimanual',
+                'Medical: Synto, Ergometrine, Carboprost, TXA',
+                'Surgical: Exam Under Anaesthetic (EUA)'
+            ],
+            widget: 'pph'
         },
         {
-            id: 'cord_prolapse',
+            id: 'cord',
             name: 'Cord Prolapse',
-            content: `
-                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    ${generateManagementColumn('cord_prolapse', 'Call Help (Cat 1 Section)', 'Immediate delivery required. Target DDI 30 mins.', [
-                        'Call for Help. Cat 1 C-section required.',
-                        'Manually elevate presenting part (Do not remove hand).',
-                        'Position: Knee-chest or Trendelenburg.',
-                        'Terbutaline 250mcg SC given.'
-                    ])}
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Umbilical cord palpable or visible below presenting part.', 'Category 1 C-Section (Decision to Delivery Interval ≤ 30 mins).')}
-                        ${generateAlgoButton()}
-                        ${generateNotesSection('cord_prolapse')}
-                    </div>
-                </div>`
+            steps: ['Call Help', 'Elevate Presenting Part', 'Knee-Chest Position', 'Stop Syntocinon', 'Cat 1 Section'],
+            checklist: [
+                'Call Help (Cat 1 Section)',
+                'Manual Elevation (gloved hand in vagina)',
+                'Position: Knee-chest / Head down',
+                'Tocolysis: Terbutaline 250mcg SC',
+                'Do not remove hand until delivery'
+            ]
         },
         {
-            id: 'shoulder_dystocia',
+            id: 'shoulder',
             name: 'Shoulder Dystocia',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="space-y-6">
-                         <div class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 p-4 rounded-xl flex items-center justify-between">
-                            <div>
-                                <h4 class="font-bold text-orange-900 dark:text-orange-300">Head-to-Body Interval</h4>
-                                <p class="text-xs text-orange-700 dark:text-orange-400">Target < 5 mins</p>
-                            </div>
-                            <div class="text-right">
-                                <div id="dystocia-timer" class="text-2xl font-mono font-bold text-orange-800 dark:text-orange-200 mb-1">00:00</div>
-                                <button id="btn-dystocia-timer" onclick="toggleDystociaTimer()" class="bg-orange-600 hover:bg-orange-700 text-white text-xs py-1 px-3 rounded shadow-sm">Start Timer</button>
-                            </div>
-                        </div>
-
-                         ${generateManagementColumnInner('shoulder_dystocia', [
-                            'Help called. Time of head delivery noted.',
-                            'Episiotomy considered/performed.',
-                            'Legs (McRoberts) - Hyperflex hips.',
-                            'Pressure (Suprapubic) - Rocking motion.',
-                            'Enter / Remove Arm (Internal manoeuvres).'
-                        ], 'HELPERR Algorithm')}
-                    </div>
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Turtle neck sign. Failure of restitution.', 'Deliver body within 5 minutes to prevent hypoxic ischaemic injury.')}
-                        ${generateAlgoButton()}
-                        ${generateNotesSection('shoulder_dystocia')}
-                    </div>
-                </div>`
+            steps: ['Call Help', 'Episiotomy', 'Legs (McRoberts)', 'Pressure (Suprapubic)', 'Enter (Manoeuvres)', 'Remove Arm', 'Roll'],
+            checklist: [
+                'H: Help Called (Stop Pushing)',
+                'E: Episiotomy considered',
+                'L: Legs (McRoberts Manoeuvre)',
+                'P: Suprapubic Pressure (Rocking)',
+                'E: Enter (Rubin II / Woods Screw)',
+                'R: Remove Posterior Arm',
+                'R: Roll (All Fours)'
+            ],
+            widget: 'dystocia'
         },
         {
-            id: 'cardiac_arrest',
+            id: 'breech',
+            name: 'Breech Birth (Unexpected)',
+            steps: ['Call Help', 'Hands Off', 'Spontaneous Descent', 'Loveset\'s Manoeuvre', 'Deliver Head (MSV)'],
+            checklist: [
+                'Call Senior Help (Obs + Paeds)',
+                'Hands OFF until umbilicus visible',
+                'Legs: Pinard Manoeuvre',
+                'Arms: Loveset\'s Manoeuvre',
+                'Head: Mauriceau-Smellie-Veit'
+            ]
+        },
+        {
+            id: 'cardiac',
             name: 'Obstetric Cardiac Arrest',
-            content: `
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="space-y-6">
-                        <div class="bg-red-600 text-white p-6 rounded-xl shadow-lg relative overflow-hidden">
-                            <div class="relative z-10">
-                                <h3 class="text-xl font-bold mb-1">Perimortem Hysterotomy Timer</h3>
-                                <p class="text-red-100 text-sm mb-4">Delivery indicated if no ROSC by 4 mins.</p>
-                                <div class="flex items-center justify-between">
-                                    <div id="cardiac-timer-display" class="text-5xl font-mono font-bold tracking-wider">04:00</div>
-                                    <div class="flex flex-col gap-2">
-                                        <button id="btn-cardiac-start" onclick="startCardiacTimer()" class="bg-white text-red-600 hover:bg-red-50 font-bold py-2 px-6 rounded-lg shadow transition-colors">START</button>
-                                        <button onclick="resetCardiacTimer()" class="bg-red-700 text-red-200 hover:bg-red-800 text-sm py-1 px-4 rounded transition-colors">Reset</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                         ${generateManagementColumnInner('cardiac_arrest', [
-                            'Manual left uterine displacement performed.',
-                            'Resuscitative Hysterotomy decision made at 4 minutes.',
-                            'Obstetric causes (4Hs/4Ts) considered.'
-                        ], 'ALS Modifications')}
-                    </div>
-                    <div class="space-y-6">
-                        ${generateDiagnosticBox('Unresponsive, absent breathing. Uterus >20 weeks.', '4 Minute Rule. If no ROSC by 4 mins, Hysterotomy. Deliver by 5 mins.')}
-                        ${generateNotesSection('cardiac_arrest')}
-                    </div>
-                </div>`
+            steps: ['Call 2222', 'CPR + LUD', 'Assess Rhythm', '4 Mins: Hysterotomy', '5 Mins: Delivery'],
+            checklist: [
+                'Manual Left Uterine Displacement',
+                'Intubate Early (High aspiration risk)',
+                'IV Access above diaphragm',
+                '4 Minute Rule: Prepare Hysterotomy',
+                'Deliver baby to improve maternal outcome'
+            ],
+            widget: 'cardiac'
         }
     ];
 
-    // --- HTML GENERATORS ---
+    // --- APP STATE ---
+    let currentId = 'afe';
+    let logs = {};
+    let pphVol = 0;
 
-    function generateManagementColumn(id, title, desc, items) {
-        return `
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-             <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center">
-                    <div class="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 p-2 rounded-lg mr-3">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">${title}</h3>
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Render Navigation
+        const nav = document.getElementById('nav-container');
+        protocols.forEach(p => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-btn';
+            btn.textContent = p.name;
+            btn.onclick = () => loadProtocol(p.id);
+            btn.id = `nav-${p.id}`;
+            nav.appendChild(btn);
+        });
+
+        // Load First Protocol
+        loadProtocol(protocols[0].id);
+        
+        // Search Listener
+        document.getElementById('search-bar').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            protocols.forEach(p => {
+                const btn = document.getElementById(`nav-${p.id}`);
+                const match = p.name.toLowerCase().includes(term);
+                btn.style.display = match ? 'inline-block' : 'none';
+            });
+        });
+
+        // Checkbox Listener (Delegation)
+        document.getElementById('content-area').addEventListener('change', (e) => {
+            if(e.target.matches('.checkbox')) {
+                const msg = e.target.getAttribute('data-msg');
+                const action = e.target.checked ? '[DONE]' : '[UNDO]';
+                logAction(currentId, `${action} ${msg}`);
+            }
+        });
+
+        // Load Settings
+        loadSettings();
+        if(!localStorage.getItem('wmebem_accepted')) document.getElementById('disclaimer-modal').showModal();
+        if(localStorage.getItem('wmebem_dark') === 'true') document.body.classList.add('dark');
+    });
+
+    // --- CORE RENDERER ---
+    function loadProtocol(id) {
+        currentId = id;
+        const p = protocols.find(x => x.id === id);
+        
+        // Update Nav
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`nav-${id}`).classList.add('active');
+
+        // Render Widgets
+        let widgetHtml = '';
+        if(p.widget === 'pph') widgetHtml = renderPPHWidget();
+        if(p.widget === 'dystocia') widgetHtml = renderDystociaWidget();
+        if(p.widget === 'cardiac') widgetHtml = renderCardiacWidget();
+
+        // Render Checklists
+        const checklistHtml = p.checklist.map((item, idx) => `
+            <details>
+                <summary>
+                    <input type="checkbox" class="checkbox" data-msg="${item}">
+                    ${item}
+                    <span class="summary-arrow">▶</span>
+                </summary>
+                <div class="p-4 text-sm bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                    Action logged. See full guidance for details.
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="expandAll('${id}')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Expand All</button>
-                    <span class="text-gray-300">|</span>
-                    <button onclick="collapseAll('${id}')" class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Collapse All</button>
+            </details>
+        `).join('');
+
+        // Inject Content
+        const area = document.getElementById('content-area');
+        area.innerHTML = `
+            ${widgetHtml}
+            <div class="card p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-lg">${p.name}</h2>
+                    <button class="btn btn-primary btn-sm" onclick="showAlgo('${id}')">View Algorithm</button>
                 </div>
+                ${checklistHtml}
             </div>
-            <div id="checklist-${id}" class="space-y-3">
-                ${items.map(item => `
-                    <details class="group border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden bg-gray-50 dark:bg-slate-700/50">
-                        <summary class="font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-slate-700 p-3 select-none flex items-center">
-                            <input type="checkbox" class="h-5 w-5 mr-3 flex-shrink-0 rounded border-gray-300 text-green-600 focus:ring-green-500 custom-checkbox" data-log="${item}">
-                            ${item}
-                            <span class="ml-auto summary-arrow text-gray-400 group-hover:text-gray-600">&#9654;</span>
-                        </summary>
-                        <div class="p-4 details-content text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-600 bg-white dark:bg-slate-800">
-                            Action logged. (Detailed guidance for this step would be here).
-                        </div>
-                    </details>
-                `).join('')}
-            </div>
-        </div>`;
-    }
-
-    function generateManagementColumnInner(id, items, title="Immediate Management") {
-        return generateManagementColumn(id, title, "", items);
-    }
-
-    function generateDiagnosticBox(criteria, target) {
-        return `
-        <div class="bg-indigo-50 dark:bg-indigo-900/20 border-l-4 border-indigo-600 p-4 rounded-r-lg shadow-sm">
-            <h4 class="font-bold text-indigo-900 dark:text-indigo-300 mb-2">Diagnostic Criteria & Targets</h4>
-            <div class="text-sm text-indigo-800 dark:text-indigo-200 space-y-2">
-                <p><strong class="font-semibold">Criteria:</strong> ${criteria}</p>
-                <p><strong class="font-semibold">Target:</strong> ${target}</p>
-            </div>
-        </div>`;
-    }
-
-    function generateAlgoButton() {
-        return `
-        <button onclick="document.getElementById('algo-modal').showModal()" class="w-full py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 rounded-lg hover:border-blue-500 hover:text-blue-500 transition-colors font-medium flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-.447-.894L15 7m0 13V7" /></svg>
-            View Algorithm Flowchart
-        </button>`;
-    }
-
-    function generateNotesSection(id) {
-        return `
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-                <h3 class="text-lg font-bold mb-3 text-gray-900 dark:text-white flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    Timestamped Log
-                </h3>
-                <textarea id="notes-${id}" class="w-full h-48 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-gray-300 text-sm font-mono focus:ring-2 focus:ring-blue-500 outline-none" readonly placeholder="Log empty..."></textarea>
+            <div class="card p-4 mt-4">
+                <h4 class="font-bold text-sm text-muted mb-2">SESSION LOG</h4>
+                <textarea id="log-area" class="h-40" readonly>${getLogText(id)}</textarea>
             </div>
         `;
     }
 
-    // --- LOGIC FUNCTIONS ---
+    // --- ALGORITHM GENERATOR (SVG) ---
+    function showAlgo(id) {
+        const p = protocols.find(x => x.id === id);
+        const steps = p.steps;
+        const modal = document.getElementById('algo-modal');
+        const content = document.getElementById('algo-content');
+        document.getElementById('algo-title').textContent = p.name + " Algorithm";
 
-    function init() {
-        // Load settings
-        loadSettings();
+        // Dynamic SVG Generation
+        const boxH = 50;
+        const boxW = 220;
+        const gap = 40;
+        const svgH = (steps.length * (boxH + gap)) + 20;
         
-        // Sort and Render Nav Buttons & Content
-        const navMenu = document.getElementById('nav-menu');
-        const mainContent = document.getElementById('main-content');
-        emergencyProtocols.sort((a, b) => a.name.localeCompare(b.name));
-
-        emergencyProtocols.forEach(p => {
-            // Nav Button
-            const btn = document.createElement('button');
-            btn.className = 'nav-button whitespace-nowrap px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700 text-sm font-medium transition-all shadow-sm';
-            btn.textContent = p.name;
-            btn.dataset.id = p.id;
-            btn.onclick = () => showContent(p.id);
-            navMenu.appendChild(btn);
-
-            // Content Section
-            const div = document.createElement('div');
-            div.id = `content-${p.id}`;
-            div.className = 'content-section';
-            div.innerHTML = p.content;
-            mainContent.appendChild(div);
-        });
-
-        // Show first
-        if(emergencyProtocols.length) showContent(emergencyProtocols[0].id);
-
-        // Search Listener
-        document.getElementById('global-search').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            document.querySelectorAll('.nav-button').forEach(btn => {
-                const match = btn.textContent.toLowerCase().includes(term);
-                btn.style.display = match ? 'block' : 'none';
-                if(match) btn.style.opacity = '1';
-            });
-        });
-
-        // Checkbox Delegation
-        document.body.addEventListener('change', (e) => {
-            if(e.target.matches('input[type="checkbox"]')) {
-                const id = e.target.closest('.content-section').id.replace('content-', '');
-                updateLog(id, e.target.checked, e.target.getAttribute('data-log'));
+        let svg = `<svg width="300" height="${svgH}" viewBox="0 0 300 ${svgH}" xmlns="http://www.w3.org/2000/svg">`;
+        svg += `<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="flow-arrow" fill="currentColor" /></marker></defs>`;
+        
+        steps.forEach((step, i) => {
+            const y = 20 + (i * (boxH + gap));
+            svg += `<rect x="40" y="${y}" width="${boxW}" height="${boxH}" class="flow-box" />`;
+            svg += `<text x="150" y="${y + 30}" class="flow-text">${step}</text>`;
+            if (i < steps.length - 1) {
+                svg += `<line x1="150" y1="${y + boxH}" x2="150" y2="${y + boxH + gap}" class="flow-arrow" />`;
             }
         });
-    }
-
-    function showContent(id) {
-        currentProtocolId = id;
-        document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-        document.getElementById(`content-${id}`).classList.add('active');
+        svg += `</svg>`;
         
-        // Update Nav State
-        document.querySelectorAll('.nav-button').forEach(btn => {
-            const active = btn.dataset.id === id;
-            btn.className = active 
-                ? 'nav-button whitespace-nowrap px-4 py-2 rounded-full border border-blue-600 bg-blue-600 text-white shadow-md text-sm font-medium transition-all'
-                : 'nav-button whitespace-nowrap px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-slate-700 text-sm font-medium transition-all shadow-sm';
-        });
+        content.innerHTML = svg;
+        modal.showModal();
     }
 
-    function updateLog(id, added, msg) {
-        if(!logEntries[id]) logEntries[id] = [];
-        const time = new Date().toTimeString().substring(0, 5);
-        
-        if(added) {
-            logEntries[id].push({ time, msg });
-        } else {
-            // Only remove if exact match (simple logic)
-            logEntries[id] = logEntries[id].filter(e => e.msg !== msg);
-        }
-        renderLog(id);
-    }
-
-    function renderLog(id) {
-        const txt = document.getElementById(`notes-${id}`);
-        if(txt) {
-            txt.value = logEntries[id].map(e => `[${e.time}] ${e.msg}`).join('\n');
-            txt.scrollTop = txt.scrollHeight;
-        }
-    }
-
-    function manualLog(id, msg) {
-        updateLog(id, true, msg);
-    }
-
-    // --- FEATURES ---
-
-    // Dark Mode
-    function toggleDarkMode() {
-        document.documentElement.classList.toggle('dark');
-        document.getElementById('moon-icon').classList.toggle('hidden');
-        document.getElementById('sun-icon').classList.toggle('hidden');
-    }
-
-    // Settings / Numbers
-    function loadSettings() {
-        const nums = JSON.parse(localStorage.getItem('wmebem_numbers') || '{}');
-        document.getElementById('setting-crash-num').value = nums.crash || '';
-        document.getElementById('setting-obs-num').value = nums.obs || '';
-        document.getElementById('setting-neo-num').value = nums.neo || '';
-        renderNumbers(nums);
-    }
-
-    function saveSettings() {
-        const nums = {
-            crash: document.getElementById('setting-crash-num').value,
-            obs: document.getElementById('setting-obs-num').value,
-            neo: document.getElementById('setting-neo-num').value
-        };
-        localStorage.setItem('wmebem_numbers', JSON.stringify(nums));
-        renderNumbers(nums);
-        document.getElementById('settings-modal').close();
-    }
-
-    function openSettings() { document.getElementById('settings-modal').showModal(); }
-
-    function renderNumbers(nums) {
-        const div = document.getElementById('emergency-numbers-display');
-        div.innerHTML = '';
-        if(nums.crash) div.innerHTML += `<span class="bg-red-100 text-red-800 px-2 py-1 rounded">Crash: <strong>${nums.crash}</strong></span>`;
-        if(nums.obs) div.innerHTML += `<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Obs: <strong>${nums.obs}</strong></span>`;
-        if(nums.neo) div.innerHTML += `<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Neo: <strong>${nums.neo}</strong></span>`;
-    }
-
-    // Accordions
-    function expandAll(id) { document.getElementById(`checklist-${id}`).querySelectorAll('details').forEach(d => d.open = true); }
-    function collapseAll(id) { document.getElementById(`checklist-${id}`).querySelectorAll('details').forEach(d => d.open = false); }
-
-    // PPH Calc
-    function addBloodLoss(amount) {
-        pphTotal += amount;
-        document.getElementById('pph-total-display').innerText = `${pphTotal} ml`;
-        manualLog('post_partum_haemorrhage', `EBL updated: Total ${pphTotal}ml (+${amount}ml)`);
-    }
-    function resetPPH() {
-        pphTotal = 0;
-        document.getElementById('pph-total-display').innerText = `0 ml`;
-        manualLog('post_partum_haemorrhage', `EBL Reset to 0`);
-    }
-
-    // Shoulder Dystocia Timer
-    let dystociaInterval;
-    function toggleDystociaTimer() {
-        const btn = document.getElementById('btn-dystocia-timer');
-        const display = document.getElementById('dystocia-timer');
-        
-        if(btn.innerText === 'Start Timer') {
-            const start = Date.now();
-            manualLog('shoulder_dystocia', 'Head delivered. Timer started.');
-            btn.innerText = 'Stop';
-            btn.className = "bg-red-600 hover:bg-red-700 text-white text-xs py-1 px-3 rounded shadow-sm";
-            
-            dystociaInterval = setInterval(() => {
-                const diff = Math.floor((Date.now() - start) / 1000);
-                const m = Math.floor(diff / 60).toString().padStart(2, '0');
-                const s = (diff % 60).toString().padStart(2, '0');
-                display.innerText = `${m}:${s}`;
-                if(diff > 300) display.classList.add('text-red-600', 'animate-pulse');
-            }, 1000);
-        } else {
-            clearInterval(dystociaInterval);
-            manualLog('shoulder_dystocia', `Body delivered. Interval: ${display.innerText}`);
-            btn.innerText = 'Start Timer';
-            btn.className = "bg-orange-600 hover:bg-orange-700 text-white text-xs py-1 px-3 rounded shadow-sm";
-            display.classList.remove('text-red-600', 'animate-pulse');
-        }
-    }
-
-    // Cardiac 4 Min Timer
-    let cardiacInterval;
-    let cardiacSeconds = 240; // 4 mins
-    function startCardiacTimer() {
-        const btn = document.getElementById('btn-cardiac-start');
-        if(btn.innerText === 'START') {
-            // Init Audio Context for beep
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            const ctx = new AudioContext(); // Init on interaction
-            
-            manualLog('cardiac_arrest', 'Cardiac Arrest Timer Started (4 min countdown).');
-            btn.innerText = 'STOP';
-            cardiacSeconds = 240;
-            
-            cardiacInterval = setInterval(() => {
-                cardiacSeconds--;
-                const m = Math.floor(cardiacSeconds / 60);
-                const s = (cardiacSeconds % 60).toString().padStart(2, '0');
-                document.getElementById('cardiac-timer-display').innerText = `0${m}:${s}`;
-
-                // Beeps
-                if(cardiacSeconds === 30) playBeep(ctx, 440, 0.5); // 3:30 warning
-                if(cardiacSeconds === 0) {
-                    playBeep(ctx, 880, 1); // 4:00 ALARM
-                    clearInterval(cardiacInterval);
-                    manualLog('cardiac_arrest', '4 MINUTES REACHED. HYSTEROTOMY INDICATED.');
-                }
-            }, 1000);
-        } else {
-            clearInterval(cardiacInterval);
-            btn.innerText = 'START';
-        }
+    // --- WIDGET RENDERERS ---
+    function renderPPHWidget() {
+        return `
+        <div class="card p-4 mb-4" style="background:var(--danger-light); border-color:var(--danger);">
+            <div class="flex justify-between items-end mb-2">
+                <div><div class="text-xs font-bold text-danger uppercase">Total Blood Loss</div><div class="text-3xl font-mono font-bold text-danger" id="pph-total">${pphVol} ml</div></div>
+                <button class="btn btn-outline btn-sm bg-white" onclick="resetPPH()">Reset</button>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn bg-white w-full border-danger text-danger" onclick="addPPH(100)">+100</button>
+                <button class="btn btn-danger w-full font-bold" onclick="addPPH(500)">+500ml</button>
+            </div>
+        </div>`;
     }
     
-    function resetCardiacTimer() {
-        clearInterval(cardiacInterval);
-        cardiacSeconds = 240;
-        document.getElementById('cardiac-timer-display').innerText = "04:00";
-        document.getElementById('btn-cardiac-start').innerText = 'START';
+    function renderDystociaWidget() {
+        return `
+        <div class="card p-4 mb-4 bg-warning-light border-warning">
+             <div class="flex justify-between items-center">
+                <div><div class="text-xs font-bold text-warning-dark uppercase">Head-to-Body Interval</div><div id="dystocia-time" class="text-2xl font-mono font-bold">00:00</div></div>
+                <button id="btn-dystocia" class="btn btn-primary" onclick="toggleDystocia()">Start Timer</button>
+             </div>
+        </div>`;
     }
 
-    function playBeep(ctx, freq, duration) {
-        if(!ctx) return;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = freq;
-        osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
-        osc.stop(ctx.currentTime + duration);
+    function renderCardiacWidget() {
+        return `
+        <div class="timer-box">
+            <div class="text-xs opacity-80 uppercase tracking-widest">Hysterotomy Timer</div>
+            <div id="cardiac-time" class="timer-display">04:00</div>
+            <div class="flex justify-center gap-2 mt-2">
+                <button id="btn-cardiac" class="btn bg-white text-danger font-bold" onclick="toggleCardiac()">START</button>
+                <button class="btn btn-outline text-white border-white hover:bg-white/10" onclick="resetCardiac()">Reset</button>
+            </div>
+        </div>`;
     }
 
-    // Generic FAB Timer
-    let fabInterval, fabSeconds = 0;
-    function toggleFabTimer() {
-        const panel = document.getElementById('fab-timer-panel');
-        panel.classList.toggle('hidden');
-        // Force reflow for transition
-        setTimeout(() => {
-            panel.classList.toggle('translate-x-full');
-            panel.classList.toggle('opacity-0');
-        }, 10);
+    // --- TIMERS & LOGIC ---
+    function logAction(id, msg) {
+        if(!logs[id]) logs[id] = [];
+        const time = new Date().toTimeString().substring(0,5);
+        logs[id].push(`[${time}] ${msg}`);
+        const area = document.getElementById('log-area');
+        if(area) { area.value = logs[id].join('\n'); area.scrollTop = area.scrollHeight; }
     }
-    function fabTimerStart() {
-        const btn = document.getElementById('fab-timer-btn-start');
-        if(btn.innerText === 'Start') {
-            btn.innerText = 'Stop';
-            btn.className = "bg-red-600 text-white py-1 px-2 rounded text-sm";
-            const start = Date.now() - (fabSeconds * 1000);
-            fabInterval = setInterval(() => {
-                fabSeconds = Math.floor((Date.now() - start) / 1000);
-                const m = Math.floor(fabSeconds / 60).toString().padStart(2,'0');
-                const s = (fabSeconds % 60).toString().padStart(2,'0');
-                document.getElementById('fab-timer-display').innerText = `${m}:${s}`;
-            }, 1000);
+    function getLogText(id) { return logs[id] ? logs[id].join('\n') : ''; }
+    function copyLog() { const area = document.getElementById('log-area'); if(area) { area.select(); document.execCommand('copy'); alert('Copied!'); } }
+
+    // PPH Logic
+    function addPPH(n) { pphVol += n; document.getElementById('pph-total').textContent = pphVol + ' ml'; logAction('pph', `EBL Updated: ${pphVol}ml (+${n})`); }
+    function resetPPH() { pphVol = 0; document.getElementById('pph-total').textContent = '0 ml'; logAction('pph', 'EBL Reset'); }
+
+    // Dystocia Timer
+    let dysInt, dysSec = 0;
+    function toggleDystocia() {
+        const btn = document.getElementById('btn-dystocia');
+        if(btn.textContent.includes('Start')) {
+            btn.textContent = 'Stop'; btn.className = 'btn btn-danger';
+            logAction('shoulder', 'Head Delivered. Timer Started.');
+            dysInt = setInterval(() => { dysSec++; document.getElementById('dystocia-time').textContent = fmtTime(dysSec); }, 1000);
         } else {
-            clearInterval(fabInterval);
-            btn.innerText = 'Start';
-            btn.className = "bg-green-600 text-white py-1 px-2 rounded text-sm";
+            clearInterval(dysInt); btn.textContent = 'Start Timer'; btn.className = 'btn btn-primary';
+            logAction('shoulder', 'Body Delivered. Interval: ' + fmtTime(dysSec)); dysSec = 0;
         }
     }
-    function fabTimerReset() {
-        clearInterval(fabInterval);
-        fabSeconds = 0;
-        document.getElementById('fab-timer-display').innerText = "00:00";
-        document.getElementById('fab-timer-btn-start').innerText = 'Start';
-        document.getElementById('fab-timer-btn-start').className = "bg-green-600 text-white py-1 px-2 rounded text-sm";
+
+    // Cardiac Timer
+    let carInt, carSec = 240;
+    function toggleCardiac() {
+        const btn = document.getElementById('btn-cardiac');
+        if(btn.textContent === 'START') {
+            initAudio(); btn.textContent = 'STOP'; logAction('cardiac', 'Cardiac Timer STARTED');
+            carInt = setInterval(() => {
+                carSec--; document.getElementById('cardiac-time').textContent = fmtTime(carSec);
+                if(carSec === 30) beep(440);
+                if(carSec === 0) { beep(880); clearInterval(carInt); logAction('cardiac', '4 MINUTE LIMIT REACHED'); }
+            }, 1000);
+        } else { clearInterval(carInt); btn.textContent = 'START'; logAction('cardiac', 'Timer PAUSED'); }
+    }
+    function resetCardiac() { clearInterval(carInt); carSec = 240; document.getElementById('cardiac-time').textContent = '04:00'; document.getElementById('btn-cardiac').textContent = 'START'; }
+
+    // Fab Timer
+    let fabInt, fabSec = 0;
+    function toggleFabWidget() { document.getElementById('fab-timer-widget').classList.toggle('hidden'); }
+    function runFabTimer() {
+        const btn = document.getElementById('fab-timer-btn');
+        if(btn.textContent === 'Start') {
+            btn.textContent = 'Stop'; btn.className = 'btn btn-danger w-full';
+            fabInt = setInterval(() => { fabSec++; document.getElementById('fab-timer-display').textContent = fmtTime(fabSec); }, 1000);
+        } else { clearInterval(fabInt); fabSec = 0; btn.textContent = 'Start'; btn.className = 'btn btn-success w-full'; document.getElementById('fab-timer-display').textContent = '00:00'; }
     }
 
-    // Sticky Log Copy
-    function copyCurrentLog() {
-        if(!currentProtocolId) return;
-        const txt = document.getElementById(`notes-${currentProtocolId}`);
-        txt.select();
-        document.execCommand('copy');
-        
-        const toast = document.getElementById('copy-toast');
-        toast.classList.remove('hidden');
-        setTimeout(() => toast.classList.add('hidden'), 2000);
-    }
+    // Utilities
+    function fmtTime(s) { return new Date(s * 1000).toISOString().substring(14, 19); }
+    let audioCtx; function initAudio() { if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    function beep(f) { if(audioCtx) { const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.frequency.value = f; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5); o.stop(audioCtx.currentTime + 0.5); } }
 
-    // Run
-    document.addEventListener('DOMContentLoaded', init);
+    // Settings
+    function openSettings() { document.getElementById('settings-modal').showModal(); }
+    function saveSettings() {
+        localStorage.setItem('wmebem_nums', JSON.stringify({ crash: document.getElementById('set-crash').value, obs: document.getElementById('set-obs').value }));
+        loadSettings(); document.getElementById('settings-modal').close();
+    }
+    function loadSettings() {
+        const d = JSON.parse(localStorage.getItem('wmebem_nums') || '{}');
+        document.getElementById('set-crash').value = d.crash || ''; document.getElementById('set-obs').value = d.obs || '';
+        const b = document.getElementById('numbers-bar'); b.innerHTML = '';
+        if(d.crash) b.innerHTML += `<span style="background:#fecaca; color:#7f1d1d; padding:2px 6px; border-radius:4px;">Crash: ${d.crash}</span>`;
+        if(d.obs) b.innerHTML += `<span style="background:#bfdbfe; color:#1e3a8a; padding:2px 6px; border-radius:4px;">Obs: ${d.obs}</span>`;
+    }
+    function toggleDark() { document.body.classList.toggle('dark'); localStorage.setItem('wmebem_dark', document.body.classList.contains('dark')); }
+    function acceptDisclaimer() { localStorage.setItem('wmebem_accepted', 'true'); document.getElementById('disclaimer-modal').close(); }
     </script>
 </body>
 </html>
