@@ -34,7 +34,7 @@
         
         /* Components */
         .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
-        .btn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; border: 1px solid transparent; font-size: 0.9rem; transition: all 0.2s; }
+        .btn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; border: 1px solid transparent; font-size: 0.9rem; transition: all 0.2s; text-decoration: none; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-main); }
         .btn-danger { background: var(--danger); color: white; }
@@ -50,8 +50,8 @@
 
         /* Header */
         header { position: sticky; top: 0; z-index: 50; background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 0.75rem 0; }
-        .home-btn { font-size: 1.2rem; padding: 0.5rem; border-radius: 0.5rem; background: var(--bg-body); border: 1px solid var(--border-color); margin-right: 0.5rem; cursor: pointer; }
-
+        .logo { height: 40px; width: auto; margin-right: 0.75rem; }
+        
         /* Accordions */
         details { border-bottom: 1px solid var(--border-color); background: var(--bg-card); }
         details:last-child { border-bottom: none; }
@@ -96,7 +96,7 @@
         </div>
         <div class="p-4">
             <p>This application is an <strong>educational aide-mémoire</strong> for qualified medical professionals.</p>
-            <p class="mt-2 font-bold text-danger">DOES NOT replace clinical judgment. Use at your own risk.</p>
+            <p class="mt-2 font-bold text-danger">DOES NOT replace clinical judgment. Use at your own risk. Check local trust guidelines.</p>
         </div>
         <div class="p-4 bg-gray-50 dark:bg-gray-800">
             <button class="btn btn-primary w-full" onclick="acceptDisclaimer()">I Accept</button>
@@ -106,15 +106,16 @@
     <header>
         <div class="container">
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <button class="home-btn" onclick="showHome()">🏠</button>
+                <div class="flex items-center">
+                    <img src="https://iili.io/KGQOvkl.md.png" alt="WMEBEM Logo" class="logo" onclick="showHome()">
                     <div>
-                        <div style="font-weight: 700; font-size:1.1rem;">Obs Emergencies</div>
-                        <div id="page-title" class="text-sm text-muted">Index</div>
+                        <div style="font-weight: 700; font-size:1.1rem; line-height: 1.2;">WMEBEM</div>
+                        <div id="page-title" class="text-sm text-muted">Obs Emergencies</div>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button class="btn btn-outline btn-sm" onclick="openSettings()">Numbers</button>
+                    <button id="header-back-btn" class="hidden btn btn-outline btn-sm" onclick="showHome()">Back</button>
+                    <button class="btn btn-outline btn-sm" onclick="openSettings()">#</button>
                 </div>
             </div>
             <div id="numbers-bar" class="mt-2 flex gap-2 text-xs"></div>
@@ -171,167 +172,214 @@
     </dialog>
 
     <script>
-    // --- FULL DATASET WITH EXPANDED INFO ---
+    // --- FULL DATASET WITH EXPANDED INFO & LINKS ---
     const protocols = [
         {
             id: 'afe',
             name: 'Amniotic Fluid Embolism',
-            bg: "Rare, unpredictable, and catastrophic collapse. Occurs during labour or immediately postpartum. A diagnosis of exclusion.",
-            dx: "Sudden onset hypoxia, hypotension, and fetal distress. Early coagulopathy (DIC) is common. Preceded by 'aura' or sense of doom.",
-            steps: ['Call Help (2222)', 'CPR + LUD', 'Airway / Oxygen', 'Treat Coagulopathy (MHP)', 'Perimortem Section'],
+            bg: "Rare, unpredictable, catastrophic collapse. Occurs during labour or immediately postpartum. Diagnosis of exclusion. RCOG GTG 56.",
+            dx: "Triad: 1. Sudden hypoxia, 2. Hypotension, 3. Coagulopathy (DIC). Premonitory symptoms: numbness, agitation, 'pins and needles', sense of doom.",
+            steps: ['Call Help (2222)', 'CPR + LUD', 'Intubate', 'MHP (Fibrinogen)', 'Perimortem Section'],
             checklist: [
                 'Recognise: Collapse + Hypoxia + Coagulopathy',
-                'Call Help (Snr Obs, Anaes, Haem)',
-                'Start CPR + Left Uterine Displacement',
-                'Secure Airway (100% Oxygen)',
-                'Activate MHP (Early FFP/Cryo/Fibrinogen)'
+                'Call 2222: Obstetric Emergency + Cardiac Arrest',
+                'Start CPR + Left Uterine Displacement (LUD)',
+                'Secure Airway: Intubate early (aspiration risk)',
+                'Activate MHP: Early FFP, Cryoprecipitate, Fibrinogen',
+                'Consider: TXA 1g IV',
+                'If Cardiac Arrest: Delivery within 5 mins',
+                'Consider Recombinant Factor VIIa if refractory'
+            ],
+            links: [
+                { title: 'RCOG GTG 56: Maternal Collapse', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/' }
             ]
         },
         {
             id: 'abruption',
             name: 'Placental Abruption',
-            bg: "Premature separation of placenta. Can be 'concealed' (no visible bleeding) or 'revealed'. High risk of DIC.",
-            dx: "Continuous abdominal pain, 'woody' hard uterus, fetal distress on CTG. Bleeding may be absent despite shock.",
-            steps: ['Assess (Pain + Bleeding)', 'Resus Mother (IV x2)', 'CTG Monitoring', 'Coag Screen', 'Category 1 Section'],
+            bg: "Premature separation of placenta. 'Concealed' or 'Revealed'. Risk factors: Pre-eclampsia, Trauma, Previous Abruption, Smoking, Cocaine.",
+            dx: "Constant pain, 'woody' hard uterus, vaginal bleeding (may be absent), fetal distress. Maternal shock out of proportion to visible loss.",
+            steps: ['Assess (Pain/Bleeding)', 'Resus (IV x2)', 'FBC/Coag/G&S', 'CTG', 'Deliver'],
             checklist: [
-                'Recognise: Painful bleeding, woody uterus',
                 'Call Senior Help immediately',
                 'Maternal Resus: ABCDE, 2x Grey Cannulas',
-                'Send FBC, G&S, Coag (Fibrinogen)',
+                'Bloods: FBC, G&S, Coag, Fibrinogen (<2g/L is significant)',
                 'Continuous CTG (if fetal heart present)',
-                'Expedite Delivery (Cat 1 CS)'
+                'Pain relief (Opiates usually required)',
+                'Anti-D if Rh Negative',
+                'Expedite Delivery (Cat 1 CS if fetal distress)'
+            ],
+            links: [
+                { title: 'RCOG GTG 63: Antepartum Haemorrhage', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/antepartum-haemorrhage-green-top-guideline-no-63/' }
             ]
         },
         {
             id: 'torsion',
             name: 'Ovarian Torsion',
-            bg: "Rotation of the ovary on its pedicle, compromising blood supply. Time-critical to save the ovary.",
-            dx: "Acute, severe, unilateral pelvic pain. Associated with vomiting. USS may show 'whirlpool sign' but is not definitive.",
-            steps: ['Analgesia + Antiemetics', 'Pregnancy Test (-ve)', 'Urgent Gynae Review', 'Laparoscopy'],
+            bg: "Rotation of ovary on pedicle. Time-critical. Risk factors: Ovarian Mass >5cm, Pregnancy, IVF.",
+            dx: "Acute, severe, unilateral pelvic pain. Vomiting (very common). Mild pyrexia. USS: Enlarged ovary, 'whirlpool sign', free fluid.",
+            steps: ['Analgesia/Antiemetics', 'Pregnancy Test', 'Gynae Review', 'Laparoscopy'],
             checklist: [
-                'Recognise: Severe unilateral pain + Vomiting',
-                'Perform Pregnancy Test (Exclude Ectopic)',
-                'NBM + IV Fluids + Analgesia',
+                'Analgesia (NSAIDs/Opiates) + Antiemetics',
+                'Pregnancy Test (Exclude Ectopic)',
+                'Keep NBM (Preparation for Theatre)',
                 'Urgent Gynae Referral',
-                'Consent for Laparoscopy'
+                'Laparoscopy (Detorsion usually possible even if appears necrotic)'
+            ],
+            links: [
+                { title: 'RCOG GTG 62: Ovarian Masses', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-suspected-ovarian-masses-in-premenopausal-women-green-top-guideline-no-62/' }
             ]
         },
         {
             id: 'pid',
             name: 'Severe PID / TOA',
-            bg: "Ascending infection. Can progress to Tubo-Ovarian Abscess (TOA) and Sepsis.",
-            dx: "Bilateral lower abdo pain, deep dyspareunia, abnormal discharge. O/E: Cervical motion tenderness + fever.",
-            steps: ['Sepsis Screen', 'Admit Inpatient', 'IV Antibiotics', 'Gynae Review', 'Imaging'],
+            bg: "Ascending infection. BASHH Guidelines 2019/24. Risks: Multiple partners, young age, recent instrumentation.",
+            dx: "Bilateral lower abdo pain, deep dyspareunia, discharge. O/E: Cervical excitation, adnexal tenderness. Fever suggests severe/TOA.",
+            steps: ['Sepsis Screen', 'Swabs (NAAT)', 'Antibiotics', 'Admit vs Discharge'],
             checklist: [
-                'Assess Severity (Sepsis? TOA? Pregnancy?)',
-                'Start IV Abx (Ceftriaxone + Doxy + Metro)',
-                'Analgesia + IV Fluids',
-                'Gynae Consult for ?Drainage if TOA suspected'
+                'Pregnancy Test (Essential)',
+                'Swabs: Endocervical/Vaginal NAAT (GC/Chlamydia) + MC&S',
+                'Outpatient Rx: IM Ceftriaxone 1g + Doxy 100mg BD (14d) + Metro 400mg BD (14d)',
+                'Inpatient Rx (Severe): IV Ceftriaxone 2g OD + IV Doxy + IV Metro',
+                'Consider TOA if severe/sepsis: Requires Imaging (USS/CT)'
+            ],
+            links: [
+                { title: 'BASHH PID Guidelines', url: 'https://www.bashh.org/guidelines' }
             ]
         },
         {
             id: 'preeclampsia',
             name: 'Pre-eclampsia / Eclampsia',
-            bg: "New hypertension >20 weeks with proteinuria or end-organ dysfunction. Eclampsia is the occurrence of seizures.",
-            dx: "BP >140/90. Symptoms: Frontal headache, visual disturbance (flashing lights), epigastric pain, hyperreflexia.",
-            steps: ['Call Help', 'Seizure: MgSO4 4g', 'BP: Labetalol/Hydralazine', 'Restrict Fluid', 'Deliver'],
+            bg: "New HTN >20w with proteinuria or end-organ dysfunction. NICE NG133.",
+            dx: "BP >140/90. Severe if >160/110. Symptoms: Headache, Visual disturbance, Epigastric pain, Clonus.",
+            steps: ['Call Help', 'Seizure: MgSO4', 'BP Control', 'Fluid Restrict', 'Deliver'],
             checklist: [
-                'Call 2222 (Obstetric Emergency)',
-                'Load MgSO4 4g IV (over 5-10 mins) for seizure proph/treatment',
-                'Treat BP if >160/110 (Target 135/85)',
-                'Fluid Restrict (80ml/hr) to prevent pulmonary oedema',
-                'Monitor Reflexes & Resp Rate',
+                'Call 2222 if Eclamptic Seizure',
+                'Airway/Breathing: High flow O2',
+                'Seizure: MgSO4 4g IV Loading (over 5-10m) then 1g/hr',
+                'Recurrent Seizure: Further 2g MgSO4 IV',
+                'BP Control (Target 135/85): Oral Nifedipine / IV Labetalol / IV Hydralazine',
+                'Fluid Restriction: 80ml/hr total input',
                 'Urgent Delivery Plan'
+            ],
+            links: [
+                { title: 'NICE NG133: Hypertension in Pregnancy', url: 'https://www.nice.org.uk/guidance/ng133' }
             ]
         },
         {
             id: 'ectopic',
             name: 'Ruptured Ectopic',
-            bg: "Implantation outside uterus. Rupture causes massive intraperitoneal haemorrhage. Leading cause of 1st trimester death.",
-            dx: "Positive pregnancy test + Abdo pain + Shoulder tip pain (diaphragmatic irritation). Collapse/Shock.",
-            steps: ['Positive hCG + Shock', 'Call Help + MHP', 'IV Access x2', 'Immediate Theatre'],
+            bg: "Implantation outside uterus. Rupture = Life Threatening Haemorrhage. NICE NG126.",
+            dx: "+ve hCG + Pain + Shoulder tip pain + Shock. Diarrhoea/Vomiting common.",
+            steps: ['Resus (ABC)', 'Crossmatch', 'Gynae + Anaes', 'Theatre'],
             checklist: [
-                'Recognise: +ve hCG, Peritonism, Shock',
+                'Recognise: Shock + Positive Pregnancy Test',
                 'Call Gynae + Anaesthetics STAT',
                 'Activate Massive Haemorrhage Protocol',
-                'Do NOT delay for Ultrasound if unstable',
-                'Transfer to Theatre (Laparoscopy/Laparotomy)'
+                'IV Access x2 Grey/Orange',
+                'Do NOT delay for Ultrasound if haemodynamically unstable',
+                'Transfer directly to Theatre (Laparotomy/Laparoscopy)'
+            ],
+            links: [
+                { title: 'NICE NG126: Ectopic Pregnancy', url: 'https://www.nice.org.uk/guidance/ng126' }
             ]
         },
         {
             id: 'pph',
             name: 'Post Partum Haemorrhage',
-            bg: "Primary PPH: >500ml blood loss within 24h. The '4 Ts': Tone, Trauma, Tissue, Thrombin.",
-            dx: "Visible bleeding or haemodynamic instability. Tone (Boggy uterus) is most common cause.",
-            steps: ['Call Help', 'Fundal Massage', 'Drugs (Synto/Ergo)', '4 Ts Check', 'MHP / Theatre'],
+            bg: "Primary PPH: >500ml within 24h. 4 Ts: Tone (70%), Trauma, Tissue, Thrombin. RCOG GTG 52.",
+            dx: "Visible bleeding or instability. 'Boggy' uterus.",
+            steps: ['Call Help', 'Massage', 'Drugs', 'Manouevres', 'Theatre'],
             checklist: [
                 'Call 2222 if >1000ml or Shock',
-                'Lie Flat + High flow Oxygen',
-                'Mechanical: Fundal Massage / Bimanual compression',
-                'Medical: Synto, Ergometrine, Carboprost, TXA',
-                'Surgical: Exam Under Anaesthetic (EUA)'
+                'Lie Flat + O2 + 2x Cannulae + Bloods',
+                'Mechanical: Fundal Massage + Bimanual Compression',
+                'Drug 1: Syntometrine IM (if no BP issues) or Syntocinon 5IU IV',
+                'Drug 2: Tranexamic Acid 1g IV',
+                'Drug 3: Carboprost 250mcg IM (rep every 15m, max 8 doses)',
+                'Drug 4: Misoprostol 800-1000mcg PR',
+                'Surgical: Balloon tamponade / B-Lynch / Hysterectomy'
             ],
-            widget: 'pph'
+            widget: 'pph',
+            links: [
+                { title: 'RCOG GTG 52: PPH', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/' }
+            ]
         },
         {
             id: 'cord',
             name: 'Cord Prolapse',
-            bg: "Umbilical cord descends below presenting part. High risk of fetal hypoxia due to compression/spasm.",
-            dx: "Cord palpable on vaginal exam or visible at introitus. Fetal bradycardia/decelerations.",
-            steps: ['Call Help', 'Elevate Presenting Part', 'Knee-Chest Position', 'Stop Syntocinon', 'Cat 1 Section'],
+            bg: "Cord descends below presenting part. Vasospasm/Compression = Hypoxia. RCOG GTG 50.",
+            dx: "Cord palpable/visible. Fetal bradycardia.",
+            steps: ['Call Help', 'Elevate Head', 'Position', 'Bladder Fill', 'Section'],
             checklist: [
                 'Call Help (Cat 1 Section)',
-                'Manual Elevation: Gloved hand in vagina to lift head off cord',
+                'Digital: Gloved hand in vagina to lift head off cord (KEEP HAND IN)',
                 'Position: Knee-chest or Head down (Trendelenburg)',
-                'Tocolysis: Terbutaline 250mcg SC to stop contractions',
-                'Do not remove hand until baby is delivered'
+                'Bladder Filling: 500-700ml 0.9% Saline via catheter (clamp catheter)',
+                'Tocolysis: Terbutaline 250mcg SC',
+                'Transport to theatre immediately'
+            ],
+            links: [
+                { title: 'RCOG GTG 50: Cord Prolapse', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/umbilical-cord-prolapse-green-top-guideline-no-50/' }
             ]
         },
         {
             id: 'shoulder',
             name: 'Shoulder Dystocia',
-            bg: "Anterior shoulder impacts behind pubic symphysis. Bone emergency. Do not pull.",
-            dx: "'Turtle Sign' (head retracts). Failure of restitution. Standard traction fails.",
-            steps: ['Call Help', 'Episiotomy', 'Legs (McRoberts)', 'Pressure (Suprapubic)', 'Enter (Manoeuvres)', 'Remove Arm', 'Roll'],
+            bg: "Ant shoulder impacts pubic symphysis. 'Turtle Sign'. Bone emergency. RCOG GTG 42.",
+            dx: "Failure of restitution. Standard traction fails.",
+            steps: ['Call Help', 'McRoberts', 'Suprapubic', 'Internal Manoeuvres', 'Roll'],
             checklist: [
-                'H: Help Called (Stop Pushing)',
-                'E: Episiotomy considered (allows room for hands)',
-                'L: Legs (McRoberts Manoeuvre - hyperflex hips)',
-                'P: Suprapubic Pressure (Rocking motion)',
-                'E: Enter (Rubin II / Woods Screw)',
-                'R: Remove Posterior Arm (grasp wrist, sweep across face)',
-                'R: Roll (All Fours / Gaskin)'
+                'Call Help (Anaes + Paeds). Stop Pushing. Flat bed.',
+                'McRoberts: Flex hips hyperflexed against abdomen (resolves 90%)',
+                'Suprapubic Pressure: Constant or rocking (CPR style) behind anterior shoulder',
+                'Internal: Episiotomy (for access)',
+                'Rubin II / Woods Screw / Reverse Woods Screw',
+                'Remove Posterior Arm: Grasp wrist, sweep across face',
+                'Roll: All Fours (Gaskin)'
             ],
-            widget: 'dystocia'
+            widget: 'dystocia',
+            links: [
+                { title: 'RCOG GTG 42: Shoulder Dystocia', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/shoulder-dystocia-green-top-guideline-no-42/' }
+            ]
         },
         {
             id: 'breech',
             name: 'Breech Birth (Unexpected)',
-            bg: "Buttocks or feet presenting. High risk of head entrapment. Gravity is the main aid.",
-            dx: "Palpation of buttocks/feet. Meconium passage. confirmed on USS.",
-            steps: ['Call Help', 'Hands Off', 'Spontaneous Descent', 'Loveset\'s Manoeuvre', 'Deliver Head (MSV)'],
+            bg: "Buttocks/feet presenting. High risk of head entrapment. RCOG GTG 20b.",
+            dx: "Meconium, palpable cleft.",
+            steps: ['Call Help', 'Hands Off', 'Legs', 'Arms', 'Head'],
             checklist: [
                 'Call Senior Help (Obs + Paeds)',
-                'Hands OFF until umbilicus visible (keep back up)',
-                'Legs: Pinard Manoeuvre (abduct thigh, flex knee)',
-                'Arms: Loveset\'s Manoeuvre (rotate to deliver arms)',
-                'Head: Mauriceau-Smellie-Veit (flex head)'
+                'Hands OFF until umbilicus visible',
+                'Delivery of Legs: Pinard Manoeuvre (abduct thigh, flex knee)',
+                'Delivery of Arms: Lovset\'s Manoeuvre (rotate 180 deg)',
+                'Delivery of Head: Mauriceau-Smellie-Veit (Jaw flexion, shoulder traction)',
+                'ENTRAPMENT: Incise cervix (Dührssen) or Symphysiotomy'
+            ],
+            links: [
+                { title: 'RCOG GTG 20b: Breech Presentation', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-breech-presentation-green-top-guideline-no-20b/' }
             ]
         },
         {
             id: 'cardiac',
             name: 'Obstetric Cardiac Arrest',
-            bg: "Maternal collapse. Modifications required due to physiology (aortocaval compression).",
-            dx: "Unresponsive, no breathing, no pulse. Causes: A-H (Anaesthesia, Accidents, Bleeding, Cardiac, Drugs, Embolism, Fever, General).",
-            steps: ['Call 2222', 'CPR + LUD', 'Assess Rhythm', '4 Mins: Hysterotomy', '5 Mins: Delivery'],
+            bg: "Maternal collapse. Aortocaval compression reduces CO by 30%. Resus Council UK.",
+            dx: "Unresponsive, Apnoeic. Causes: 4Hs 4Ts + Eclampsia, AFE, Intracranial.",
+            steps: ['Call 2222', 'CPR + LUD', 'Airway', 'Hysterotomy <4min', 'Deliver <5min'],
             checklist: [
+                'Call 2222 (Obs + Adult Cardiac Arrest)',
                 'Manual Left Uterine Displacement (LUD)',
-                'Intubate Early (High aspiration risk)',
-                'IV Access above diaphragm',
-                '4 Minute Rule: Prepare Hysterotomy (Perimortem CS)',
-                'Deliver baby to improve maternal outcome'
+                'CPR: 30:2 (Compressions higher on sternum)',
+                'Airway: Intubate early (ETCO2 monitoring)',
+                'IV Access: Above diaphragm (SVC)',
+                '4 Minute Rule: Start Perimortem CS (no anaesthetic)',
+                '5 Minute Rule: Deliver fetus'
             ],
-            widget: 'cardiac'
+            widget: 'cardiac',
+            links: [
+                { title: 'Resus Council UK: Maternal Arrest', url: 'https://www.resus.org.uk/library/2021-resuscitation-guidelines/special-circumstances-guidelines' }
+            ]
         }
     ];
 
@@ -371,7 +419,8 @@
     function showHome() {
         document.getElementById('view-index').classList.remove('hidden');
         document.getElementById('view-protocol').classList.add('hidden');
-        document.getElementById('page-title').textContent = 'Index';
+        document.getElementById('header-back-btn').classList.add('hidden');
+        document.getElementById('page-title').textContent = 'Obs Emergencies';
         currentId = null;
     }
 
@@ -395,6 +444,7 @@
         // Switch Views
         document.getElementById('view-index').classList.add('hidden');
         document.getElementById('view-protocol').classList.remove('hidden');
+        document.getElementById('header-back-btn').classList.remove('hidden');
         document.getElementById('page-title').textContent = p.name;
 
         // Render Widgets
@@ -411,10 +461,19 @@
                     <span>${item}</span>
                 </summary>
                 <div class="p-4 text-sm bg-gray-50 dark:bg-gray-800" style="padding-left: 3.5rem;">
-                    Action logged. See local guidelines for drug doses.
+                    Action logged.
                 </div>
             </details>
         `).join('');
+
+        // Render Links
+        let linksHtml = '';
+        if(p.links) {
+            linksHtml = `<div class="card p-4 mb-4">
+                <h4 class="font-bold text-sm text-muted mb-2">GUIDELINES</h4>
+                ${p.links.map(l => `<a href="${l.url}" target="_blank" class="btn btn-outline btn-sm w-full mb-2" style="justify-content:space-between">${l.title} <span>↗</span></a>`).join('')}
+            </div>`;
+        }
 
         // Inject Content
         const area = document.getElementById('content-area');
@@ -433,6 +492,7 @@
                 </div>
                 ${checklistHtml}
             </div>
+            ${linksHtml}
             <div class="card p-4">
                 <h4 class="font-bold text-sm text-muted mb-2">SESSION LOG</h4>
                 <textarea id="log-area" class="h-40" readonly>${getLogText(id)}</textarea>
@@ -440,7 +500,7 @@
         `;
     }
 
-    // --- WIDGETS, TIMERS, LOGIC (Unchanged but included for completeness) ---
+    // --- WIDGETS ---
     function renderPPHWidget() {
         return `
         <div class="card p-4 mb-4" style="background:var(--danger-light); border-color:var(--danger);">
@@ -492,7 +552,6 @@
         if (currentId) {
             txt = `Protocol: ${currentId.toUpperCase()}\n` + getLogText(currentId);
         } else {
-            // Copy all
             Object.keys(logs).forEach(k => { txt += `--- ${k.toUpperCase()} ---\n${logs[k].join('\n')}\n\n` });
         }
         navigator.clipboard.writeText(txt).then(() => alert('Log Copied!')); 
