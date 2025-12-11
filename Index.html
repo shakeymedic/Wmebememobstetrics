@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WMEBEM | Obstetric Emergencies (Complete)</title>
+    <title>WMEBEM | Obstetric Emergencies</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* --- CORE CSS --- */
@@ -13,50 +13,56 @@
             --primary: #2563eb; --primary-hover: #1d4ed8; --primary-light: #eff6ff;
             --danger: #dc2626; --danger-light: #fef2f2;
             --success: #16a34a; --warning: #f59e0b; --warning-light: #fffbeb;
+            --info-bg: #e0f2fe; --info-text: #0c4a6e;
         }
         .dark {
             --bg-body: #0f172a; --text-main: #f3f4f6; --text-muted: #9ca3af;
             --bg-card: #1e293b; --border-color: #374151;
             --primary: #3b82f6; --primary-light: #1e3a8a;
             --danger-light: #450a0a; --warning-light: #451a03;
+            --info-bg: #172554; --info-text: #bfdbfe;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg-body); color: var(--text-main); font-size: 16px; line-height: 1.5; padding-bottom: 100px; }
         
         /* Layout */
-        .container { max-width: 1024px; margin: 0 auto; padding: 0 1rem; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0 1rem; }
         .flex { display: flex; } .flex-col { flex-direction: column; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .gap-2 { gap: 0.5rem; }
         .hidden { display: none !important; } .block { display: block; }
-        .w-full { width: 100%; } .p-4 { padding: 1rem; } .mb-4 { margin-bottom: 1rem; } .mt-2 { margin-top: 0.5rem; }
+        .w-full { width: 100%; } .p-4 { padding: 1rem; } .mb-4 { margin-bottom: 1rem; } .mt-2 { margin-top: 0.5rem; } .text-sm { font-size: 0.875rem; } .font-bold { font-weight: 700; }
         
         /* Components */
         .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
-        .btn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; border: 1px solid transparent; font-size: 0.875rem; transition: all 0.2s; }
+        .btn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; border: 1px solid transparent; font-size: 0.9rem; transition: all 0.2s; }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-muted); }
+        .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-main); }
         .btn-danger { background: var(--danger); color: white; }
+        .btn-sm { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
         
+        /* Grid Menu */
+        .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 1rem 0; }
+        .menu-item { background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem; border-radius: 0.75rem; text-align: center; cursor: pointer; font-weight: 600; transition: transform 0.1s; display: flex; align-items: center; justify-content: center; min-height: 80px; }
+        .menu-item:active { transform: scale(0.98); background: var(--primary-light); }
+
         /* Inputs */
         input[type="text"], textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 1rem; }
 
         /* Header */
-        header { position: sticky; top: 0; z-index: 50; background: var(--bg-card); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(8px); padding: 0.75rem 0; opacity: 0.98; }
-
-        /* Navigation */
-        .nav-scroll { overflow-x: auto; white-space: nowrap; padding-bottom: 0.5rem; -ms-overflow-style: none; scrollbar-width: none; }
-        .nav-scroll::-webkit-scrollbar { display: none; }
-        .nav-btn { display: inline-block; padding: 0.5rem 1rem; margin-right: 0.5rem; border-radius: 99px; border: 1px solid var(--border-color); color: var(--text-muted); background: var(--bg-card); font-size: 0.875rem; transition: all 0.2s; }
-        .nav-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        header { position: sticky; top: 0; z-index: 50; background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 0.75rem 0; }
+        .home-btn { font-size: 1.2rem; padding: 0.5rem; border-radius: 0.5rem; background: var(--bg-body); border: 1px solid var(--border-color); margin-right: 0.5rem; cursor: pointer; }
 
         /* Accordions */
-        details { border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--bg-body); margin-bottom: 0.5rem; overflow: hidden; }
-        details summary { padding: 0.75rem; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 500; }
+        details { border-bottom: 1px solid var(--border-color); background: var(--bg-card); }
+        details:last-child { border-bottom: none; }
+        details summary { padding: 1rem; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 500; }
         details summary::-webkit-details-marker { display: none; }
-        details[open] summary { border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.02); }
-        .summary-arrow { margin-left: auto; transition: transform 0.2s; }
-        details[open] .summary-arrow { transform: rotate(90deg); }
-        .checkbox { width: 1.25rem; height: 1.25rem; margin-right: 0.75rem; accent-color: var(--success); }
+        details[open] summary { background: rgba(0,0,0,0.02); font-weight: 700; color: var(--primary); }
+        .checkbox { width: 1.5rem; height: 1.5rem; margin-right: 1rem; accent-color: var(--success); flex-shrink: 0; }
+
+        /* Info Box */
+        .info-box { background: var(--info-bg); color: var(--info-text); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; border-left: 4px solid var(--primary); font-size: 0.9rem; }
+        .info-title { font-weight: 700; display: block; margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; opacity: 0.8; }
 
         /* Widgets */
         .timer-box { background: var(--danger); color: white; padding: 1.5rem; border-radius: 0.75rem; text-align: center; margin-bottom: 1rem; }
@@ -73,7 +79,7 @@
         dialog { border: none; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); padding: 0; max-width: 95vw; width: 600px; background: var(--bg-card); color: var(--text-main); }
         dialog::backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
         
-        /* SVG Flowchart Styles */
+        /* SVG Flowchart */
         .flow-box { fill: var(--primary-light); stroke: var(--primary); stroke-width: 2px; rx: 8px; }
         .flow-text { font-family: sans-serif; font-size: 14px; fill: var(--text-main); text-anchor: middle; font-weight: 600; }
         .flow-arrow { stroke: var(--text-muted); stroke-width: 2px; marker-end: url(#arrowhead); }
@@ -99,26 +105,31 @@
 
     <header>
         <div class="container">
-            <div class="flex justify-between items-center mb-3">
+            <div class="flex justify-between items-center">
                 <div class="flex items-center gap-2">
-                    <img src="https://iili.io/KGQOvkl.md.png" alt="Logo" style="height: 32px; width: auto;">
-                    <span style="font-weight: 700;">Obs Emergencies</span>
+                    <button class="home-btn" onclick="showHome()">🏠</button>
+                    <div>
+                        <div style="font-weight: 700; font-size:1.1rem;">Obs Emergencies</div>
+                        <div id="page-title" class="text-sm text-muted">Index</div>
+                    </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <div id="numbers-bar" style="font-size: 0.75rem; display: flex; gap: 0.5rem;"></div>
-                    <button class="btn btn-outline" style="padding: 0.5rem;" onclick="openSettings()">⚙️</button>
-                    <button class="btn btn-outline" style="padding: 0.5rem;" onclick="toggleDark()">🌙</button>
+                    <button class="btn btn-outline btn-sm" onclick="openSettings()">Numbers</button>
                 </div>
             </div>
-            
-            <input type="text" id="search-bar" placeholder="Search (e.g., 'Sepsis', 'Cord')..." class="mb-3">
-            
-            <div class="nav-scroll" id="nav-container"></div>
+            <div id="numbers-bar" class="mt-2 flex gap-2 text-xs"></div>
         </div>
     </header>
 
     <main class="container mt-2">
-        <div id="content-area"></div>
+        <div id="view-index">
+            <input type="text" id="search-bar" placeholder="Search protocols..." class="mb-4">
+            <div class="grid-menu" id="grid-container"></div>
+        </div>
+
+        <div id="view-protocol" class="hidden">
+            <div id="content-area"></div>
+        </div>
     </main>
 
     <div class="fab-container">
@@ -128,8 +139,9 @@
                 <div id="fab-timer-display" style="font-family:monospace; font-size:2rem; text-align:center;">00:00</div>
                 <button class="btn btn-success w-full" id="fab-timer-btn" onclick="runFabTimer()">Start</button>
             </div>
-            <button class="fab-item" onclick="toggleFabWidget()">⏱️ Timer</button>
+            <button class="fab-item" onclick="toggleFabWidget()">⏱️ General Timer</button>
             <button class="fab-item" onclick="copyLog()">📋 Copy Log</button>
+            <button class="fab-item" onclick="toggleDark()">🌙 Toggle Dark</button>
         </div>
         <button class="fab-btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
@@ -141,8 +153,7 @@
             <h3 style="margin:0" id="algo-title">Algorithm</h3>
             <button class="btn btn-outline" onclick="document.getElementById('algo-modal').close()">✕</button>
         </div>
-        <div class="p-4" style="overflow-x: auto; text-align: center; background: var(--bg-card);" id="algo-content">
-            </div>
+        <div class="p-4" style="overflow-x: auto; text-align: center; background: var(--bg-card);" id="algo-content"></div>
     </dialog>
 
     <dialog id="settings-modal">
@@ -160,27 +171,31 @@
     </dialog>
 
     <script>
-    // --- FULL DATASET ---
+    // --- FULL DATASET WITH EXPANDED INFO ---
     const protocols = [
         {
             id: 'afe',
             name: 'Amniotic Fluid Embolism',
+            bg: "Rare, unpredictable, and catastrophic collapse. Occurs during labour or immediately postpartum. A diagnosis of exclusion.",
+            dx: "Sudden onset hypoxia, hypotension, and fetal distress. Early coagulopathy (DIC) is common. Preceded by 'aura' or sense of doom.",
             steps: ['Call Help (2222)', 'CPR + LUD', 'Airway / Oxygen', 'Treat Coagulopathy (MHP)', 'Perimortem Section'],
             checklist: [
                 'Recognise: Collapse + Hypoxia + Coagulopathy',
                 'Call Help (Snr Obs, Anaes, Haem)',
                 'Start CPR + Left Uterine Displacement',
                 'Secure Airway (100% Oxygen)',
-                'Activate MHP (Early FFP/Cryo)'
+                'Activate MHP (Early FFP/Cryo/Fibrinogen)'
             ]
         },
         {
             id: 'abruption',
             name: 'Placental Abruption',
+            bg: "Premature separation of placenta. Can be 'concealed' (no visible bleeding) or 'revealed'. High risk of DIC.",
+            dx: "Continuous abdominal pain, 'woody' hard uterus, fetal distress on CTG. Bleeding may be absent despite shock.",
             steps: ['Assess (Pain + Bleeding)', 'Resus Mother (IV x2)', 'CTG Monitoring', 'Coag Screen', 'Category 1 Section'],
             checklist: [
                 'Recognise: Painful bleeding, woody uterus',
-                'Call Senior Help',
+                'Call Senior Help immediately',
                 'Maternal Resus: ABCDE, 2x Grey Cannulas',
                 'Send FBC, G&S, Coag (Fibrinogen)',
                 'Continuous CTG (if fetal heart present)',
@@ -190,11 +205,13 @@
         {
             id: 'torsion',
             name: 'Ovarian Torsion',
+            bg: "Rotation of the ovary on its pedicle, compromising blood supply. Time-critical to save the ovary.",
+            dx: "Acute, severe, unilateral pelvic pain. Associated with vomiting. USS may show 'whirlpool sign' but is not definitive.",
             steps: ['Analgesia + Antiemetics', 'Pregnancy Test (-ve)', 'Urgent Gynae Review', 'Laparoscopy'],
             checklist: [
                 'Recognise: Severe unilateral pain + Vomiting',
                 'Perform Pregnancy Test (Exclude Ectopic)',
-                'NBM + IV Fluids',
+                'NBM + IV Fluids + Analgesia',
                 'Urgent Gynae Referral',
                 'Consent for Laparoscopy'
             ]
@@ -202,23 +219,27 @@
         {
             id: 'pid',
             name: 'Severe PID / TOA',
+            bg: "Ascending infection. Can progress to Tubo-Ovarian Abscess (TOA) and Sepsis.",
+            dx: "Bilateral lower abdo pain, deep dyspareunia, abnormal discharge. O/E: Cervical motion tenderness + fever.",
             steps: ['Sepsis Screen', 'Admit Inpatient', 'IV Antibiotics', 'Gynae Review', 'Imaging'],
             checklist: [
-                'Assess Severity (Sepsis/TOA/Pregnancy)',
+                'Assess Severity (Sepsis? TOA? Pregnancy?)',
                 'Start IV Abx (Ceftriaxone + Doxy + Metro)',
-                'Analgesia',
-                'Gynae Consult for ?Drainage'
+                'Analgesia + IV Fluids',
+                'Gynae Consult for ?Drainage if TOA suspected'
             ]
         },
         {
             id: 'preeclampsia',
             name: 'Pre-eclampsia / Eclampsia',
+            bg: "New hypertension >20 weeks with proteinuria or end-organ dysfunction. Eclampsia is the occurrence of seizures.",
+            dx: "BP >140/90. Symptoms: Frontal headache, visual disturbance (flashing lights), epigastric pain, hyperreflexia.",
             steps: ['Call Help', 'Seizure: MgSO4 4g', 'BP: Labetalol/Hydralazine', 'Restrict Fluid', 'Deliver'],
             checklist: [
                 'Call 2222 (Obstetric Emergency)',
-                'Load MgSO4 4g IV (over 5-10 mins)',
+                'Load MgSO4 4g IV (over 5-10 mins) for seizure proph/treatment',
                 'Treat BP if >160/110 (Target 135/85)',
-                'Fluid Restrict (80ml/hr)',
+                'Fluid Restrict (80ml/hr) to prevent pulmonary oedema',
                 'Monitor Reflexes & Resp Rate',
                 'Urgent Delivery Plan'
             ]
@@ -226,23 +247,27 @@
         {
             id: 'ectopic',
             name: 'Ruptured Ectopic',
+            bg: "Implantation outside uterus. Rupture causes massive intraperitoneal haemorrhage. Leading cause of 1st trimester death.",
+            dx: "Positive pregnancy test + Abdo pain + Shoulder tip pain (diaphragmatic irritation). Collapse/Shock.",
             steps: ['Positive hCG + Shock', 'Call Help + MHP', 'IV Access x2', 'Immediate Theatre'],
             checklist: [
                 'Recognise: +ve hCG, Peritonism, Shock',
                 'Call Gynae + Anaesthetics STAT',
                 'Activate Massive Haemorrhage Protocol',
-                'Do NOT delay for Ultrasound',
+                'Do NOT delay for Ultrasound if unstable',
                 'Transfer to Theatre (Laparoscopy/Laparotomy)'
             ]
         },
         {
             id: 'pph',
             name: 'Post Partum Haemorrhage',
+            bg: "Primary PPH: >500ml blood loss within 24h. The '4 Ts': Tone, Trauma, Tissue, Thrombin.",
+            dx: "Visible bleeding or haemodynamic instability. Tone (Boggy uterus) is most common cause.",
             steps: ['Call Help', 'Fundal Massage', 'Drugs (Synto/Ergo)', '4 Ts Check', 'MHP / Theatre'],
             checklist: [
                 'Call 2222 if >1000ml or Shock',
                 'Lie Flat + High flow Oxygen',
-                'Mechanical: Fundal Massage / Bimanual',
+                'Mechanical: Fundal Massage / Bimanual compression',
                 'Medical: Synto, Ergometrine, Carboprost, TXA',
                 'Surgical: Exam Under Anaesthetic (EUA)'
             ],
@@ -251,51 +276,59 @@
         {
             id: 'cord',
             name: 'Cord Prolapse',
+            bg: "Umbilical cord descends below presenting part. High risk of fetal hypoxia due to compression/spasm.",
+            dx: "Cord palpable on vaginal exam or visible at introitus. Fetal bradycardia/decelerations.",
             steps: ['Call Help', 'Elevate Presenting Part', 'Knee-Chest Position', 'Stop Syntocinon', 'Cat 1 Section'],
             checklist: [
                 'Call Help (Cat 1 Section)',
-                'Manual Elevation (gloved hand in vagina)',
-                'Position: Knee-chest / Head down',
-                'Tocolysis: Terbutaline 250mcg SC',
-                'Do not remove hand until delivery'
+                'Manual Elevation: Gloved hand in vagina to lift head off cord',
+                'Position: Knee-chest or Head down (Trendelenburg)',
+                'Tocolysis: Terbutaline 250mcg SC to stop contractions',
+                'Do not remove hand until baby is delivered'
             ]
         },
         {
             id: 'shoulder',
             name: 'Shoulder Dystocia',
+            bg: "Anterior shoulder impacts behind pubic symphysis. Bone emergency. Do not pull.",
+            dx: "'Turtle Sign' (head retracts). Failure of restitution. Standard traction fails.",
             steps: ['Call Help', 'Episiotomy', 'Legs (McRoberts)', 'Pressure (Suprapubic)', 'Enter (Manoeuvres)', 'Remove Arm', 'Roll'],
             checklist: [
                 'H: Help Called (Stop Pushing)',
-                'E: Episiotomy considered',
-                'L: Legs (McRoberts Manoeuvre)',
-                'P: Suprapubic Pressure (Rocking)',
+                'E: Episiotomy considered (allows room for hands)',
+                'L: Legs (McRoberts Manoeuvre - hyperflex hips)',
+                'P: Suprapubic Pressure (Rocking motion)',
                 'E: Enter (Rubin II / Woods Screw)',
-                'R: Remove Posterior Arm',
-                'R: Roll (All Fours)'
+                'R: Remove Posterior Arm (grasp wrist, sweep across face)',
+                'R: Roll (All Fours / Gaskin)'
             ],
             widget: 'dystocia'
         },
         {
             id: 'breech',
             name: 'Breech Birth (Unexpected)',
+            bg: "Buttocks or feet presenting. High risk of head entrapment. Gravity is the main aid.",
+            dx: "Palpation of buttocks/feet. Meconium passage. confirmed on USS.",
             steps: ['Call Help', 'Hands Off', 'Spontaneous Descent', 'Loveset\'s Manoeuvre', 'Deliver Head (MSV)'],
             checklist: [
                 'Call Senior Help (Obs + Paeds)',
-                'Hands OFF until umbilicus visible',
-                'Legs: Pinard Manoeuvre',
-                'Arms: Loveset\'s Manoeuvre',
-                'Head: Mauriceau-Smellie-Veit'
+                'Hands OFF until umbilicus visible (keep back up)',
+                'Legs: Pinard Manoeuvre (abduct thigh, flex knee)',
+                'Arms: Loveset\'s Manoeuvre (rotate to deliver arms)',
+                'Head: Mauriceau-Smellie-Veit (flex head)'
             ]
         },
         {
             id: 'cardiac',
             name: 'Obstetric Cardiac Arrest',
+            bg: "Maternal collapse. Modifications required due to physiology (aortocaval compression).",
+            dx: "Unresponsive, no breathing, no pulse. Causes: A-H (Anaesthesia, Accidents, Bleeding, Cardiac, Drugs, Embolism, Fever, General).",
             steps: ['Call 2222', 'CPR + LUD', 'Assess Rhythm', '4 Mins: Hysterotomy', '5 Mins: Delivery'],
             checklist: [
-                'Manual Left Uterine Displacement',
+                'Manual Left Uterine Displacement (LUD)',
                 'Intubate Early (High aspiration risk)',
                 'IV Access above diaphragm',
-                '4 Minute Rule: Prepare Hysterotomy',
+                '4 Minute Rule: Prepare Hysterotomy (Perimortem CS)',
                 'Deliver baby to improve maternal outcome'
             ],
             widget: 'cardiac'
@@ -303,37 +336,24 @@
     ];
 
     // --- APP STATE ---
-    let currentId = 'afe';
+    let currentId = null;
     let logs = {};
     let pphVol = 0;
 
     // --- INITIALIZATION ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Render Navigation
-        const nav = document.getElementById('nav-container');
-        protocols.forEach(p => {
-            const btn = document.createElement('button');
-            btn.className = 'nav-btn';
-            btn.textContent = p.name;
-            btn.onclick = () => loadProtocol(p.id);
-            btn.id = `nav-${p.id}`;
-            nav.appendChild(btn);
-        });
-
-        // Load First Protocol
-        loadProtocol(protocols[0].id);
+        renderIndex();
         
         // Search Listener
         document.getElementById('search-bar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            protocols.forEach(p => {
-                const btn = document.getElementById(`nav-${p.id}`);
-                const match = p.name.toLowerCase().includes(term);
-                btn.style.display = match ? 'inline-block' : 'none';
+            document.querySelectorAll('.menu-item').forEach(btn => {
+                const name = btn.textContent.toLowerCase();
+                btn.style.display = name.includes(term) ? 'flex' : 'none';
             });
         });
 
-        // Checkbox Listener (Delegation)
+        // Checkbox Listener
         document.getElementById('content-area').addEventListener('change', (e) => {
             if(e.target.matches('.checkbox')) {
                 const msg = e.target.getAttribute('data-msg');
@@ -342,20 +362,40 @@
             }
         });
 
-        // Load Settings
         loadSettings();
         if(!localStorage.getItem('wmebem_accepted')) document.getElementById('disclaimer-modal').showModal();
         if(localStorage.getItem('wmebem_dark') === 'true') document.body.classList.add('dark');
     });
 
-    // --- CORE RENDERER ---
+    // --- VIEW MANAGEMENT ---
+    function showHome() {
+        document.getElementById('view-index').classList.remove('hidden');
+        document.getElementById('view-protocol').classList.add('hidden');
+        document.getElementById('page-title').textContent = 'Index';
+        currentId = null;
+    }
+
+    function renderIndex() {
+        const grid = document.getElementById('grid-container');
+        grid.innerHTML = '';
+        protocols.forEach(p => {
+            const btn = document.createElement('div');
+            btn.className = 'menu-item';
+            btn.textContent = p.name;
+            btn.onclick = () => loadProtocol(p.id);
+            grid.appendChild(btn);
+        });
+    }
+
+    // --- PROTOCOL RENDERER ---
     function loadProtocol(id) {
         currentId = id;
         const p = protocols.find(x => x.id === id);
         
-        // Update Nav
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(`nav-${id}`).classList.add('active');
+        // Switch Views
+        document.getElementById('view-index').classList.add('hidden');
+        document.getElementById('view-protocol').classList.remove('hidden');
+        document.getElementById('page-title').textContent = p.name;
 
         // Render Widgets
         let widgetHtml = '';
@@ -368,11 +408,10 @@
             <details>
                 <summary>
                     <input type="checkbox" class="checkbox" data-msg="${item}">
-                    ${item}
-                    <span class="summary-arrow">▶</span>
+                    <span>${item}</span>
                 </summary>
-                <div class="p-4 text-sm bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-                    Action logged. See full guidance for details.
+                <div class="p-4 text-sm bg-gray-50 dark:bg-gray-800" style="padding-left: 3.5rem;">
+                    Action logged. See local guidelines for drug doses.
                 </div>
             </details>
         `).join('');
@@ -380,53 +419,28 @@
         // Inject Content
         const area = document.getElementById('content-area');
         area.innerHTML = `
+            <div class="info-box">
+                <span class="info-title">Background</span>
+                <div class="mb-2">${p.bg}</div>
+                <span class="info-title">Diagnosis / Signs</span>
+                <div>${p.dx}</div>
+            </div>
             ${widgetHtml}
-            <div class="card p-4">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="font-bold text-lg">${p.name}</h2>
-                    <button class="btn btn-primary btn-sm" onclick="showAlgo('${id}')">View Algorithm</button>
+            <div class="card mb-4">
+                <div class="p-4 flex justify-between items-center border-b" style="border-color:var(--border-color)">
+                    <h2 class="font-bold">Action Checklist</h2>
+                    <button class="btn btn-primary btn-sm" onclick="showAlgo('${id}')">Algorithm</button>
                 </div>
                 ${checklistHtml}
             </div>
-            <div class="card p-4 mt-4">
+            <div class="card p-4">
                 <h4 class="font-bold text-sm text-muted mb-2">SESSION LOG</h4>
                 <textarea id="log-area" class="h-40" readonly>${getLogText(id)}</textarea>
             </div>
         `;
     }
 
-    // --- ALGORITHM GENERATOR (SVG) ---
-    function showAlgo(id) {
-        const p = protocols.find(x => x.id === id);
-        const steps = p.steps;
-        const modal = document.getElementById('algo-modal');
-        const content = document.getElementById('algo-content');
-        document.getElementById('algo-title').textContent = p.name + " Algorithm";
-
-        // Dynamic SVG Generation
-        const boxH = 50;
-        const boxW = 220;
-        const gap = 40;
-        const svgH = (steps.length * (boxH + gap)) + 20;
-        
-        let svg = `<svg width="300" height="${svgH}" viewBox="0 0 300 ${svgH}" xmlns="http://www.w3.org/2000/svg">`;
-        svg += `<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="flow-arrow" fill="currentColor" /></marker></defs>`;
-        
-        steps.forEach((step, i) => {
-            const y = 20 + (i * (boxH + gap));
-            svg += `<rect x="40" y="${y}" width="${boxW}" height="${boxH}" class="flow-box" />`;
-            svg += `<text x="150" y="${y + 30}" class="flow-text">${step}</text>`;
-            if (i < steps.length - 1) {
-                svg += `<line x1="150" y1="${y + boxH}" x2="150" y2="${y + boxH + gap}" class="flow-arrow" />`;
-            }
-        });
-        svg += `</svg>`;
-        
-        content.innerHTML = svg;
-        modal.showModal();
-    }
-
-    // --- WIDGET RENDERERS ---
+    // --- WIDGETS, TIMERS, LOGIC (Unchanged but included for completeness) ---
     function renderPPHWidget() {
         return `
         <div class="card p-4 mb-4" style="background:var(--danger-light); border-color:var(--danger);">
@@ -463,22 +477,32 @@
         </div>`;
     }
 
-    // --- TIMERS & LOGIC ---
+    // --- LOGIC FUNCTIONS ---
     function logAction(id, msg) {
+        if(!id) return;
         if(!logs[id]) logs[id] = [];
         const time = new Date().toTimeString().substring(0,5);
         logs[id].push(`[${time}] ${msg}`);
         const area = document.getElementById('log-area');
         if(area) { area.value = logs[id].join('\n'); area.scrollTop = area.scrollHeight; }
     }
-    function getLogText(id) { return logs[id] ? logs[id].join('\n') : ''; }
-    function copyLog() { const area = document.getElementById('log-area'); if(area) { area.select(); document.execCommand('copy'); alert('Copied!'); } }
+    function getLogText(id) { return (logs[id] || []).join('\n'); }
+    function copyLog() { 
+        let txt = '';
+        if (currentId) {
+            txt = `Protocol: ${currentId.toUpperCase()}\n` + getLogText(currentId);
+        } else {
+            // Copy all
+            Object.keys(logs).forEach(k => { txt += `--- ${k.toUpperCase()} ---\n${logs[k].join('\n')}\n\n` });
+        }
+        navigator.clipboard.writeText(txt).then(() => alert('Log Copied!')); 
+    }
 
-    // PPH Logic
+    // PPH
     function addPPH(n) { pphVol += n; document.getElementById('pph-total').textContent = pphVol + ' ml'; logAction('pph', `EBL Updated: ${pphVol}ml (+${n})`); }
     function resetPPH() { pphVol = 0; document.getElementById('pph-total').textContent = '0 ml'; logAction('pph', 'EBL Reset'); }
 
-    // Dystocia Timer
+    // Dystocia
     let dysInt, dysSec = 0;
     function toggleDystocia() {
         const btn = document.getElementById('btn-dystocia');
@@ -492,7 +516,7 @@
         }
     }
 
-    // Cardiac Timer
+    // Cardiac
     let carInt, carSec = 240;
     function toggleCardiac() {
         const btn = document.getElementById('btn-cardiac');
@@ -518,12 +542,38 @@
         } else { clearInterval(fabInt); fabSec = 0; btn.textContent = 'Start'; btn.className = 'btn btn-success w-full'; document.getElementById('fab-timer-display').textContent = '00:00'; }
     }
 
+    // Algorithm SVG
+    function showAlgo(id) {
+        const p = protocols.find(x => x.id === id);
+        const steps = p.steps;
+        const modal = document.getElementById('algo-modal');
+        const content = document.getElementById('algo-content');
+        document.getElementById('algo-title').textContent = p.name + " Algorithm";
+
+        const boxH = 50; const boxW = 220; const gap = 40;
+        const svgH = (steps.length * (boxH + gap)) + 20;
+        
+        let svg = `<svg width="300" height="${svgH}" viewBox="0 0 300 ${svgH}" xmlns="http://www.w3.org/2000/svg">`;
+        svg += `<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="flow-arrow" fill="currentColor" /></marker></defs>`;
+        
+        steps.forEach((step, i) => {
+            const y = 20 + (i * (boxH + gap));
+            svg += `<rect x="40" y="${y}" width="${boxW}" height="${boxH}" class="flow-box" />`;
+            svg += `<text x="150" y="${y + 30}" class="flow-text">${step}</text>`;
+            if (i < steps.length - 1) {
+                svg += `<line x1="150" y1="${y + boxH}" x2="150" y2="${y + boxH + gap}" class="flow-arrow" />`;
+            }
+        });
+        svg += `</svg>`;
+        content.innerHTML = svg;
+        modal.showModal();
+    }
+
     // Utilities
     function fmtTime(s) { return new Date(s * 1000).toISOString().substring(14, 19); }
     let audioCtx; function initAudio() { if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
     function beep(f) { if(audioCtx) { const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.frequency.value = f; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5); o.stop(audioCtx.currentTime + 0.5); } }
 
-    // Settings
     function openSettings() { document.getElementById('settings-modal').showModal(); }
     function saveSettings() {
         localStorage.setItem('wmebem_nums', JSON.stringify({ crash: document.getElementById('set-crash').value, obs: document.getElementById('set-obs').value }));
