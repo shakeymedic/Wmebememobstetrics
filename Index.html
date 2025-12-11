@@ -1,270 +1,212 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WMEBEM | Obstetric Emergencies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- CORE CSS --- */
-        :root {
-            --bg-body: #f3f4f6; --text-main: #1f2937; --text-muted: #6b7280;
-            --bg-card: #ffffff; --border-color: #e5e7eb;
-            --primary: #2563eb; --primary-hover: #1d4ed8; --primary-light: #eff6ff;
-            --danger: #dc2626; --danger-light: #fef2f2;
-            --success: #16a34a; --warning: #f59e0b; --warning-light: #fffbeb;
-            --info-bg: #e0f2fe; --info-text: #0c4a6e;
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        /* Custom Scrollbar to match Trauma Tool */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #64748b; border-radius: 4px; }
+        
+        /* Utility for toggle animations */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .2s ease-in-out; }
+        @keyframes sweep { 0% {opacity: 0; transform: translateY(-5px)} 100% {opacity: 1; transform: translateY(0)} }
+
+        /* Dark mode overrides if system pref is dark (optional support) */
+        @media (prefers-color-scheme: dark) {
+            .dark-mode body { background-color: #0f172a; color: #f1f5f9; }
+            .dark-mode .bg-white { background-color: #1e293b; border-color: #334155; }
+            .dark-mode .text-slate-900 { color: #f1f5f9; }
+            .dark-mode .text-slate-700 { color: #cbd5e1; }
+            .dark-mode .text-slate-500 { color: #94a3b8; }
+            .dark-mode .bg-slate-50 { background-color: #0f172a; }
+            .dark-mode .border-slate-300 { border-color: #334155; }
+            .dark-mode .border-slate-400 { border-color: #475569; }
         }
-        .dark {
-            --bg-body: #0f172a; --text-main: #f3f4f6; --text-muted: #9ca3af;
-            --bg-card: #1e293b; --border-color: #374151;
-            --primary: #3b82f6; --primary-light: #1e3a8a;
-            --danger-light: #450a0a; --warning-light: #451a03;
-            --info-bg: #172554; --info-text: #bfdbfe;
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: var(--bg-body); color: var(--text-main); font-size: 16px; line-height: 1.5; padding-bottom: 100px; }
-        
-        /* Layout */
-        .container { max-width: 800px; margin: 0 auto; padding: 0 1rem; }
-        .flex { display: flex; } .flex-col { flex-direction: column; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .gap-2 { gap: 0.5rem; }
-        .hidden { display: none !important; } .block { display: block; }
-        .w-full { width: 100%; } .p-4 { padding: 1rem; } .mb-4 { margin-bottom: 1rem; } .mt-2 { margin-top: 0.5rem; } .text-sm { font-size: 0.875rem; } .font-bold { font-weight: 700; }
-        
-        /* Components */
-        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 0.75rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; }
-        .btn { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; border: 1px solid transparent; font-size: 0.9rem; transition: all 0.2s; text-decoration: none; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-outline { background: transparent; border-color: var(--border-color); color: var(--text-main); }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-sm { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
-        
-        /* Grid Menu */
-        .grid-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 1rem 0; }
-        .menu-item { background: var(--bg-card); border: 1px solid var(--border-color); padding: 1rem; border-radius: 0.75rem; text-align: center; cursor: pointer; font-weight: 600; transition: transform 0.1s; display: flex; align-items: center; justify-content: center; min-height: 80px; }
-        .menu-item:active { transform: scale(0.98); background: var(--primary-light); }
-
-        /* Inputs */
-        input[type="text"], textarea { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 0.5rem; background: var(--bg-body); color: var(--text-main); font-family: inherit; font-size: 1rem; }
-
-        /* Header */
-        header { position: sticky; top: 0; z-index: 50; background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 0.75rem 0; }
-        .logo { height: 40px; width: auto; margin-right: 0.75rem; }
-        
-        /* Accordions */
-        details { border-bottom: 1px solid var(--border-color); background: var(--bg-card); }
-        details:last-child { border-bottom: none; }
-        details summary { padding: 1rem; cursor: pointer; list-style: none; display: flex; align-items: center; font-weight: 500; }
-        details summary::-webkit-details-marker { display: none; }
-        details[open] summary { background: rgba(0,0,0,0.02); font-weight: 700; color: var(--primary); }
-        .checkbox { width: 1.5rem; height: 1.5rem; margin-right: 1rem; accent-color: var(--success); flex-shrink: 0; }
-
-        /* Info Box */
-        .info-box { background: var(--info-bg); color: var(--info-text); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; border-left: 4px solid var(--primary); font-size: 0.9rem; }
-        .info-title { font-weight: 700; display: block; margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; opacity: 0.8; }
-
-        /* Widgets */
-        .timer-box { background: var(--danger); color: white; padding: 1.5rem; border-radius: 0.75rem; text-align: center; margin-bottom: 1rem; }
-        .timer-display { font-family: monospace; font-size: 3rem; font-weight: 700; line-height: 1; margin: 0.5rem 0; }
-        
-        /* FAB */
-        .fab-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; display: flex; flex-direction: column; align-items: flex-end; pointer-events: none; }
-        .fab-btn { pointer-events: auto; width: 3.5rem; height: 3.5rem; border-radius: 50%; background: var(--primary); color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
-        .fab-menu { opacity: 0; transform: translateY(10px); transition: all 0.2s; pointer-events: none; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; }
-        .fab-container:hover .fab-menu, .fab-menu:hover { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .fab-item { background: var(--bg-card); color: var(--text-main); padding: 0.5rem 1rem; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid var(--border-color); font-size: 0.875rem; cursor: pointer; }
-
-        /* Modals */
-        dialog { border: none; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); padding: 0; max-width: 95vw; width: 600px; background: var(--bg-card); color: var(--text-main); }
-        dialog::backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
-        
-        /* SVG Flowchart */
-        .flow-box { fill: var(--primary-light); stroke: var(--primary); stroke-width: 2px; rx: 8px; }
-        .flow-text { font-family: sans-serif; font-size: 14px; fill: var(--text-main); text-anchor: middle; font-weight: 600; }
-        .flow-arrow { stroke: var(--text-muted); stroke-width: 2px; marker-end: url(#arrowhead); }
-        .dark .flow-box { fill: #1e3a8a; stroke: #60a5fa; }
-        .dark .flow-text { fill: white; }
-        .dark .flow-arrow { stroke: #94a3b8; }
     </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        danger: '#dc2626',
+                        success: '#16a34a',
+                        warning: '#f59e0b',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-slate-100 text-slate-900 antialiased pb-24">
 
-    <dialog id="disclaimer-modal">
-        <div class="p-4 border-b" style="border-color: var(--border-color)">
-            <h2 style="margin:0; font-size:1.25rem;">Clinical Disclaimer</h2>
+    <dialog id="disclaimer-modal" class="rounded-xl shadow-2xl p-0 max-w-md w-full backdrop:backdrop-blur-sm backdrop:bg-slate-900/50 open:animate-fade-in">
+        <div class="p-4 border-b border-slate-200 bg-slate-50 rounded-t-xl">
+            <h2 class="text-lg font-black text-slate-900">Clinical Disclaimer</h2>
         </div>
-        <div class="p-4">
-            <p>This application is an <strong>educational aide-mémoire</strong> for qualified medical professionals.</p>
-            <p class="mt-2 font-bold text-danger">DOES NOT replace clinical judgment. Use at your own risk. Check local trust guidelines.</p>
-        </div>
-        <div class="p-4 bg-gray-50 dark:bg-gray-800">
-            <button class="btn btn-primary w-full" onclick="acceptDisclaimer()">I Accept</button>
+        <div class="p-6 bg-white">
+            <p class="text-slate-700 mb-4">This application is an <strong>educational aide-mémoire</strong> for qualified medical professionals.</p>
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+                <p class="font-bold text-red-800 text-sm">DOES NOT replace clinical judgment. Use at your own risk. Check local trust guidelines.</p>
+            </div>
+            <button class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-sm transition" onclick="acceptDisclaimer()">I Accept</button>
         </div>
     </dialog>
 
-    <header>
-        <div class="container">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                    <img src="https://iili.io/KGQOvkl.md.png" alt="WMEBEM Logo" class="logo" onclick="showHome()">
-                    <div>
-                        <div style="font-weight: 700; font-size:1.1rem; line-height: 1.2;">WMEBEM</div>
-                        <div id="page-title" class="text-sm text-muted">Obs Emergencies</div>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button id="header-back-btn" class="hidden btn btn-outline btn-sm" onclick="showHome()">Back</button>
-                    <button class="btn btn-outline btn-sm" onclick="openSettings()">#</button>
+    <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-slate-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
+                <img src="https://iili.io/KGQOvkl.md.png" alt="WMEBEM Logo" class="h-12 w-auto object-contain">
+                <div>
+                    <h1 class="text-lg md:text-xl font-black text-slate-900 leading-tight">WMEBEM <span class="hidden md:inline">Obs Emergencies</span></h1>
+                    <p class="text-xs text-slate-500 font-bold" id="page-title">Home</p>
                 </div>
             </div>
-            <div id="numbers-bar" class="mt-2 flex gap-2 text-xs"></div>
+            <div class="flex items-center gap-2">
+                <button id="header-back-btn" class="hidden px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded border border-slate-300 transition" onclick="showHome()">← Back</button>
+                <button class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded border border-blue-200 transition" onclick="showDrugs()">💊 Drugs</button>
+                <button class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded border border-slate-300 transition" onclick="openSettings()">#</button>
+            </div>
         </div>
+        <div id="numbers-bar" class="container mx-auto px-4 pb-2 flex gap-2 text-xs empty:hidden"></div>
     </header>
 
-    <main class="container mt-2">
-        <div id="view-index">
-            <input type="text" id="search-bar" placeholder="Search protocols..." class="mb-4">
-            <div class="grid-menu" id="grid-container"></div>
+    <main class="container mx-auto px-4 py-6 max-w-3xl">
+        
+        <div id="search-container" class="mb-6">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="text" id="search-bar" class="w-full pl-10 pr-4 py-3 border-2 border-slate-300 rounded-xl text-slate-900 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-medium transition" placeholder="Search protocols...">
+            </div>
         </div>
 
-        <div id="view-protocol" class="hidden">
-            <div id="content-area"></div>
+        <div id="view-index" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>
+
+        <div id="view-protocol" class="hidden space-y-6">
+            <div id="protocol-content"></div>
         </div>
+
+        <div id="view-drugs" class="hidden space-y-4">
+            <input type="text" id="drug-search" class="w-full px-4 py-3 border border-slate-400 rounded-lg text-sm font-medium" placeholder="Filter drugs...">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-300 overflow-hidden">
+                <div id="drug-list" class="divide-y divide-slate-200"></div>
+            </div>
+        </div>
+
     </main>
 
-    <div class="fab-container">
-        <div class="fab-menu">
-            <div class="card p-4 mb-2 hidden" id="fab-timer-widget" style="width: 200px;">
-                <div class="flex justify-between mb-2"><strong>Timer</strong> <span style="cursor:pointer" onclick="toggleFabWidget()">✕</span></div>
-                <div id="fab-timer-display" style="font-family:monospace; font-size:2rem; text-align:center;">00:00</div>
-                <button class="btn btn-success w-full" id="fab-timer-btn" onclick="runFabTimer()">Start</button>
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none">
+        <div id="fab-menu" class="mb-4 flex flex-col items-end gap-3 transition-all duration-200 opacity-0 translate-y-4 pointer-events-none">
+            <div id="fab-timer-widget" class="bg-white p-4 rounded-xl shadow-xl border border-slate-300 w-48 hidden pointer-events-auto">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-bold text-slate-700 text-sm">General Timer</span>
+                    <button onclick="toggleFabWidget()" class="text-slate-400 hover:text-slate-600">✕</button>
+                </div>
+                <div id="fab-timer-display" class="font-mono text-3xl font-black text-center text-slate-800 mb-3">00:00</div>
+                <button id="fab-timer-btn" class="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded shadow-sm" onclick="runFabTimer()">Start</button>
             </div>
-            <button class="fab-item" onclick="toggleFabWidget()">⏱️ General Timer</button>
-            <button class="fab-item" onclick="copyLog()">📋 Copy Log</button>
-            <button class="fab-item" onclick="toggleDark()">🌙 Toggle Dark</button>
+            
+            <button onclick="toggleFabWidget()" class="fab-item pointer-events-auto bg-white text-slate-700 px-4 py-2 rounded-lg shadow-lg border border-slate-200 font-bold text-sm hover:bg-slate-50 flex items-center gap-2">
+                ⏱️ Timer
+            </button>
+            <button onclick="copyLog()" class="fab-item pointer-events-auto bg-white text-slate-700 px-4 py-2 rounded-lg shadow-lg border border-slate-200 font-bold text-sm hover:bg-slate-50 flex items-center gap-2">
+                📋 Copy Log
+            </button>
+            <button onclick="toggleDark()" class="fab-item pointer-events-auto bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg border border-slate-700 font-bold text-sm hover:bg-slate-700 flex items-center gap-2">
+                🌙 Dark Mode
+            </button>
         </div>
-        <button class="fab-btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        <button id="fab-main" class="pointer-events-auto w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition-transform active:scale-95 focus:outline-none focus:ring-4 focus:ring-blue-300">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
         </button>
     </div>
 
-    <dialog id="algo-modal">
-        <div class="p-4 flex justify-between items-center border-b" style="border-color: var(--border-color);">
-            <h3 style="margin:0" id="algo-title">Algorithm</h3>
-            <button class="btn btn-outline" onclick="document.getElementById('algo-modal').close()">✕</button>
+    <dialog id="algo-modal" class="rounded-xl shadow-2xl max-w-3xl w-full p-0 backdrop:backdrop-blur-sm">
+        <div class="flex justify-between items-center p-4 border-b border-slate-200 bg-slate-50">
+            <h3 class="font-bold text-lg text-slate-800" id="algo-title">Algorithm</h3>
+            <button onclick="document.getElementById('algo-modal').close()" class="text-slate-500 hover:text-slate-800 font-bold px-3 py-1 rounded hover:bg-slate-200">Close</button>
         </div>
-        <div class="p-4" style="overflow-x: auto; text-align: center; background: var(--bg-card);" id="algo-content"></div>
+        <div class="p-6 overflow-x-auto bg-white flex justify-center" id="algo-content"></div>
     </dialog>
 
-    <dialog id="settings-modal">
-        <div class="p-4">
-            <h3>Emergency Numbers</h3>
-            <div class="flex flex-col gap-4 mt-2">
-                <input type="text" id="set-crash" placeholder="Crash Call (e.g. 2222)">
-                <input type="text" id="set-obs" placeholder="Obs Reg (e.g. Bleep 1234)">
-                <div class="flex justify-end gap-2 mt-2">
-                    <button class="btn btn-outline" onclick="document.getElementById('settings-modal').close()">Close</button>
-                    <button class="btn btn-primary" onclick="saveSettings()">Save</button>
-                </div>
+    <dialog id="settings-modal" class="rounded-xl shadow-2xl max-w-sm w-full p-6 backdrop:backdrop-blur-sm">
+        <h3 class="text-lg font-black text-slate-900 mb-1">Emergency Numbers</h3>
+        <p class="text-xs text-slate-500 mb-4 font-bold">Local numbers become clickable buttons.</p>
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Crash Call</label>
+                <input type="tel" id="set-crash" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-bold focus:ring-2 focus:ring-red-500" placeholder="e.g. 2222">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Obstetric Reg</label>
+                <input type="tel" id="set-obs" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-bold focus:ring-2 focus:ring-blue-500" placeholder="e.g. Bleep 1234">
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button class="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded" onclick="document.getElementById('settings-modal').close()">Cancel</button>
+                <button class="px-4 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-700 shadow-sm" onclick="saveSettings()">Save</button>
             </div>
         </div>
     </dialog>
 
     <script>
-    // --- FULL DATASET WITH EXPANDED INFO & LINKS ---
+    // --- DATA ---
     const protocols = [
         {
             id: 'afe',
             name: 'Amniotic Fluid Embolism',
-            bg: "Rare, unpredictable, catastrophic collapse. Occurs during labour or immediately postpartum. Diagnosis of exclusion. RCOG GTG 56.",
-            dx: "Triad: 1. Sudden hypoxia, 2. Hypotension, 3. Coagulopathy (DIC). Premonitory symptoms: numbness, agitation, 'pins and needles', sense of doom.",
+            bg: "Rare, unpredictable, catastrophic collapse. Diagnosis of exclusion.",
+            dx: "Triad: 1. Sudden hypoxia, 2. Hypotension, 3. Coagulopathy (DIC). Premonitory symptoms: 'sense of doom'.",
             steps: ['Call Help (2222)', 'CPR + LUD', 'Intubate', 'MHP (Fibrinogen)', 'Perimortem Section'],
-            checklist: [
-                'Recognise: Collapse + Hypoxia + Coagulopathy',
-                'Call 2222: Obstetric Emergency + Cardiac Arrest',
-                'Start CPR + Left Uterine Displacement (LUD)',
-                'Secure Airway: Intubate early (aspiration risk)',
-                'Activate MHP: Early FFP, Cryoprecipitate, Fibrinogen',
-                'Consider: TXA 1g IV',
-                'If Cardiac Arrest: Delivery within 5 mins',
-                'Consider Recombinant Factor VIIa if refractory'
-            ],
-            links: [
-                { title: 'RCOG GTG 56: Maternal Collapse', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/' }
-            ]
+            checklist: ['Recognise: Collapse + Hypoxia + Coagulopathy', 'Call 2222: Obstetric Emergency + Cardiac Arrest', 'Start CPR + Left Uterine Displacement (LUD)', 'Secure Airway: Intubate early (aspiration risk)', 'Activate MHP: Early FFP, Cryoprecipitate, Fibrinogen', 'Consider: TXA 1g IV', 'If Cardiac Arrest: Delivery within 5 mins'],
+            links: [{ title: 'RCOG GTG 56: Maternal Collapse', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/maternal-collapse-in-pregnancy-and-the-puerperium-green-top-guideline-no-56/' }]
         },
         {
             id: 'abruption',
             name: 'Placental Abruption',
-            bg: "Premature separation of placenta. 'Concealed' or 'Revealed'. Risk factors: Pre-eclampsia, Trauma, Previous Abruption, Smoking, Cocaine.",
-            dx: "Constant pain, 'woody' hard uterus, vaginal bleeding (may be absent), fetal distress. Maternal shock out of proportion to visible loss.",
+            bg: "Premature separation of placenta. 'Concealed' or 'Revealed'. Risk: Pre-eclampsia, Trauma, Cocaine.",
+            dx: "Constant pain, 'woody' hard uterus, vaginal bleeding (may be absent), fetal distress.",
             steps: ['Assess (Pain/Bleeding)', 'Resus (IV x2)', 'FBC/Coag/G&S', 'CTG', 'Deliver'],
-            checklist: [
-                'Call Senior Help immediately',
-                'Maternal Resus: ABCDE, 2x Grey Cannulas',
-                'Bloods: FBC, G&S, Coag, Fibrinogen (<2g/L is significant)',
-                'Continuous CTG (if fetal heart present)',
-                'Pain relief (Opiates usually required)',
-                'Anti-D if Rh Negative',
-                'Expedite Delivery (Cat 1 CS if fetal distress)'
-            ],
-            links: [
-                { title: 'RCOG GTG 63: Antepartum Haemorrhage', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/antepartum-haemorrhage-green-top-guideline-no-63/' }
-            ]
+            checklist: ['Call Senior Help immediately', 'Maternal Resus: ABCDE, 2x Grey Cannulas', 'Bloods: FBC, G&S, Coag, Fibrinogen (<2g/L is significant)', 'Continuous CTG (if fetal heart present)', 'Pain relief (Opiates usually required)', 'Anti-D if Rh Negative', 'Expedite Delivery (Cat 1 CS if fetal distress)'],
+            links: [{ title: 'RCOG GTG 63: Antepartum Haemorrhage', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/antepartum-haemorrhage-green-top-guideline-no-63/' }]
         },
         {
             id: 'torsion',
             name: 'Ovarian Torsion',
-            bg: "Rotation of ovary on pedicle. Time-critical. Risk factors: Ovarian Mass >5cm, Pregnancy, IVF.",
-            dx: "Acute, severe, unilateral pelvic pain. Vomiting (very common). Mild pyrexia. USS: Enlarged ovary, 'whirlpool sign', free fluid.",
+            bg: "Rotation of ovary on pedicle. Time-critical. Risk factors: Mass >5cm, IVF.",
+            dx: "Acute, severe, unilateral pelvic pain. Vomiting (very common). USS: 'whirlpool sign'.",
             steps: ['Analgesia/Antiemetics', 'Pregnancy Test', 'Gynae Review', 'Laparoscopy'],
-            checklist: [
-                'Analgesia (NSAIDs/Opiates) + Antiemetics',
-                'Pregnancy Test (Exclude Ectopic)',
-                'Keep NBM (Preparation for Theatre)',
-                'Urgent Gynae Referral',
-                'Laparoscopy (Detorsion usually possible even if appears necrotic)'
-            ],
-            links: [
-                { title: 'RCOG GTG 62: Ovarian Masses', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-suspected-ovarian-masses-in-premenopausal-women-green-top-guideline-no-62/' }
-            ]
+            checklist: ['Analgesia (NSAIDs/Opiates) + Antiemetics', 'Pregnancy Test (Exclude Ectopic)', 'Keep NBM (Preparation for Theatre)', 'Urgent Gynae Referral', 'Laparoscopy (Detorsion usually possible)'],
+            links: [{ title: 'RCOG GTG 62: Ovarian Masses', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-suspected-ovarian-masses-in-premenopausal-women-green-top-guideline-no-62/' }]
         },
         {
             id: 'pid',
             name: 'Severe PID / TOA',
-            bg: "Ascending infection. BASHH Guidelines 2019/24. Risks: Multiple partners, young age, recent instrumentation.",
-            dx: "Bilateral lower abdo pain, deep dyspareunia, discharge. O/E: Cervical excitation, adnexal tenderness. Fever suggests severe/TOA.",
+            bg: "Ascending infection. BASHH Guidelines. Risks: Young age, recent instrumentation.",
+            dx: "Bilateral lower abdo pain, dyspareunia, discharge. O/E: Cervical excitation. Fever suggests TOA.",
             steps: ['Sepsis Screen', 'Swabs (NAAT)', 'Antibiotics', 'Admit vs Discharge'],
-            checklist: [
-                'Pregnancy Test (Essential)',
-                'Swabs: Endocervical/Vaginal NAAT (GC/Chlamydia) + MC&S',
-                'Outpatient Rx: IM Ceftriaxone 1g + Doxy 100mg BD (14d) + Metro 400mg BD (14d)',
-                'Inpatient Rx (Severe): IV Ceftriaxone 2g OD + IV Doxy + IV Metro',
-                'Consider TOA if severe/sepsis: Requires Imaging (USS/CT)'
-            ],
-            links: [
-                { title: 'BASHH PID Guidelines', url: 'https://www.bashh.org/guidelines' }
-            ]
+            checklist: ['Pregnancy Test (Essential)', 'Swabs: Endocervical/Vaginal NAAT + MC&S', 'Outpatient Rx: IM Ceftriaxone 1g + Doxy 100mg BD (14d) + Metro 400mg BD (14d)', 'Inpatient Rx (Severe): IV Ceftriaxone 2g OD + IV Doxy + IV Metro', 'Consider TOA if severe/sepsis: Requires Imaging (USS/CT)'],
+            links: [{ title: 'BASHH PID Guidelines', url: 'https://www.bashh.org/guidelines' }]
         },
         {
             id: 'preeclampsia',
             name: 'Pre-eclampsia / Eclampsia',
             bg: "New HTN >20w with proteinuria or end-organ dysfunction. NICE NG133.",
-            dx: "BP >140/90. Severe if >160/110. Symptoms: Headache, Visual disturbance, Epigastric pain, Clonus.",
+            dx: "BP >140/90. Severe if >160/110. Symptoms: Headache, Visual disturbance, Epigastric pain.",
             steps: ['Call Help', 'Seizure: MgSO4', 'BP Control', 'Fluid Restrict', 'Deliver'],
-            checklist: [
-                'Call 2222 if Eclamptic Seizure',
-                'Airway/Breathing: High flow O2',
-                'Seizure: MgSO4 4g IV Loading (over 5-10m) then 1g/hr',
-                'Recurrent Seizure: Further 2g MgSO4 IV',
-                'BP Control (Target 135/85): Oral Nifedipine / IV Labetalol / IV Hydralazine',
-                'Fluid Restriction: 80ml/hr total input',
-                'Urgent Delivery Plan'
-            ],
-            links: [
-                { title: 'NICE NG133: Hypertension in Pregnancy', url: 'https://www.nice.org.uk/guidance/ng133' }
-            ]
+            checklist: ['Call 2222 if Eclamptic Seizure', 'Airway/Breathing: High flow O2', 'Seizure: MgSO4 4g IV Loading (over 5-10m) then 1g/hr', 'Recurrent Seizure: Further 2g MgSO4 IV', 'BP Control (Target 135/85): Labetalol / Hydralazine', 'Fluid Restriction: 80ml/hr total input', 'Urgent Delivery Plan'],
+            links: [{ title: 'NICE NG133: Hypertension in Pregnancy', url: 'https://www.nice.org.uk/guidance/ng133' }]
         },
         {
             id: 'ectopic',
@@ -272,17 +214,8 @@
             bg: "Implantation outside uterus. Rupture = Life Threatening Haemorrhage. NICE NG126.",
             dx: "+ve hCG + Pain + Shoulder tip pain + Shock. Diarrhoea/Vomiting common.",
             steps: ['Resus (ABC)', 'Crossmatch', 'Gynae + Anaes', 'Theatre'],
-            checklist: [
-                'Recognise: Shock + Positive Pregnancy Test',
-                'Call Gynae + Anaesthetics STAT',
-                'Activate Massive Haemorrhage Protocol',
-                'IV Access x2 Grey/Orange',
-                'Do NOT delay for Ultrasound if haemodynamically unstable',
-                'Transfer directly to Theatre (Laparotomy/Laparoscopy)'
-            ],
-            links: [
-                { title: 'NICE NG126: Ectopic Pregnancy', url: 'https://www.nice.org.uk/guidance/ng126' }
-            ]
+            checklist: ['Recognise: Shock + Positive Pregnancy Test', 'Call Gynae + Anaesthetics STAT', 'Activate Massive Haemorrhage Protocol', 'IV Access x2 Grey/Orange', 'Do NOT delay for Ultrasound if unstable', 'Transfer directly to Theatre'],
+            links: [{ title: 'NICE NG126: Ectopic Pregnancy', url: 'https://www.nice.org.uk/guidance/ng126' }]
         },
         {
             id: 'pph',
@@ -290,20 +223,9 @@
             bg: "Primary PPH: >500ml within 24h. 4 Ts: Tone (70%), Trauma, Tissue, Thrombin. RCOG GTG 52.",
             dx: "Visible bleeding or instability. 'Boggy' uterus.",
             steps: ['Call Help', 'Massage', 'Drugs', 'Manouevres', 'Theatre'],
-            checklist: [
-                'Call 2222 if >1000ml or Shock',
-                'Lie Flat + O2 + 2x Cannulae + Bloods',
-                'Mechanical: Fundal Massage + Bimanual Compression',
-                'Drug 1: Syntometrine IM (if no BP issues) or Syntocinon 5IU IV',
-                'Drug 2: Tranexamic Acid 1g IV',
-                'Drug 3: Carboprost 250mcg IM (rep every 15m, max 8 doses)',
-                'Drug 4: Misoprostol 800-1000mcg PR',
-                'Surgical: Balloon tamponade / B-Lynch / Hysterectomy'
-            ],
+            checklist: ['Call 2222 if >1000ml or Shock', 'Lie Flat + O2 + 2x Cannulae + Bloods', 'Mechanical: Fundal Massage + Bimanual Compression', 'Drug 1: Syntometrine IM or Syntocinon 5IU IV', 'Drug 2: Tranexamic Acid 1g IV', 'Drug 3: Carboprost 250mcg IM (rep every 15m)', 'Drug 4: Misoprostol 1000mcg PR', 'Surgical: Balloon tamponade / B-Lynch'],
             widget: 'pph',
-            links: [
-                { title: 'RCOG GTG 52: PPH', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/' }
-            ]
+            links: [{ title: 'RCOG GTG 52: PPH', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/postpartum-haemorrhage-prevention-and-management-green-top-guideline-no-52/' }]
         },
         {
             id: 'cord',
@@ -311,17 +233,8 @@
             bg: "Cord descends below presenting part. Vasospasm/Compression = Hypoxia. RCOG GTG 50.",
             dx: "Cord palpable/visible. Fetal bradycardia.",
             steps: ['Call Help', 'Elevate Head', 'Position', 'Bladder Fill', 'Section'],
-            checklist: [
-                'Call Help (Cat 1 Section)',
-                'Digital: Gloved hand in vagina to lift head off cord (KEEP HAND IN)',
-                'Position: Knee-chest or Head down (Trendelenburg)',
-                'Bladder Filling: 500-700ml 0.9% Saline via catheter (clamp catheter)',
-                'Tocolysis: Terbutaline 250mcg SC',
-                'Transport to theatre immediately'
-            ],
-            links: [
-                { title: 'RCOG GTG 50: Cord Prolapse', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/umbilical-cord-prolapse-green-top-guideline-no-50/' }
-            ]
+            checklist: ['Call Help (Cat 1 Section)', 'Digital: Gloved hand in vagina to lift head off cord (KEEP HAND IN)', 'Position: Knee-chest or Head down (Trendelenburg)', 'Bladder Filling: 500-700ml 0.9% Saline', 'Tocolysis: Terbutaline 250mcg SC', 'Transport to theatre immediately'],
+            links: [{ title: 'RCOG GTG 50: Cord Prolapse', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/umbilical-cord-prolapse-green-top-guideline-no-50/' }]
         },
         {
             id: 'shoulder',
@@ -329,19 +242,9 @@
             bg: "Ant shoulder impacts pubic symphysis. 'Turtle Sign'. Bone emergency. RCOG GTG 42.",
             dx: "Failure of restitution. Standard traction fails.",
             steps: ['Call Help', 'McRoberts', 'Suprapubic', 'Internal Manoeuvres', 'Roll'],
-            checklist: [
-                'Call Help (Anaes + Paeds). Stop Pushing. Flat bed.',
-                'McRoberts: Flex hips hyperflexed against abdomen (resolves 90%)',
-                'Suprapubic Pressure: Constant or rocking (CPR style) behind anterior shoulder',
-                'Internal: Episiotomy (for access)',
-                'Rubin II / Woods Screw / Reverse Woods Screw',
-                'Remove Posterior Arm: Grasp wrist, sweep across face',
-                'Roll: All Fours (Gaskin)'
-            ],
+            checklist: ['Call Help (Anaes + Paeds). Stop Pushing. Flat bed.', 'McRoberts: Flex hips hyperflexed against abdomen', 'Suprapubic Pressure: Constant or rocking', 'Internal: Episiotomy, Rubin II / Woods Screw', 'Remove Posterior Arm', 'Roll: All Fours (Gaskin)'],
             widget: 'dystocia',
-            links: [
-                { title: 'RCOG GTG 42: Shoulder Dystocia', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/shoulder-dystocia-green-top-guideline-no-42/' }
-            ]
+            links: [{ title: 'RCOG GTG 42: Shoulder Dystocia', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/shoulder-dystocia-green-top-guideline-no-42/' }]
         },
         {
             id: 'breech',
@@ -349,304 +252,359 @@
             bg: "Buttocks/feet presenting. High risk of head entrapment. RCOG GTG 20b.",
             dx: "Meconium, palpable cleft.",
             steps: ['Call Help', 'Hands Off', 'Legs', 'Arms', 'Head'],
-            checklist: [
-                'Call Senior Help (Obs + Paeds)',
-                'Hands OFF until umbilicus visible',
-                'Delivery of Legs: Pinard Manoeuvre (abduct thigh, flex knee)',
-                'Delivery of Arms: Lovset\'s Manoeuvre (rotate 180 deg)',
-                'Delivery of Head: Mauriceau-Smellie-Veit (Jaw flexion, shoulder traction)',
-                'ENTRAPMENT: Incise cervix (Dührssen) or Symphysiotomy'
-            ],
-            links: [
-                { title: 'RCOG GTG 20b: Breech Presentation', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-breech-presentation-green-top-guideline-no-20b/' }
-            ]
+            checklist: ['Call Senior Help (Obs + Paeds)', 'Hands OFF until umbilicus visible', 'Delivery of Legs: Pinard Manoeuvre', 'Delivery of Arms: Lovset\'s Manoeuvre', 'Delivery of Head: Mauriceau-Smellie-Veit', 'ENTRAPMENT: Incise cervix or Symphysiotomy'],
+            links: [{ title: 'RCOG GTG 20b: Breech Presentation', url: 'https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/management-of-breech-presentation-green-top-guideline-no-20b/' }]
         },
         {
             id: 'cardiac',
             name: 'Obstetric Cardiac Arrest',
-            bg: "Maternal collapse. Aortocaval compression reduces CO by 30%. Resus Council UK.",
-            dx: "Unresponsive, Apnoeic. Causes: 4Hs 4Ts + Eclampsia, AFE, Intracranial.",
+            bg: "Maternal collapse. Aortocaval compression reduces CO. Resus Council UK.",
+            dx: "Unresponsive, Apnoeic. Causes: 4Hs 4Ts + Eclampsia, AFE.",
             steps: ['Call 2222', 'CPR + LUD', 'Airway', 'Hysterotomy <4min', 'Deliver <5min'],
-            checklist: [
-                'Call 2222 (Obs + Adult Cardiac Arrest)',
-                'Manual Left Uterine Displacement (LUD)',
-                'CPR: 30:2 (Compressions higher on sternum)',
-                'Airway: Intubate early (ETCO2 monitoring)',
-                'IV Access: Above diaphragm (SVC)',
-                '4 Minute Rule: Start Perimortem CS (no anaesthetic)',
-                '5 Minute Rule: Deliver fetus'
-            ],
+            checklist: ['Call 2222 (Obs + Adult Cardiac Arrest)', 'Manual Left Uterine Displacement (LUD)', 'CPR: 30:2 (Compressions higher on sternum)', 'Airway: Intubate early (ETCO2 monitoring)', 'IV Access: Above diaphragm (SVC)', '4 Minute Rule: Start Perimortem CS', '5 Minute Rule: Deliver fetus'],
             widget: 'cardiac',
-            links: [
-                { title: 'Resus Council UK: Maternal Arrest', url: 'https://www.resus.org.uk/library/2021-resuscitation-guidelines/special-circumstances-guidelines' }
-            ]
+            links: [{ title: 'Resus Council UK: Maternal Arrest', url: 'https://www.resus.org.uk/library/2021-resuscitation-guidelines/special-circumstances-guidelines' }]
         }
     ];
 
-    // --- APP STATE ---
+    const drugData = [
+        { name: "Magnesium Sulphate", dose: "4g Loading", route: "IV", notes: "Use 20% or 50% solution. Give over 5-15 mins. Maintenance: 1g/hr." },
+        { name: "Labetalol", dose: "50mg", route: "IV", notes: "Over 1 min. Repeat after 5 mins. Max 200mg. Contraindicated in asthma." },
+        { name: "Hydralazine", dose: "5mg", route: "IV", notes: "Slow IV. Repeat after 20 mins. Watch for hypotension." },
+        { name: "Nifedipine", dose: "10-20mg", route: "Oral", notes: "Modified release preferable if available. Do not use sublingual." },
+        { name: "Syntocinon", dose: "5 IU", route: "IV", notes: "Slow IV bolus for PPH (or 10 IU IM for prophylaxis)." },
+        { name: "Syntometrine", dose: "1 Amp", route: "IM", notes: "Contains 5 IU Oxy + 500mcg Ergometrine. Avoid in Hypertension." },
+        { name: "Ergometrine", dose: "500mcg", route: "IV/IM", notes: "Slow IV. Causes nausea/vomiting. Avoid in Hypertension." },
+        { name: "Carboprost", dose: "250mcg", route: "IM", notes: "Deep IM. Repeat q15min. Max 8 doses. Caution in Asthma." },
+        { name: "Misoprostol", dose: "1000mcg", route: "PR", notes: "Rectal route for PPH. Off-label use." },
+        { name: "Tranexamic Acid", dose: "1g", route: "IV", notes: "Slow IV. Give early (<3 hours from bleeding onset)." },
+        { name: "Calcium Gluconate", dose: "10ml of 10%", route: "IV", notes: "Antidote for Magnesium toxicity." },
+        { name: "Adrenaline", dose: "1mg (1:10,000)", route: "IV", notes: "Cardiac Arrest. Every 3-5 mins." },
+        { name: "Intralipid 20%", dose: "1.5ml/kg", route: "IV", notes: "LAST. Bolus then infusion 15ml/kg/hr." }
+    ];
+
     let currentId = null;
     let logs = {};
     let pphVol = 0;
 
-    // --- INITIALIZATION ---
+    // --- INIT ---
     document.addEventListener('DOMContentLoaded', () => {
         renderIndex();
-        
-        // Search Listener
+        renderDrugs(drugData);
+
+        // FAB Logic
+        const fab = document.getElementById('fab-main');
+        const fabMenu = document.getElementById('fab-menu');
+        fab.addEventListener('click', () => {
+            fabMenu.classList.toggle('opacity-0');
+            fabMenu.classList.toggle('translate-y-4');
+            fabMenu.classList.toggle('pointer-events-none');
+        });
+
+        // Search
         document.getElementById('search-bar').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            document.querySelectorAll('.menu-item').forEach(btn => {
-                const name = btn.textContent.toLowerCase();
-                btn.style.display = name.includes(term) ? 'flex' : 'none';
+            document.querySelectorAll('#view-index > div').forEach(el => {
+                el.style.display = el.textContent.toLowerCase().includes(term) ? 'flex' : 'none';
             });
         });
 
-        // Checkbox Listener
-        document.getElementById('content-area').addEventListener('change', (e) => {
-            if(e.target.matches('.checkbox')) {
-                const msg = e.target.getAttribute('data-msg');
-                const action = e.target.checked ? '[DONE]' : '[UNDO]';
-                logAction(currentId, `${action} ${msg}`);
-            }
+        // Drug Search
+        document.getElementById('drug-search').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = drugData.filter(d => d.name.toLowerCase().includes(term));
+            renderDrugs(filtered);
         });
 
+        // Settings / Disclaimer
         loadSettings();
-        if(!localStorage.getItem('wmebem_accepted')) document.getElementById('disclaimer-modal').showModal();
-        if(localStorage.getItem('wmebem_dark') === 'true') document.body.classList.add('dark');
+        if(!localStorage.getItem('wmebem_obs_accepted')) document.getElementById('disclaimer-modal').showModal();
+        if(localStorage.getItem('wmebem_obs_dark') === 'true') document.body.classList.add('dark-mode');
     });
 
-    // --- VIEW MANAGEMENT ---
+    // --- NAVIGATION ---
     function showHome() {
         document.getElementById('view-index').classList.remove('hidden');
+        document.getElementById('search-container').classList.remove('hidden');
         document.getElementById('view-protocol').classList.add('hidden');
+        document.getElementById('view-drugs').classList.add('hidden');
         document.getElementById('header-back-btn').classList.add('hidden');
-        document.getElementById('page-title').textContent = 'Obs Emergencies';
+        document.getElementById('page-title').textContent = 'Home';
+        document.getElementById('search-bar').value = ''; 
         currentId = null;
     }
 
-    function renderIndex() {
-        const grid = document.getElementById('grid-container');
-        grid.innerHTML = '';
-        protocols.forEach(p => {
-            const btn = document.createElement('div');
-            btn.className = 'menu-item';
-            btn.textContent = p.name;
-            btn.onclick = () => loadProtocol(p.id);
-            grid.appendChild(btn);
-        });
+    function showDrugs() {
+        document.getElementById('view-index').classList.add('hidden');
+        document.getElementById('search-container').classList.add('hidden');
+        document.getElementById('view-protocol').classList.add('hidden');
+        document.getElementById('view-drugs').classList.remove('hidden');
+        document.getElementById('header-back-btn').classList.remove('hidden');
+        document.getElementById('page-title').textContent = 'Drug Quick Ref';
     }
 
-    // --- PROTOCOL RENDERER ---
+    // --- RENDERERS ---
+    function renderIndex() {
+        const container = document.getElementById('view-index');
+        container.innerHTML = protocols.map(p => `
+            <div onclick="loadProtocol('${p.id}')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-300 hover:border-blue-500 hover:shadow-md transition cursor-pointer flex items-center justify-between group active:scale-[0.99]">
+                <span class="font-bold text-slate-800 text-lg group-hover:text-blue-700">${p.name}</span>
+                <span class="text-slate-300 group-hover:text-blue-500">→</span>
+            </div>
+        `).join('');
+    }
+
+    function renderDrugs(data) {
+        const container = document.getElementById('drug-list');
+        if(data.length === 0) { container.innerHTML = '<div class="p-4 text-center text-slate-500 font-medium">No drugs found.</div>'; return; }
+        container.innerHTML = data.map(d => `
+            <div class="p-4 hover:bg-slate-50 transition">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <div class="font-black text-slate-800">${d.name}</div>
+                        <div class="text-sm text-slate-500 mt-1">${d.notes}</div>
+                    </div>
+                    <div class="text-right">
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded border border-blue-200">${d.dose}</span>
+                        <div class="text-xs font-bold text-slate-400 mt-1 uppercase tracking-wider">${d.route}</div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
     function loadProtocol(id) {
         currentId = id;
         const p = protocols.find(x => x.id === id);
         
-        // Switch Views
         document.getElementById('view-index').classList.add('hidden');
+        document.getElementById('search-container').classList.add('hidden');
         document.getElementById('view-protocol').classList.remove('hidden');
         document.getElementById('header-back-btn').classList.remove('hidden');
         document.getElementById('page-title').textContent = p.name;
 
-        // Render Widgets
-        let widgetHtml = '';
-        if(p.widget === 'pph') widgetHtml = renderPPHWidget();
-        if(p.widget === 'dystocia') widgetHtml = renderDystociaWidget();
-        if(p.widget === 'cardiac') widgetHtml = renderCardiacWidget();
+        // Render sections
+        let widget = '';
+        if(p.widget === 'pph') widget = renderPPH();
+        if(p.widget === 'dystocia') widget = renderDys();
+        if(p.widget === 'cardiac') widget = renderCard();
 
-        // Render Checklists
-        const checklistHtml = p.checklist.map((item, idx) => `
-            <details>
-                <summary>
-                    <input type="checkbox" class="checkbox" data-msg="${item}">
-                    <span>${item}</span>
-                </summary>
-                <div class="p-4 text-sm bg-gray-50 dark:bg-gray-800" style="padding-left: 3.5rem;">
-                    Action logged.
-                </div>
-            </details>
+        const checklist = p.checklist.map(item => `
+            <label class="flex items-start space-x-3 p-3 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white transition select-none">
+                <input type="checkbox" class="mt-1 w-5 h-5 text-blue-600 rounded border-slate-400 focus:ring-blue-500 transition" onchange="logItem(this, '${item.replace(/'/g, "\\'")}')">
+                <span class="text-slate-800 font-medium text-sm leading-tight">${item}</span>
+            </label>
         `).join('');
 
-        // Render Links
-        let linksHtml = '';
-        if(p.links) {
-            linksHtml = `<div class="card p-4 mb-4">
-                <h4 class="font-bold text-sm text-muted mb-2">GUIDELINES</h4>
-                ${p.links.map(l => `<a href="${l.url}" target="_blank" class="btn btn-outline btn-sm w-full mb-2" style="justify-content:space-between">${l.title} <span>↗</span></a>`).join('')}
-            </div>`;
-        }
-
-        // Inject Content
-        const area = document.getElementById('content-area');
-        area.innerHTML = `
-            <div class="info-box">
-                <span class="info-title">Background</span>
-                <div class="mb-2">${p.bg}</div>
-                <span class="info-title">Diagnosis / Signs</span>
-                <div>${p.dx}</div>
-            </div>
-            ${widgetHtml}
-            <div class="card mb-4">
-                <div class="p-4 flex justify-between items-center border-b" style="border-color:var(--border-color)">
-                    <h2 class="font-bold">Action Checklist</h2>
-                    <button class="btn btn-primary btn-sm" onclick="showAlgo('${id}')">Algorithm</button>
+        const links = p.links ? `
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-300">
+                <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide mb-3">Guidelines</h3>
+                <div class="space-y-2">
+                    ${p.links.map(l => `<a href="${l.url}" target="_blank" class="block w-full text-left px-4 py-2 rounded-lg border border-slate-300 text-blue-700 font-bold text-sm hover:bg-blue-50 transition flex justify-between items-center">${l.title} <span>↗</span></a>`).join('')}
                 </div>
-                ${checklistHtml}
+            </div>` : '';
+
+        const html = `
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-300 border-l-[6px] border-l-blue-600">
+                <div class="mb-4">
+                    <span class="block text-xs font-black text-blue-800 uppercase tracking-wide mb-1">Background</span>
+                    <p class="text-slate-700 text-sm leading-relaxed">${p.bg}</p>
+                </div>
+                <div>
+                    <span class="block text-xs font-black text-blue-800 uppercase tracking-wide mb-1">Diagnosis / Signs</span>
+                    <p class="text-slate-700 text-sm leading-relaxed">${p.dx}</p>
+                </div>
             </div>
-            ${linksHtml}
-            <div class="card p-4">
-                <h4 class="font-bold text-sm text-muted mb-2">SESSION LOG</h4>
-                <textarea id="log-area" class="h-40" readonly>${getLogText(id)}</textarea>
+
+            ${widget}
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-300">
+                <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+                    <h2 class="text-lg font-black text-slate-900">Action Checklist</h2>
+                    <button class="px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-bold rounded border border-indigo-200 hover:bg-indigo-100 transition" onclick="showAlgo('${id}')">View Algorithm</button>
+                </div>
+                <div class="space-y-2">
+                    ${checklist}
+                </div>
+            </div>
+
+            ${links}
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-300">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Session Log</h3>
+                    <button class="text-xs font-bold text-blue-600 hover:underline" onclick="copyLog()">Copy Text</button>
+                </div>
+                <div id="log-output" class="w-full h-40 p-3 bg-slate-50 border border-slate-300 rounded-lg text-xs font-mono text-slate-600 overflow-y-auto whitespace-pre-wrap leading-normal">${getLog(id)}</div>
             </div>
         `;
+        
+        document.getElementById('protocol-content').innerHTML = html;
     }
 
-    // --- WIDGETS ---
-    function renderPPHWidget() {
+    // --- WIDGETS (Tailwind Style) ---
+    function renderPPH() {
         return `
-        <div class="card p-4 mb-4" style="background:var(--danger-light); border-color:var(--danger);">
-            <div class="flex justify-between items-end mb-2">
-                <div><div class="text-xs font-bold text-danger uppercase">Total Blood Loss</div><div class="text-3xl font-mono font-bold text-danger" id="pph-total">${pphVol} ml</div></div>
-                <button class="btn btn-outline btn-sm bg-white" onclick="resetPPH()">Reset</button>
+        <div class="bg-red-50 p-5 rounded-xl shadow-sm border-2 border-red-100 border-l-[6px] border-l-red-500">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <div class="text-xs font-black text-red-900 uppercase tracking-wide">Total Estimated Loss</div>
+                    <div class="text-4xl font-black text-red-600 font-mono tracking-tight" id="pph-display">${pphVol} ml</div>
+                </div>
+                <button class="px-3 py-1 bg-white text-red-600 text-xs font-bold rounded border border-red-200 hover:bg-red-50 transition" onclick="resetPPH()">Reset</button>
             </div>
-            <div class="flex gap-2">
-                <button class="btn bg-white w-full border-danger text-danger" onclick="addPPH(100)">+100</button>
-                <button class="btn btn-danger w-full font-bold" onclick="addPPH(500)">+500ml</button>
-            </div>
-        </div>`;
-    }
-    
-    function renderDystociaWidget() {
-        return `
-        <div class="card p-4 mb-4 bg-warning-light border-warning">
-             <div class="flex justify-between items-center">
-                <div><div class="text-xs font-bold text-warning-dark uppercase">Head-to-Body Interval</div><div id="dystocia-time" class="text-2xl font-mono font-bold">00:00</div></div>
-                <button id="btn-dystocia" class="btn btn-primary" onclick="toggleDystocia()">Start Timer</button>
-             </div>
-        </div>`;
-    }
-
-    function renderCardiacWidget() {
-        return `
-        <div class="timer-box">
-            <div class="text-xs opacity-80 uppercase tracking-widest">Hysterotomy Timer</div>
-            <div id="cardiac-time" class="timer-display">04:00</div>
-            <div class="flex justify-center gap-2 mt-2">
-                <button id="btn-cardiac" class="btn bg-white text-danger font-bold" onclick="toggleCardiac()">START</button>
-                <button class="btn btn-outline text-white border-white hover:bg-white/10" onclick="resetCardiac()">Reset</button>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="py-3 bg-white border-2 border-red-200 text-red-700 font-bold rounded-lg hover:bg-red-50 active:scale-95 transition" onclick="addPPH(100)">+100 ml</button>
+                <button class="py-3 bg-red-600 text-white font-bold rounded-lg shadow-sm hover:bg-red-700 active:scale-95 transition" onclick="addPPH(500)">+500 ml</button>
             </div>
         </div>`;
     }
 
-    // --- LOGIC FUNCTIONS ---
-    function logAction(id, msg) {
-        if(!id) return;
+    function renderDys() {
+        return `
+        <div class="bg-amber-50 p-5 rounded-xl shadow-sm border-2 border-amber-100 border-l-[6px] border-l-amber-500">
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-xs font-black text-amber-900 uppercase tracking-wide">Head-to-Body Interval</div>
+                    <div class="text-3xl font-black text-amber-700 font-mono mt-1" id="dys-timer">00:00</div>
+                </div>
+                <button id="dys-btn" class="px-6 py-3 bg-amber-600 text-white font-bold rounded-lg shadow-sm hover:bg-amber-700 transition active:scale-95" onclick="toggleDys()">Start Timer</button>
+            </div>
+        </div>`;
+    }
+
+    function renderCard() {
+        return `
+        <div class="bg-slate-900 p-5 rounded-xl shadow-md border border-slate-700 text-white text-center">
+            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Perimortem Section Timer</div>
+            <div class="text-5xl font-black font-mono mb-4 text-red-500" id="card-timer">04:00</div>
+            <div class="flex justify-center gap-3">
+                <button id="card-btn" class="px-8 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded shadow transition" onclick="toggleCard()">START</button>
+                <button class="px-4 py-2 bg-transparent border border-slate-600 text-slate-300 font-bold rounded hover:bg-white/10 transition" onclick="resetCard()">Reset</button>
+            </div>
+        </div>`;
+    }
+
+    // --- LOGIC ---
+    function logItem(checkbox, msg) {
+        const action = checkbox.checked ? '[DONE]' : '[UNDO]';
+        addLog(currentId, `${action} ${msg}`);
+    }
+
+    function addLog(id, msg) {
         if(!logs[id]) logs[id] = [];
-        const time = new Date().toTimeString().substring(0,5);
+        const time = new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
         logs[id].push(`[${time}] ${msg}`);
-        const area = document.getElementById('log-area');
-        if(area) { area.value = logs[id].join('\n'); area.scrollTop = area.scrollHeight; }
+        const el = document.getElementById('log-output');
+        if(el) {
+            el.innerText = logs[id].join('\n');
+            el.scrollTop = el.scrollHeight;
+        }
     }
-    function getLogText(id) { return (logs[id] || []).join('\n'); }
-    function copyLog() { 
+
+    function getLog(id) { return (logs[id] || []).join('\n'); }
+
+    function copyLog() {
         let txt = '';
-        if (currentId) {
-            txt = `Protocol: ${currentId.toUpperCase()}\n` + getLogText(currentId);
-        } else {
-            Object.keys(logs).forEach(k => { txt += `--- ${k.toUpperCase()} ---\n${logs[k].join('\n')}\n\n` });
-        }
-        navigator.clipboard.writeText(txt).then(() => alert('Log Copied!')); 
+        if(currentId) txt = `PROTOCOL: ${currentId.toUpperCase()}\n${getLog(currentId)}`;
+        else Object.keys(logs).forEach(k => { if(logs[k].length) txt += `--- ${k.toUpperCase()} ---\n${logs[k].join('\n')}\n\n` });
+        
+        if(!txt) return alert('Log is empty');
+        navigator.clipboard.writeText(txt).then(() => alert('Log Copied to Clipboard'));
     }
 
-    // PPH
-    function addPPH(n) { pphVol += n; document.getElementById('pph-total').textContent = pphVol + ' ml'; logAction('pph', `EBL Updated: ${pphVol}ml (+${n})`); }
-    function resetPPH() { pphVol = 0; document.getElementById('pph-total').textContent = '0 ml'; logAction('pph', 'EBL Reset'); }
+    // PPH Logic
+    function addPPH(n) { pphVol += n; document.getElementById('pph-display').textContent = pphVol + ' ml'; addLog('pph', `EBL Updated: ${pphVol}ml (+${n})`); }
+    function resetPPH() { pphVol = 0; document.getElementById('pph-display').textContent = '0 ml'; addLog('pph', 'EBL Reset'); }
 
-    // Dystocia
-    let dysInt, dysSec = 0;
-    function toggleDystocia() {
-        const btn = document.getElementById('btn-dystocia');
+    // Dystocia Logic
+    let dInt, dSec = 0;
+    function toggleDys() {
+        const btn = document.getElementById('dys-btn');
         if(btn.textContent.includes('Start')) {
-            btn.textContent = 'Stop'; btn.className = 'btn btn-danger';
-            logAction('shoulder', 'Head Delivered. Timer Started.');
-            dysInt = setInterval(() => { dysSec++; document.getElementById('dystocia-time').textContent = fmtTime(dysSec); }, 1000);
+            btn.textContent = 'Stop'; btn.className = 'px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-sm hover:bg-red-700 transition active:scale-95';
+            addLog('shoulder', 'Head Delivered. Timer Started.');
+            dInt = setInterval(() => { dSec++; document.getElementById('dys-timer').textContent = new Date(dSec * 1000).toISOString().substring(14, 19); }, 1000);
         } else {
-            clearInterval(dysInt); btn.textContent = 'Start Timer'; btn.className = 'btn btn-primary';
-            logAction('shoulder', 'Body Delivered. Interval: ' + fmtTime(dysSec)); dysSec = 0;
+            clearInterval(dInt); btn.textContent = 'Start Timer'; btn.className = 'px-6 py-3 bg-amber-600 text-white font-bold rounded-lg shadow-sm hover:bg-amber-700 transition active:scale-95';
+            addLog('shoulder', `Body Delivered. Interval: ${new Date(dSec * 1000).toISOString().substring(14, 19)}`); dSec = 0;
         }
     }
 
-    // Cardiac
-    let carInt, carSec = 240;
-    function toggleCardiac() {
-        const btn = document.getElementById('btn-cardiac');
+    // Cardiac Logic
+    let cInt, cSec = 240, audioCtx;
+    function initAudio() { if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    function beep(f) { if(audioCtx){ const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.start();g.gain.exponentialRampToValueAtTime(0.00001,audioCtx.currentTime+0.5);o.stop(audioCtx.currentTime+0.5);}}
+    
+    function toggleCard() {
+        const btn = document.getElementById('card-btn');
         if(btn.textContent === 'START') {
-            initAudio(); btn.textContent = 'STOP'; logAction('cardiac', 'Cardiac Timer STARTED');
-            carInt = setInterval(() => {
-                carSec--; document.getElementById('cardiac-time').textContent = fmtTime(carSec);
-                if(carSec === 30) beep(440);
-                if(carSec === 0) { beep(880); clearInterval(carInt); logAction('cardiac', '4 MINUTE LIMIT REACHED'); }
+            initAudio(); btn.textContent = 'STOP'; addLog('cardiac', 'Timer STARTED');
+            cInt = setInterval(() => {
+                cSec--; document.getElementById('card-timer').textContent = new Date(cSec * 1000).toISOString().substring(14, 19);
+                if(cSec === 30) beep(440);
+                if(cSec === 0) { beep(880); clearInterval(cInt); addLog('cardiac', '4 MINUTE LIMIT REACHED'); }
             }, 1000);
-        } else { clearInterval(carInt); btn.textContent = 'START'; logAction('cardiac', 'Timer PAUSED'); }
+        } else { clearInterval(cInt); btn.textContent = 'START'; addLog('cardiac', 'Timer PAUSED'); }
     }
-    function resetCardiac() { clearInterval(carInt); carSec = 240; document.getElementById('cardiac-time').textContent = '04:00'; document.getElementById('btn-cardiac').textContent = 'START'; }
+    function resetCard() { clearInterval(cInt); cSec = 240; document.getElementById('card-timer').textContent = '04:00'; document.getElementById('card-btn').textContent = 'START'; }
 
-    // Fab Timer
-    let fabInt, fabSec = 0;
+    // FAB Timer
+    let fInt, fSec = 0;
     function toggleFabWidget() { document.getElementById('fab-timer-widget').classList.toggle('hidden'); }
     function runFabTimer() {
         const btn = document.getElementById('fab-timer-btn');
         if(btn.textContent === 'Start') {
-            btn.textContent = 'Stop'; btn.className = 'btn btn-danger w-full';
-            fabInt = setInterval(() => { fabSec++; document.getElementById('fab-timer-display').textContent = fmtTime(fabSec); }, 1000);
-        } else { clearInterval(fabInt); fabSec = 0; btn.textContent = 'Start'; btn.className = 'btn btn-success w-full'; document.getElementById('fab-timer-display').textContent = '00:00'; }
+            btn.textContent = 'Stop'; btn.className = 'w-full py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded shadow-sm';
+            fInt = setInterval(() => { fSec++; document.getElementById('fab-timer-display').textContent = new Date(fSec * 1000).toISOString().substring(14, 19); }, 1000);
+        } else { clearInterval(fInt); fSec = 0; btn.textContent = 'Start'; btn.className = 'w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded shadow-sm'; document.getElementById('fab-timer-display').textContent = '00:00'; }
+    }
+
+    // Settings
+    function openSettings() { document.getElementById('settings-modal').showModal(); }
+    function saveSettings() {
+        const d = { crash: document.getElementById('set-crash').value, obs: document.getElementById('set-obs').value };
+        localStorage.setItem('wmebem_obs_nums', JSON.stringify(d));
+        loadSettings(); document.getElementById('settings-modal').close();
+    }
+    function loadSettings() {
+        const d = JSON.parse(localStorage.getItem('wmebem_obs_nums') || '{}');
+        document.getElementById('set-crash').value = d.crash || '';
+        document.getElementById('set-obs').value = d.obs || '';
+        const bar = document.getElementById('numbers-bar');
+        bar.innerHTML = '';
+        if(d.crash) bar.innerHTML += `<a href="tel:${d.crash}" class="bg-red-100 text-red-800 px-2 py-1 rounded font-bold hover:bg-red-200">📞 Crash: ${d.crash}</a>`;
+        if(d.obs) bar.innerHTML += `<a href="tel:${d.obs}" class="bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold hover:bg-blue-200">📞 Obs: ${d.obs}</a>`;
+    }
+    function acceptDisclaimer() { localStorage.setItem('wmebem_obs_accepted', 'true'); document.getElementById('disclaimer-modal').close(); }
+    function toggleDark() { 
+        document.body.classList.toggle('dark-mode'); 
+        localStorage.setItem('wmebem_obs_dark', document.body.classList.contains('dark-mode'));
     }
 
     // Algorithm SVG
     function showAlgo(id) {
         const p = protocols.find(x => x.id === id);
-        const steps = p.steps;
         const modal = document.getElementById('algo-modal');
-        const content = document.getElementById('algo-content');
         document.getElementById('algo-title').textContent = p.name + " Algorithm";
-
-        const boxH = 50; const boxW = 220; const gap = 40;
-        const svgH = (steps.length * (boxH + gap)) + 20;
+        
+        const h = 50, w = 220, g = 40;
+        const svgH = (p.steps.length * (h + g)) + 20;
         
         let svg = `<svg width="300" height="${svgH}" viewBox="0 0 300 ${svgH}" xmlns="http://www.w3.org/2000/svg">`;
-        svg += `<defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" class="flow-arrow" fill="currentColor" /></marker></defs>`;
+        svg += `<defs><marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/></marker></defs>`;
         
-        steps.forEach((step, i) => {
-            const y = 20 + (i * (boxH + gap));
-            svg += `<rect x="40" y="${y}" width="${boxW}" height="${boxH}" class="flow-box" />`;
-            svg += `<text x="150" y="${y + 30}" class="flow-text">${step}</text>`;
-            if (i < steps.length - 1) {
-                svg += `<line x1="150" y1="${y + boxH}" x2="150" y2="${y + boxH + gap}" class="flow-arrow" />`;
-            }
+        p.steps.forEach((step, i) => {
+            const y = 20 + (i * (h + g));
+            svg += `<rect x="40" y="${y}" width="${w}" height="${h}" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>`;
+            svg += `<text x="150" y="${y + 30}" font-family="sans-serif" font-size="14" font-weight="600" fill="#1e293b" text-anchor="middle">${step}</text>`;
+            if (i < p.steps.length - 1) svg += `<line x1="150" y1="${y + h}" x2="150" y2="${y + h + g}" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>`;
         });
         svg += `</svg>`;
-        content.innerHTML = svg;
+        
+        document.getElementById('algo-content').innerHTML = svg;
         modal.showModal();
     }
-
-    // Utilities
-    function fmtTime(s) { return new Date(s * 1000).toISOString().substring(14, 19); }
-    let audioCtx; function initAudio() { if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
-    function beep(f) { if(audioCtx) { const o = audioCtx.createOscillator(); const g = audioCtx.createGain(); o.connect(g); g.connect(audioCtx.destination); o.frequency.value = f; o.start(); g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5); o.stop(audioCtx.currentTime + 0.5); } }
-
-    function openSettings() { document.getElementById('settings-modal').showModal(); }
-    function saveSettings() {
-        localStorage.setItem('wmebem_nums', JSON.stringify({ crash: document.getElementById('set-crash').value, obs: document.getElementById('set-obs').value }));
-        loadSettings(); document.getElementById('settings-modal').close();
-    }
-    function loadSettings() {
-        const d = JSON.parse(localStorage.getItem('wmebem_nums') || '{}');
-        document.getElementById('set-crash').value = d.crash || ''; document.getElementById('set-obs').value = d.obs || '';
-        const b = document.getElementById('numbers-bar'); b.innerHTML = '';
-        if(d.crash) b.innerHTML += `<span style="background:#fecaca; color:#7f1d1d; padding:2px 6px; border-radius:4px;">Crash: ${d.crash}</span>`;
-        if(d.obs) b.innerHTML += `<span style="background:#bfdbfe; color:#1e3a8a; padding:2px 6px; border-radius:4px;">Obs: ${d.obs}</span>`;
-    }
-    function toggleDark() { document.body.classList.toggle('dark'); localStorage.setItem('wmebem_dark', document.body.classList.contains('dark')); }
-    function acceptDisclaimer() { localStorage.setItem('wmebem_accepted', 'true'); document.getElementById('disclaimer-modal').close(); }
     </script>
 </body>
 </html>
