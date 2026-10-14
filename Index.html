@@ -31,6 +31,14 @@
         }
     </style>
     <link rel="stylesheet" href="tailwind.bundle.css">
+    <!-- Install as an app (PWA) -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#be185d">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="Obstetrics">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 </head>
 <body class="bg-slate-100 text-slate-900 antialiased pb-24">
 
@@ -591,5 +599,6 @@
         modal.showModal();
     }
     </script>
+    <script src="sw-register.js"></script>
 </body>
 </html>
